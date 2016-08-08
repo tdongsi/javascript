@@ -5,3 +5,9 @@ console.log(process.argv)
 var average = totalCost/number;
 
 console.log("$" + average);
+
+var helloWorld = function(name) {
+	console.log("Hello " + name);
+}
+
+helloWorld("World");
