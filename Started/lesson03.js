@@ -3,7 +3,7 @@ var rollDice = function(diceSize) {
 	return result;
 };
 
-for (var i = 0; i < 10; i+= 1) {
+for (var i = 0; i < 5; i+= 1) {
 	var roll = rollDice(6);
 
 	if (roll == 6) {
@@ -15,4 +15,8 @@ for (var i = 0; i < 10; i+= 1) {
 	}
 
 	console.log("You rolled a " +  roll);
+}
+
+for (var i = 0; i < process.argv.length; i++) {
+	console.log(process.argv[i]);
 }
