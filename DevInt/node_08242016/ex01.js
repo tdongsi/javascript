@@ -8,9 +8,12 @@ for (; x<5; x++) {
     // Rule 1: you can modify the code between this
     // Rule 2: you cannot invoke console.log in the first loop
     // Rule 3: you cannot use y in the console.log
+
+    const t = x;
+
     funcs.push(function() {
-        console.log(x);
-    })
+        console.log(t);
+    });
     // Rule 1 (cont): and here ONLY 
 }
 
