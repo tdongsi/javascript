@@ -19,6 +19,11 @@ function PersonFactory(fn, ln) {
     return person;
 }
 
+function Student(sid, fn, ln) {
+    this._super.call(this, fn, ln);
+    this.sid = sid;
+}
+
 // Person.__proto__ -> what you inherit from
 // Person.prototype
 // p.__proto__ = Person.prototype
@@ -30,3 +35,18 @@ Person.prototype.getFullName = function() {
     return this.fn + " " + this.ln;
 };
 console.log(p.getFullName());
+
+
+
+Student.protoype = Object.create(Person.prototype);
+Student.prototype.constructor = Student;
+Student.prototype._super = Person;
+
+Student.prototype.getStudentInfo = function() {
+    return this.sid + ' ' + this.ln;
+}
+
+var s = new Student("12", "John", "Doe");
+
+console.log(s.getStudentInfo());
+
