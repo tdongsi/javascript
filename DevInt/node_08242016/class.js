@@ -50,3 +50,35 @@ var s = new Student("12", "John", "Doe");
 
 console.log(s.getStudentInfo());
 
+
+
+/******** 
+ * ES2015 class syntax
+ *******/
+
+class Person2 {
+
+    constructor(fn, ln) {
+        this.fn = fn
+        this.ln = ln
+    }
+
+    getFullName() {
+        return this.fn + ' ' + this.ln;
+    }
+}
+
+class Student2 extends Person2 {
+    
+    constructor(sid, fn, ln) {
+        super(fn, ln);
+        this.sid = sid;
+    }
+
+    getStudentInfo() {
+        return this.sid + " " + this.fn;
+    }
+}
+
+var s2 = new Student2("12", "John", "Doe");
+console.log(s2.getStudentInfo());
