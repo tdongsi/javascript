@@ -2,17 +2,13 @@
 
 const http = require('http');
 const fs = require('fs');
+const express = require('express');
 
-const server = http.createServer(function (req, res) {
-    fs.readFile('./www/index.html', 'utf8', function(err, data) {
-        if (err) {
-            res.end('could not find file');
-            return;
-        }
+const app = express();
+console.log(typeof app); // should return function
+app.use(express.static('www')); // configure function object
 
-        res.end(data);
-    })
-});
+const server = http.createServer(app);
 
 server.listen(3000, function() {
     console.log("listening on port 3000");
