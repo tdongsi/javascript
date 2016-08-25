@@ -9,6 +9,32 @@ console.log(typeof app); // should return function
 // app.use(express.static('www')); // configure function object
 
 
+const widgets = [
+    { id: 1, name: 'Widget 1', color: 'blue'},
+    { id: 2, name: 'Widget 2', color: 'pink'},
+    { id: 3, name: 'Widget 3', color: 'purple'},
+]
+
+app.get('/api/widgets/:widgetId', function(req, res) {
+    try {
+        res.json(widgets.find(w => w.id === parseInt(req.params.widgetId, 10)));
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+    
+})
+
+// get: only run for GET requests.
+app.get('/api/widgets', function(req, res) {
+    try {
+        res.json(widgets);
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+    
+})
+
+// use: it will run for all requests.
 app.use("/duy", function(req, res, next) {
     console.log("duy is cool");
 
@@ -24,10 +50,10 @@ app.use(function(req, res) {
 
     fs.readFile('www/index.html', 'utf8', (err, data) => {
         if (err) {
-            res.end("error");
+            res.send("error");
             return;
         }
-        res.end(data);
+        res.send(data);
     });
 });
 
