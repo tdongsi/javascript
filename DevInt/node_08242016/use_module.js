@@ -29,3 +29,6 @@ function myRequire2(fileName) {
 var temp = myRequire2("./module");
 console.log(temp);
 temp.doIt("this is fun");
+
+var firstPkg = require("first-pkg");
+firstPkg.doIt("hi");
