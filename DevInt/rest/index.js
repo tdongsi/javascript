@@ -15,6 +15,30 @@ const widgets = [
     { id: 3, name: 'Widget 3', color: 'purple'},
 ]
 
+const new_widget = {
+    name: 'My widget',
+    color: 'blue'
+}
+
+app.post('/api/widgets/:widgetId', function(req, res) {
+    try {
+        new_widget.id = req.params.widgetId;
+        widgets.push(new_widget);
+        res.json(widgets);
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+})
+
+app.delete('/api/widgets', function(req, res) {
+    try {
+        widgets.pop();
+        res.json(widgets);
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+})
+
 app.get('/api/widgets/:widgetId', function(req, res) {
     try {
         res.json(widgets.find(w => w.id === parseInt(req.params.widgetId, 10)));
