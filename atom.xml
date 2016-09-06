@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[My Octopress Blog]]></title>
+  <link href="http://tdongsi.github.io/javascript/atom.xml" rel="self"/>
+  <link href="http://tdongsi.github.io/javascript/"/>
+  <updated>2016-09-05T22:36:22-07:00</updated>
+  <id>http://tdongsi.github.io/javascript/</id>
+  <author>
+    <name><![CDATA[Your Name]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[JavaScript Quick Recap]]></title>
+    <link href="http://tdongsi.github.io/javascript/blog/2016/09/05/javascript-quick-recap/"/>
+    <updated>2016-09-05T22:34:53-07:00</updated>
+    <id>http://tdongsi.github.io/javascript/blog/2016/09/05/javascript-quick-recap</id>
+    <content type="html"><![CDATA[<p>What to review before a JavaScript interview.</p>
+
+<!--more-->
+
+
+<p>TODO</p>
+]]></content>
+  </entry>
+  
+</feed>
