@@ -18,6 +18,10 @@ This file contains a number of front-end interview questions that can be used wh
 
 **Note:** Keep in mind that many of these questions are open-ended and could lead to interesting discussions that tell you more about the person's capabilities than a straight answer would.
 
+## External links
+
+* [reddit](https://www.reddit.com/r/cscareerquestions/comments/50qnvr/how_to_prepare_for_a_frontend_engineering/)
+
 ## Table of Contents
 
   1. [General Questions](#general-questions)
