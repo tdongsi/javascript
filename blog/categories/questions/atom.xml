@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Personal Interview Notes]]></title>
-  <link href="http://tdongsi.github.io/javascript/atom.xml" rel="self"/>
+  <title><![CDATA[Category: Questions | Personal Interview Notes]]></title>
+  <link href="http://tdongsi.github.io/javascript/blog/categories/questions/atom.xml" rel="self"/>
   <link href="http://tdongsi.github.io/javascript/"/>
   <updated>2016-09-06T22:57:49-07:00</updated>
   <id>http://tdongsi.github.io/javascript/</id>
@@ -185,16 +185,10 @@
 <li>Difference between document load event and document DOMContentLoaded event?</li>
 <li>What is the difference between <code>==</code> and <code>===</code>?</li>
 <li>Explain the same-origin policy with regards to JavaScript.</li>
-<li>Make this work:</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">duplicate</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]);</span> <span class="c1">// [1,2,3,4,5,1,2,3,4,5]</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
+<li>Make this work:
+<code>javascript
+duplicate([1,2,3,4,5]); // [1,2,3,4,5,1,2,3,4,5]
+</code></li>
 <li>Why is it called a Ternary expression, what does the word &ldquo;Ternary&rdquo; indicate?</li>
 <li>What is <code>"use strict";</code>? what are the advantages and disadvantages to using it?</li>
 <li>Create a for loop that iterates up to <code>100</code> while outputting <strong>&ldquo;fizz&rdquo;</strong> at multiples of <code>3</code>, <strong>&ldquo;buzz&rdquo;</strong> at multiples of <code>5</code> and <strong>&ldquo;fizzbuzz&rdquo;</strong> at multiples of <code>3</code> and <code>5</code></li>
@@ -267,89 +261,59 @@
 
 <h4>Coding Questions:</h4>
 
-<p><em>Question: What is the value of <code>foo</code>?</em></p>
+<p><em>Question: What is the value of <code>foo</code>?</em>
+<code>javascript
+var foo = 10 + '20';
+</code></p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">+</span> <span class="s1">&#39;20&#39;</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
+<p><em>Question: How would you make this work?</em>
+<code>javascript
+add(2, 5); // 7
+add(2)(5); // 7
+</code></p>
 
+<p><em>Question: What value is returned from the following statement?</em>
+<code>javascript
+"i'm a lasagna hog".split("").reverse().join("");
+</code></p>
 
-<p><em>Question: How would you make this work?</em></p>
+<p><em>Question: What is the value of <code>window.foo</code>?</em>
+<code>javascript
+( window.foo || ( window.foo = "bar" ) );
+</code></p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">add</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span> <span class="c1">// 7</span>
-</span><span class='line'><span class="nx">add</span><span class="p">(</span><span class="mi">2</span><span class="p">)(</span><span class="mi">5</span><span class="p">);</span> <span class="c1">// 7</span>
-</span></code></pre></td></tr></table></div></figure>
+<p><em>Question: What is the outcome of the two alerts below?</em>
+<code>javascript
+var foo = "Hello";
+(function() {
+  var bar = " World";
+  alert(foo + bar);
+})();
+alert(foo + bar);
+</code></p>
 
+<p><em>Question: What is the value of <code>foo.length</code>?</em>
+<code>javascript
+var foo = [];
+foo.push(1);
+foo.push(2);
+</code></p>
 
-<p><em>Question: What value is returned from the following statement?</em></p>
+<p><em>Question: What is the value of <code>foo.x</code>?</em>
+<code>javascript
+var foo = {n: 1};
+var bar = foo;
+foo.x = foo = {n: 2};
+</code></p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="s2">&quot;i&#39;m a lasagna hog&quot;</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">).</span><span class="nx">reverse</span><span class="p">().</span><span class="nx">join</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><em>Question: What is the value of <code>window.foo</code>?</em></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="p">(</span> <span class="nb">window</span><span class="p">.</span><span class="nx">foo</span> <span class="o">||</span> <span class="p">(</span> <span class="nb">window</span><span class="p">.</span><span class="nx">foo</span> <span class="o">=</span> <span class="s2">&quot;bar&quot;</span> <span class="p">)</span> <span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><em>Question: What is the outcome of the two alerts below?</em></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="s2">&quot;Hello&quot;</span><span class="p">;</span>
-</span><span class='line'><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>  <span class="kd">var</span> <span class="nx">bar</span> <span class="o">=</span> <span class="s2">&quot; World&quot;</span><span class="p">;</span>
-</span><span class='line'>  <span class="nx">alert</span><span class="p">(</span><span class="nx">foo</span> <span class="o">+</span> <span class="nx">bar</span><span class="p">);</span>
-</span><span class='line'><span class="p">})();</span>
-</span><span class='line'><span class="nx">alert</span><span class="p">(</span><span class="nx">foo</span> <span class="o">+</span> <span class="nx">bar</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><em>Question: What is the value of <code>foo.length</code>?</em></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="p">[];</span>
-</span><span class='line'><span class="nx">foo</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-</span><span class='line'><span class="nx">foo</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><em>Question: What is the value of <code>foo.x</code>?</em></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="p">{</span><span class="nx">n</span><span class="o">:</span> <span class="mi">1</span><span class="p">};</span>
-</span><span class='line'><span class="kd">var</span> <span class="nx">bar</span> <span class="o">=</span> <span class="nx">foo</span><span class="p">;</span>
-</span><span class='line'><span class="nx">foo</span><span class="p">.</span><span class="nx">x</span> <span class="o">=</span> <span class="nx">foo</span> <span class="o">=</span> <span class="p">{</span><span class="nx">n</span><span class="o">:</span> <span class="mi">2</span><span class="p">};</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><em>Question: What does the following code print?</em></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;one&#39;</span><span class="p">);</span>
-</span><span class='line'><span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;two&#39;</span><span class="p">);</span>
-</span><span class='line'><span class="p">},</span> <span class="mi">0</span><span class="p">);</span>
-</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;three&#39;</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
+<p><em>Question: What does the following code print?</em>
+<code>javascript
+console.log('one');
+setTimeout(function() {
+  console.log('two');
+}, 0);
+console.log('three');
+</code></p>
 
 <h4>Fun Questions:</h4>
 
@@ -368,20 +332,6 @@
 <p>This document started in 2009 as a collaboration of <a href="https://twitter.com/paul_irish">@paul_irish</a> <a href="https://twitter.com/bentruyman">@bentruyman</a> <a href="https://twitter.com/cowboy">@cowboy</a> <a href="https://twitter.com/ajpiano">@ajpiano</a>  <a href="https://twitter.com/slexaxton">@SlexAxton</a> <a href="https://twitter.com/boazsender">@boazsender</a> <a href="https://twitter.com/miketaylr">@miketaylr</a> <a href="https://twitter.com/vladikoff">@vladikoff</a> <a href="https://twitter.com/gf3">@gf3</a> <a href="https://twitter.com/jon_neal">@jon_neal</a> <a href="https://twitter.com/sambreed">@sambreed</a> and <a href="https://twitter.com/iansym">@iansym</a>.</p>
 
 <p>It has since received contributions from over <a href="https://github.com/h5bp/Front-end-Developer-Interview-Questions/graphs/contributors">100 developers</a>.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[JavaScript Quick Recap]]></title>
-    <link href="http://tdongsi.github.io/javascript/blog/2016/09/05/javascript-quick-recap/"/>
-    <updated>2016-09-05T22:34:53-07:00</updated>
-    <id>http://tdongsi.github.io/javascript/blog/2016/09/05/javascript-quick-recap</id>
-    <content type="html"><![CDATA[<p>What to review before a JavaScript interview.</p>
-
-<!--more-->
-
-
-<p>TODO</p>
 ]]></content>
   </entry>
   
