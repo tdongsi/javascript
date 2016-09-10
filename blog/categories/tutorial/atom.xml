@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Tutorial | Personal Interview Notes]]></title>
   <link href="http://tdongsi.github.io/javascript/blog/categories/tutorial/atom.xml" rel="self"/>
   <link href="http://tdongsi.github.io/javascript/"/>
-  <updated>2016-09-09T21:56:47-07:00</updated>
+  <updated>2016-09-09T22:01:37-07:00</updated>
   <id>http://tdongsi.github.io/javascript/</id>
   <author>
     <name><![CDATA[Cuong Dong-Si]]></name>
@@ -38,8 +38,8 @@ To run it:</p>
 </li>
 <li>Change directory to the <code>rest</code> folder.</li>
 <li><code>npm install</code></li>
-<li><code>npm index.js</code></li>
-<li>From the browser or <code>POSTman</code> application, run commands against <code>http://localhost:3000/api/widgets/</code>.</li>
+<li><code>node index.js</code></li>
+<li>From the browser or <a href="https://www.getpostman.com/">POSTman</a> application, run HTTP methods against <code>http://localhost:3000/api/widgets/</code>.</li>
 </ul>
 
 
