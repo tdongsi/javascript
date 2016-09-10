@@ -23,8 +23,8 @@ To run it:
     * In Windows, run MongoDB as: `mongod.exe --dbpath C:\data\db` 
 * Change directory to the `rest` folder.
 * `npm install`
-* `npm index.js`
-* From the browser or `POSTman` application, run commands against `http://localhost:3000/api/widgets/`.
+* `node index.js`
+* From the browser or [POSTman](https://www.getpostman.com/) application, run HTTP methods against `http://localhost:3000/api/widgets/`.
 
 #### References
 
