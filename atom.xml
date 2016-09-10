@@ -4,7 +4,7 @@
   <title><![CDATA[Personal Interview Notes]]></title>
   <link href="http://tdongsi.github.io/javascript/atom.xml" rel="self"/>
   <link href="http://tdongsi.github.io/javascript/"/>
-  <updated>2016-09-06T22:57:49-07:00</updated>
+  <updated>2016-09-09T21:56:47-07:00</updated>
   <id>http://tdongsi.github.io/javascript/</id>
   <author>
     <name><![CDATA[Cuong Dong-Si]]></name>
@@ -12,6 +12,63 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Tutorial: Getting Started With MEAN Stack]]></title>
+    <link href="http://tdongsi.github.io/javascript/blog/2016/09/09/tutorial-mean-stack/"/>
+    <updated>2016-09-09T21:43:51-07:00</updated>
+    <id>http://tdongsi.github.io/javascript/blog/2016/09/09/tutorial-mean-stack</id>
+    <content type="html"><![CDATA[<p>An example web application with MongoDB, ExpressJS, and NodeJS.</p>
+
+<!--more-->
+
+
+<h3>Final application</h3>
+
+<p>I would go through the final version of the example application before going from the ground up.
+You can find the final example application <a href="https://github.com/tdongsi/mongodb/tree/develop/DevInt/rest">here</a>.
+To run it:</p>
+
+<ul>
+<li>Make sure that MongoDB are running with port 27017.
+
+<ul>
+<li>In Windows, run MongoDB as: <code>mongod.exe --dbpath C:\data\db</code></li>
+</ul>
+</li>
+<li>Change directory to the <code>rest</code> folder.</li>
+<li><code>npm install</code></li>
+<li><code>npm index.js</code></li>
+<li>From the browser or <code>POSTman</code> application, run commands against <code>http://localhost:3000/api/widgets/</code>.</li>
+</ul>
+
+
+<h4>References</h4>
+
+<ul>
+<li>MongoDB installation
+
+<ul>
+<li><a href="http://stackoverflow.com/questions/20796714/what-is-the-way-to-start-mongo-db-from-windows-7-64-bit">Windows</a>.
+
+<ul>
+<li>Note that Windows 7 requires <a href="https://support.microsoft.com/en-us/kb/2731284">a hotfix from Microsoft</a>, based on <a href="https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/">MongoDB instruction</a>.</li>
+</ul>
+</li>
+<li>Mac: <code>brew install mongodb</code> works for me.</li>
+</ul>
+</li>
+<li><a href="https://www.getpostman.com/">https://www.getpostman.com/</a></li>
+</ul>
+
+
+<h3>First version</h3>
+
+<h3>Second version: Database separation</h3>
+
+<h3>Third version: Routing</h3>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Question Bank]]></title>
@@ -28,6 +85,13 @@
 <p>This file contains a number of front-end interview questions that can be used when vetting potential candidates. It is by no means recommended to use every single question here on the same candidate (that would take hours). Choosing a few items from this list should help you vet the intended skills you require.</p>
 
 <p><strong>Note:</strong> Keep in mind that many of these questions are open-ended and could lead to interesting discussions that tell you more about the person&rsquo;s capabilities than a straight answer would.</p>
+
+<h2>External links</h2>
+
+<ul>
+<li><a href="https://www.reddit.com/r/cscareerquestions/comments/50qnvr/how_to_prepare_for_a_frontend_engineering/">reddit</a></li>
+</ul>
+
 
 <h2>Table of Contents</h2>
 

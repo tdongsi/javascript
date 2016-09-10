@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+<loc>http://tdongsi.github.io/javascript/blog/2016/09/09/tutorial-mean-stack/</loc>
+<lastmod>2016-09-09T21:43:51-07:00</lastmod>
+</url>
+<url>
 <loc>http://tdongsi.github.io/javascript/blog/2016/09/06/question-bank/</loc>
 <lastmod>2016-09-06T22:34:25-07:00</lastmod>
 </url>
