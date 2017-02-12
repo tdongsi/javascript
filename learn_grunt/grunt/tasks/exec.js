@@ -1,6 +1,10 @@
 module.exports = {
-    node: {
-        command: "node --version",
-        stdout: true
+    github: {
+        command: "ssh -T git@github.com",
+        exitCode: 1,
+        stdout: false,
+        options: {
+            verbose: false
+        }
     }
 }
