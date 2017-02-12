@@ -8,6 +8,7 @@ module.exports = function(grunt, appOptions) {
     return {
         default: ['build'],
         build: build,
+        test: ['jslint'], 
         jenkins: ['mkdir:jenkins', 'versionOutput']
     };
 };
