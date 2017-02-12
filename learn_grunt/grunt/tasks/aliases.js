@@ -1,6 +1,9 @@
 module.exports = function(grunt, appOptions) {
     var build = [
-        'mkdir:build'
+        'mkdir:build',
+        'compass',
+        'copy',
+        'compress'
     ];
 
     // This overrides the tasks in matrix-ui-common.
