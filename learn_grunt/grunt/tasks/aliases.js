@@ -1,5 +1,5 @@
 module.exports = function(grunt, appOptions) {
-    var build = [
+    var buildList = [
         'mkdir:build',
         'compass',
         'copy',
@@ -10,8 +10,9 @@ module.exports = function(grunt, appOptions) {
     //
     return {
         default: ['build'],
-        build: build,
+        build: buildList,
         test: ['jslint'], 
-        jenkins: ['mkdir:jenkins', 'versionOutput']
+        jenkins: ['mkdir:jenkins', 'versionOutput'],
+        checkGithub: ['prompt:github', 'exec:github']
     };
 };
