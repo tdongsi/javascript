@@ -4,7 +4,7 @@
   <title><![CDATA[Personal Interview Notes]]></title>
   <link href="http://tdongsi.github.io/javascript/atom.xml" rel="self"/>
   <link href="http://tdongsi.github.io/javascript/"/>
-  <updated>2017-05-23T23:25:32-07:00</updated>
+  <updated>2017-05-23T23:31:32-07:00</updated>
   <id>http://tdongsi.github.io/javascript/</id>
   <author>
     <name><![CDATA[Cuong Dong-Si]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Code Coverage: Instanbul && Nyc]]></title>
+    <title type="html"><![CDATA[Code Coverage: Istanbul & Nyc]]></title>
     <link href="http://tdongsi.github.io/javascript/blog/2017/05/23/code-coverage-instanbul-slash-nyc/"/>
     <updated>2017-05-23T21:54:01-07:00</updated>
     <id>http://tdongsi.github.io/javascript/blog/2017/05/23/code-coverage-instanbul-slash-nyc</id>
@@ -166,6 +166,13 @@ The relevant code for processing <code>.nycrc</code> file is in <a href="https:/
 </span><span class='line'>nyc [command] [options]
 </span><span class='line'>
 </span><span class='line'>run your tests with the nyc bin to instrument them with coverage</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>References</h3>
+
+<ul>
+<li><a href="https://github.com/istanbuljs/nyc">Istanbul nyc</a></li>
+</ul>
 
 ]]></content>
   </entry>
