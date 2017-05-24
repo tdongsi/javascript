@@ -257,10 +257,11 @@ In Jenkins environment, it means that if you can place that file into a parent f
 
 <p>The problem with code coverage thresholds in <code>.nycrc</code> is explained in <a href="https://stackoverflow.com/questions/44148412/increase-code-coverage-gate-for-protected-master-branch-in-github-enterprise">this question</a>.
 In summary, if a person wants to increase code coverage threshold in <code>.nycrc</code> file sitting in a Github repository with protected branches, the PR cannot be merged because the test run fails.
-The easy way to work around this is to disable &ldquo;Include adminstrators&rdquo; under &ldquo;Require status checks to pass before merging&rdquo; in Repository settings -> Branches -> master, then add the manager into the Admin group. In this way, developers can still reduce the code coverage threshold in their branches and merge their PRs.
+The easy way to work around this is to disable &ldquo;Include adminstrators&rdquo; under &ldquo;Require status checks to pass before merging&rdquo; in Repository settings -> Branches -> master, then add the manager into the Admin group.
+However, in this approach, sneaky developers can still reduce the code coverage threshold in their branches and merge their PRs.
 For larger teams, the file <code>.nycrc</code> should be separated from the repository in question.
 Instead, that file should be included into the Docker image for running that job (assumption: containerized Jenkins system with Kubernetes plugin) and symlinked to workspace folder or its parent directory accordingly.
-See the above and <code>find-up</code> package for explanations.</p>
+See above and <code>find-up</code> package for explanations.</p>
 
 <h3>References</h3>
 
