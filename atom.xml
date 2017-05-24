@@ -4,7 +4,7 @@
   <title><![CDATA[Personal Interview Notes]]></title>
   <link href="http://tdongsi.github.io/javascript/atom.xml" rel="self"/>
   <link href="http://tdongsi.github.io/javascript/"/>
-  <updated>2017-05-23T23:31:32-07:00</updated>
+  <updated>2017-05-24T13:12:27-07:00</updated>
   <id>http://tdongsi.github.io/javascript/</id>
   <author>
     <name><![CDATA[Cuong Dong-Si]]></name>
@@ -100,7 +100,7 @@
 
 <h3><code>nyc</code> settings</h3>
 
-<p>Is it possible to specify the custom location of <code>.nycrc</code> file? Short answer: NO.</p>
+<p>Is it possible to specify the custom location of <code>.nycrc</code> file? Short answer: NO. Long answer: Depending on the custom location in question.</p>
 
 <p>nycrc support is implemented in <a href="https://github.com/istanbuljs/nyc/pull/391/files">this PR</a>.
 The relevant code for processing <code>.nycrc</code> file is in <a href="https://github.com/istanbuljs/nyc/blob/master/lib/config-util.js">this file</a>:</p>
@@ -122,7 +122,13 @@ The relevant code for processing <code>.nycrc</code> file is in <a href="https:/
 <span class='line-number'>15</span>
 <span class='line-number'>16</span>
 <span class='line-number'>17</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="c1">// load config from a cascade of sources:</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kr">const</span> <span class="nx">findUp</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;find-up&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="p">...</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// load config from a cascade of sources:</span>
 </span><span class='line'><span class="c1">// * command line arguments</span>
 </span><span class='line'><span class="c1">// * package.json</span>
 </span><span class='line'><span class="c1">// * .nycrc</span>
@@ -141,6 +147,9 @@ The relevant code for processing <code>.nycrc</code> file is in <a href="https:/
 </span><span class='line'><span class="p">...</span>
 </span></code></pre></td></tr></table></div></figure>
 
+
+<p>The <a href="https://www.npmjs.com/package/find-up"><code>find-up</code></a> returns valid path if the file <code>.nycrc</code> is in the parent folders.
+In Jenkins environment, it means that if you can place that file into a parent folder of the workspace, then <code>.nycrc</code> can be found.</p>
 
 <p>The commandline arguments and their default values can be retrieved from <code>nyc help</code>, as shown belows:</p>
 
@@ -168,10 +177,20 @@ The relevant code for processing <code>.nycrc</code> file is in <a href="https:/
 </span><span class='line'>run your tests with the nyc bin to instrument them with coverage</span></code></pre></td></tr></table></div></figure>
 
 
+<h4>Related problem</h4>
+
+<p>The problem with code coverage thresholds in <code>.nycrc</code> is explained in <a href="https://stackoverflow.com/questions/44148412/increase-code-coverage-gate-for-protected-master-branch-in-github-enterprise">this question</a>.
+In summary, if a person wants to increase code coverage threshold in <code>.nycrc</code> file sitting in a Github repository with protected branches, the PR cannot be merged because the test run fails.
+The easy way to work around this is to disable &ldquo;Include adminstrators&rdquo; under &ldquo;Require status checks to pass before merging&rdquo; in Repository settings -> Branches -> master, then add the manager into the Admin group. In this way, developers can still reduce the code coverage threshold in their branches and merge their PRs.
+For larger teams, the file <code>.nycrc</code> should be separated from the repository in question.
+Instead, that file should be included into the Docker image for running that job (assumption: containerized Jenkins system with Kubernetes plugin) and symlinked to workspace folder or its parent directory accordingly.
+See the above and <code>find-up</code> package for explanations.</p>
+
 <h3>References</h3>
 
 <ul>
 <li><a href="https://github.com/istanbuljs/nyc">Istanbul nyc</a></li>
+<li><a href="https://github.com/istanbuljs/nyc/pull/391/files">nycrc implementation</a></li>
 </ul>
 
 ]]></content>
