@@ -6,6 +6,12 @@ comments: true
 categories: 
 ---
 
+Code coverage for NodeJS projects.
+
+<!--more-->
+
+### Settings in `.nycrc` file
+
 What is the standard code coverage settings look like?
 
 ``` json Example nycrc file
@@ -47,6 +53,33 @@ What is the standard code coverage settings look like?
 
 ### `nyc` settings
 
+Is it possible to specify the custom location of `.nycrc` file? Short answer: NO.
+
+nycrc support is implemented in [this PR](https://github.com/istanbuljs/nyc/pull/391/files).
+The relevant code for processing `.nycrc` file is in [this file](https://github.com/istanbuljs/nyc/blob/master/lib/config-util.js):
+
+``` javascript .nycrc processing, extracted on May 20th 2017
+// load config from a cascade of sources:
+// * command line arguments
+// * package.json
+// * .nycrc
+Config.loadConfig = function (argv, cwd) {
+  cwd = cwd || process.env.NYC_CWD || process.cwd()
+  var pkgPath = findUp.sync('package.json', {cwd: cwd})
+  var rcPath = findUp.sync('.nycrc', {cwd: cwd})
+  var rcConfig = null
+
+  if (rcPath) {
+    rcConfig = JSON.parse(
+      fs.readFileSync(rcPath, 'utf-8')
+    )
+  }
+
+...
+```
+
+The commandline arguments and their default values can be retrieved from `nyc help`, as shown belows:
+
 ``` plain Installing nyc
 mymac:learn_grunt tdongsi$ npm i nyc -g
 /Users/tdongsi/.nvm/versions/node/v4.6.1/bin/nyc -> /Users/tdongsi/.nvm/versions/node/v4.6.1/lib/node_modules/nyc/bin/nyc.js
@@ -60,4 +93,3 @@ nyc [command] [options]
 
 run your tests with the nyc bin to instrument them with coverage
 ```
-
