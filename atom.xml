@@ -4,7 +4,7 @@
   <title><![CDATA[Personal Interview Notes]]></title>
   <link href="http://tdongsi.github.io/javascript/atom.xml" rel="self"/>
   <link href="http://tdongsi.github.io/javascript/"/>
-  <updated>2016-09-09T22:01:37-07:00</updated>
+  <updated>2017-05-23T23:25:32-07:00</updated>
   <id>http://tdongsi.github.io/javascript/</id>
   <author>
     <name><![CDATA[Cuong Dong-Si]]></name>
@@ -12,6 +12,163 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Code Coverage: Instanbul && Nyc]]></title>
+    <link href="http://tdongsi.github.io/javascript/blog/2017/05/23/code-coverage-instanbul-slash-nyc/"/>
+    <updated>2017-05-23T21:54:01-07:00</updated>
+    <id>http://tdongsi.github.io/javascript/blog/2017/05/23/code-coverage-instanbul-slash-nyc</id>
+    <content type="html"><![CDATA[<p>Code coverage for NodeJS projects.</p>
+
+<!--more-->
+
+
+<h3>Settings in <code>.nycrc</code> file</h3>
+
+<p>What is the standard code coverage settings look like?</p>
+
+<figure class='code'><figcaption><span>Example nycrc file</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+</pre></td><td class='code'><pre><code class='json'><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="nt">&quot;reporter&quot;</span><span class="p">:</span> <span class="p">[</span>
+</span><span class='line'>    <span class="s2">&quot;text-summary&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;html&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;lcov&quot;</span>
+</span><span class='line'>  <span class="p">],</span>
+</span><span class='line'>  <span class="nt">&quot;lines&quot;</span><span class="p">:</span> <span class="mi">46</span><span class="p">,</span>
+</span><span class='line'>  <span class="nt">&quot;statements&quot;</span><span class="p">:</span> <span class="mi">47</span><span class="p">,</span>
+</span><span class='line'>  <span class="nt">&quot;functions&quot;</span><span class="p">:</span> <span class="mi">44</span><span class="p">,</span>
+</span><span class='line'>  <span class="nt">&quot;branches&quot;</span><span class="p">:</span> <span class="mi">35</span><span class="p">,</span>
+</span><span class='line'>  <span class="nt">&quot;exclude&quot;</span><span class="p">:</span> <span class="p">[</span>
+</span><span class='line'>    <span class="s2">&quot;**/node_modules/**&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;**/grunt/**&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;**/public/**&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;**/test/**&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;i18n-express.js&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;newrelic.js&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;app.js&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;Gruntfile.js&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;scripts/**&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;build/**&quot;</span>
+</span><span class='line'>  <span class="p">],</span>
+</span><span class='line'>  <span class="nt">&quot;extension&quot;</span><span class="p">:</span> <span class="p">[</span>
+</span><span class='line'>    <span class="s2">&quot;.js&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;.jsx&quot;</span>
+</span><span class='line'>  <span class="p">],</span>
+</span><span class='line'>  <span class="nt">&quot;require&quot;</span><span class="p">:</span> <span class="p">[</span>
+</span><span class='line'>    <span class="s2">&quot;babel/register&quot;</span>
+</span><span class='line'>  <span class="p">],</span>
+</span><span class='line'>  <span class="nt">&quot;all&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+</span><span class='line'>  <span class="nt">&quot;check-coverage&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+</span><span class='line'>  <span class="nt">&quot;cache&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+</span><span class='line'>  <span class="nt">&quot;report-dir&quot;</span><span class="p">:</span> <span class="s2">&quot;./build/coverage&quot;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3><code>nyc</code> settings</h3>
+
+<p>Is it possible to specify the custom location of <code>.nycrc</code> file? Short answer: NO.</p>
+
+<p>nycrc support is implemented in <a href="https://github.com/istanbuljs/nyc/pull/391/files">this PR</a>.
+The relevant code for processing <code>.nycrc</code> file is in <a href="https://github.com/istanbuljs/nyc/blob/master/lib/config-util.js">this file</a>:</p>
+
+<figure class='code'><figcaption><span>.nycrc processing, extracted on May 20th 2017</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="c1">// load config from a cascade of sources:</span>
+</span><span class='line'><span class="c1">// * command line arguments</span>
+</span><span class='line'><span class="c1">// * package.json</span>
+</span><span class='line'><span class="c1">// * .nycrc</span>
+</span><span class='line'><span class="nx">Config</span><span class="p">.</span><span class="nx">loadConfig</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">argv</span><span class="p">,</span> <span class="nx">cwd</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">cwd</span> <span class="o">=</span> <span class="nx">cwd</span> <span class="o">||</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">NYC_CWD</span> <span class="o">||</span> <span class="nx">process</span><span class="p">.</span><span class="nx">cwd</span><span class="p">()</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">pkgPath</span> <span class="o">=</span> <span class="nx">findUp</span><span class="p">.</span><span class="nx">sync</span><span class="p">(</span><span class="s1">&#39;package.json&#39;</span><span class="p">,</span> <span class="p">{</span><span class="nx">cwd</span><span class="o">:</span> <span class="nx">cwd</span><span class="p">})</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">rcPath</span> <span class="o">=</span> <span class="nx">findUp</span><span class="p">.</span><span class="nx">sync</span><span class="p">(</span><span class="s1">&#39;.nycrc&#39;</span><span class="p">,</span> <span class="p">{</span><span class="nx">cwd</span><span class="o">:</span> <span class="nx">cwd</span><span class="p">})</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">rcConfig</span> <span class="o">=</span> <span class="kc">null</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="nx">rcPath</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">rcConfig</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span>
+</span><span class='line'>      <span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="nx">rcPath</span><span class="p">,</span> <span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">)</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">...</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The commandline arguments and their default values can be retrieved from <code>nyc help</code>, as shown belows:</p>
+
+<figure class='code'><figcaption><span>Installing nyc</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>mymac:learn_grunt tdongsi$ npm i nyc -g
+</span><span class='line'>/Users/tdongsi/.nvm/versions/node/v4.6.1/bin/nyc -&gt; /Users/tdongsi/.nvm/versions/node/v4.6.1/lib/node_modules/nyc/bin/nyc.js
+</span><span class='line'>nyc@10.3.2 /Users/tdongsi/.nvm/versions/node/v4.6.1/lib/node_modules/nyc
+</span><span class='line'>
+</span><span class='line'>mymac:learn_grunt tdongsi$ which nyc
+</span><span class='line'>/Users/tdongsi/.nvm/versions/node/v4.6.1/bin/nyc
+</span><span class='line'>
+</span><span class='line'>mymac:learn_grunt tdongsi$ nyc help config
+</span><span class='line'>nyc [command] [options]
+</span><span class='line'>
+</span><span class='line'>run your tests with the nyc bin to instrument them with coverage</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Tutorial: Getting Started With MEAN Stack]]></title>
