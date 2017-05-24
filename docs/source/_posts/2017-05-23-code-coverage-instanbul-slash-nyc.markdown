@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Code coverage: Instanbul && nyc"
+title: "Code coverage: Istanbul & nyc"
 date: 2017-05-23 21:54:01 -0700
 comments: true
 categories: 
@@ -93,3 +93,7 @@ nyc [command] [options]
 
 run your tests with the nyc bin to instrument them with coverage
 ```
+
+### References
+
+* [Istanbul nyc](https://github.com/istanbuljs/nyc)
