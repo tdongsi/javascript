@@ -104,10 +104,11 @@ run your tests with the nyc bin to instrument them with coverage
 
 The problem with code coverage thresholds in `.nycrc` is explained in [this question](https://stackoverflow.com/questions/44148412/increase-code-coverage-gate-for-protected-master-branch-in-github-enterprise). 
 In summary, if a person wants to increase code coverage threshold in `.nycrc` file sitting in a Github repository with protected branches, the PR cannot be merged because the test run fails.
-The easy way to work around this is to disable "Include adminstrators" under "Require status checks to pass before merging" in Repository settings -> Branches -> master, then add the manager into the Admin group. In this way, developers can still reduce the code coverage threshold in their branches and merge their PRs.
+The easy way to work around this is to disable "Include adminstrators" under "Require status checks to pass before merging" in Repository settings -> Branches -> master, then add the manager into the Admin group. 
+However, in this approach, sneaky developers can still reduce the code coverage threshold in their branches and merge their PRs.
 For larger teams, the file `.nycrc` should be separated from the repository in question. 
 Instead, that file should be included into the Docker image for running that job (assumption: containerized Jenkins system with Kubernetes plugin) and symlinked to workspace folder or its parent directory accordingly. 
-See the above and `find-up` package for explanations.
+See above and `find-up` package for explanations.
 
 ### References
 
