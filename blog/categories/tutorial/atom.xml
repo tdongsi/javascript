@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Tutorial | Personal Interview Notes]]></title>
   <link href="http://tdongsi.github.io/javascript/blog/categories/tutorial/atom.xml" rel="self"/>
   <link href="http://tdongsi.github.io/javascript/"/>
-  <updated>2017-05-24T15:25:43-07:00</updated>
+  <updated>2017-06-21T01:23:10-07:00</updated>
   <id>http://tdongsi.github.io/javascript/</id>
   <author>
     <name><![CDATA[Cuong Dong-Si]]></name>
@@ -12,6 +12,29 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Tutorial: Quick-start for JavaScript Programming Test]]></title>
+    <link href="http://tdongsi.github.io/javascript/blog/2017/06/21/tutorial-quick-start-for-javascript-programming-test/"/>
+    <updated>2017-06-21T00:58:03-07:00</updated>
+    <id>http://tdongsi.github.io/javascript/blog/2017/06/21/tutorial-quick-start-for-javascript-programming-test</id>
+    <content type="html"><![CDATA[<p>For timed programming tests, new test-takers usually underestimate how short two and a half hours can be (more <a href="https://tdongsi.github.io/java/blog/2016/08/29/tutorial-timed-programming-test/">here</a>).
+This post lists out steps to get started quickly for a JavaScript programming test, using React.</p>
+
+<!--more-->
+
+
+<p>Using this boiler plate <a href="https://github.com/davezuko/react-redux-starter-kit">https://github.com/davezuko/react-redux-starter-kit</a></p>
+
+<p>For example, build the followings:</p>
+
+<ul>
+<li>As a player I want to move my objects around the screen using the keyboard (or any preferred input device)</li>
+<li>If the object meets other objects in the screen, give some feedback.</li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Tutorial: Getting Started With MEAN Stack]]></title>
