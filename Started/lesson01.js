@@ -11,3 +11,7 @@ var helloWorld = function(name) {
 }
 
 helloWorld("World");
+
+var burritoPrice = 5.99;
+var totalPrice = 5 * burritoPrice;
+console.log(totalPrice);
