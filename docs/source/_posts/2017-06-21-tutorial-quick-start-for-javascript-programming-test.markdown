@@ -20,3 +20,23 @@ For example, build the followings:
 
 * As a player I want to move my objects around the screen using the keyboard (or any preferred input device)
 * If the object meets other objects in the screen, give some feedback.
+
+### Start an empty project
+
+
+
+### Add unit testing
+
+``` plain Unit testing with Jasmine
+# Add Jasmine to your package.json
+npm install --save-dev jasmine
+
+# Initialize Jasmine in your project
+./node_modules/.bin/jasmine init
+
+# Set jasmine as your test script in your package.json
+"scripts": { "test": "jasmine" }
+
+# Run your tests
+npm test
+```

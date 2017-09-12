@@ -9,11 +9,17 @@ var computeTotal = function(price) {
 console.log(computeTotal(5.99))
 console.log(computeTotal(9.99))
 
-var addTag = function(tag, content) {
+var addHtmlTag = function(tag, content) {
     var openTag = "<" + tag + ">";
     var closeTag = "</" + tag + ">";
     return openTag + content + closeTag;
 };
 
-console.log(addTag("p", "hello"))
-console.log(addTag("div", "hello"))
+console.log(addHtmlTag("p", "hello"));
+console.log(addHtmlTag("div", "hello"));
+
+var toCardString = function(rank, suit) {
+    return rank + " of " + suit;
+};
+console.log(toCardString("two", "diamonds"));
+console.log(toCardString("queen", "hearts"));
