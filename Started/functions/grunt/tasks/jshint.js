@@ -12,6 +12,7 @@ module.exports = {
     boss: true,
     eqnull: true,
     browser: true,
+    esversion: 6,
     globals: {}
   },
   gruntfile: {
