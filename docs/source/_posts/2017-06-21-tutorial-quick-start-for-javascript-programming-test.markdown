@@ -143,10 +143,10 @@ require('load-grunt-tasks')(grunt);
 ```
 
 After requiring the plugin, it will analyze your package.json file, determine which of the dependencies are Grunt plugins and load them all automatically.
-
 `load-grunt-tasks` shrunk your Gruntfile in code and complexity a little, but task configurations still remain in the Gruntfile (defined in `grunt.initConfig`). 
 As you configure a large application, it will still become a very large file.
-This is where `load-grunt-config` comes into play. 
+
+This is when `load-grunt-config` comes into play. 
 `load-grunt-config` lets you break up your Gruntfile config by task.
 With `load-grunt-config`, your `Gruntfile` may look like this:
 
@@ -167,6 +167,7 @@ module.exports = function(grunt) {
 };
 ```
 
+Note that `load-grunt-config` also includes `load-grunt-tasks`'s functionality.
 The task configurations live in files in folder `./grunt/tasks`.
 By default, `./grunt` folder is used but, in this example, using a custom path is demonstrated.
 In other words, our directory structure should be like this:
