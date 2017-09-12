@@ -6,10 +6,11 @@
   "devDependencies": {
     "grunt": "^1.0.1",
     "grunt-jslint": "^1.1.14",
+    "jasmine": "^2.8.0",
     "load-grunt-tasks": "^3.5.2"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jasmine"
   },
   "author": "",
   "license": "ISC"
