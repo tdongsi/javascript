@@ -41,8 +41,6 @@ grunt-init gruntfile
 
 At the end of these steps, you have a basic `package.json` and `Gruntfile`.
 
-#### `load-grunt-tasks` vs `load-grunt-config`
-
 ``` javascript Basic Gruntfile
 /*global module:false*/
 module.exports = function(grunt) {
@@ -127,6 +125,8 @@ module.exports = function(grunt) {
 };
 ```
 
+#### `load-grunt-tasks` vs `load-grunt-config`
+
 The original basic Gruntfile (after `grunt-init` step) manually load our Grunt plugins, as
 
 ``` javascript
@@ -146,6 +146,74 @@ After requiring the plugin, it will analyze your package.json file, determine wh
 
 `load-grunt-tasks` shrunk your Gruntfile in code and complexity a little, but task configurations still remain in the Gruntfile (defined in `grunt.initConfig`). 
 As you configure a large application, it will still become a very large file.
+This is where `load-grunt-config` comes into play. 
+`load-grunt-config` lets you break up your Gruntfile config by task.
+With `load-grunt-config`, your `Gruntfile` may look like this:
+
+``` javascript Gruntfile with load-grunt-config
+module.exports = function(grunt) {
+
+  var path = require('path');  
+  const appOptions = {
+      data: {},
+      configPath: [
+          path.join(process.cwd(), '/grunt/tasks')
+      ]
+  };
+  
+  require('time-grunt')(grunt);
+  require('load-grunt-config')(grunt, appOptions);
+
+};
+```
+
+The task configurations live in files in folder `./grunt/tasks`.
+By default, `./grunt` folder is used but, in this example, using a custom path is demonstrated.
+In other words, our directory structure should be like this:
+
+``` plain Directory structure
+- current_project/
+-- Gruntfile
+-- grunt/tasks/
+---- concat.js
+---- uglify.js
+---- imagemin.js
+```
+
+The task configuration for each task is defined in respective file name.
+For example, task `concat` is defined in "grunt/tasks/concat.js":
+
+``` javascript grunt/tasks/concat.js
+module.exports = {
+  options: {
+    banner: '<%= banner %>',
+    stripBanners: true
+  },
+  dist: {
+    src: ['lib/<%= pkg.name %>.js'],
+    dest: 'dist/<%= pkg.name %>.js'
+  }
+};
+```
+
+The list of registered task aliases such as `default` is defined in `aliases.js` file.
+
+``` javascript grunt/tasks/aliases.js
+module.exports = function(grunt, appOptions) {
+    var buildList = [
+        'jshint',
+        'qunit',
+        'concat',
+        'uglify'
+    ];
+
+    return {
+        default: ['build'],
+        build: buildList,
+        test: ['jslint']
+    };
+};
+```
 
 #### References
 
