@@ -23,7 +23,26 @@ For example, build the followings:
 
 ### Start an empty project
 
+``` plain Starting a Node project
+# Init by creating package.json file
+npm init
+# Answer questions to create package.json file
 
+# Adding grunt
+npm install grunt --save-dev
+npm install grunt-jslint --save-dev
+npm install load-grunt-tasks --save-dev
+
+# Initalizing Gruntfile
+npm install grunt-init -g
+grunt-init gruntfile
+```
+
+At the end of these steps, you have a basic `package.json` and `Gruntfile`.
+
+References:
+
+* Safari: Introducing Grunt: the JavaScript task runner
 
 ### Add unit testing
 
