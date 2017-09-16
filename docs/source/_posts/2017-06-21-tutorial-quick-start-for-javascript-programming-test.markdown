@@ -40,7 +40,7 @@ grunt-init gruntfile
 ```
 
 At the end of these steps, you have a basic `package.json` and `Gruntfile`.
-For large scale project, you may want to further clean up your Gruntfile using `load-grunt-config` plugin.
+For large scale project, you may want to further [clean up your Gruntfile using `load-grunt-config` plugin](http://tdongsi.github.io/blog/2017/09/15/keep-gruntfile-clean-with-load-grunt-config/).
 
 ### Add unit testing
 
