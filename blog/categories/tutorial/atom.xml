@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Tutorial | Personal Interview Notes]]></title>
   <link href="http://tdongsi.github.io/javascript/blog/categories/tutorial/atom.xml" rel="self"/>
   <link href="http://tdongsi.github.io/javascript/"/>
-  <updated>2017-09-15T23:53:08-07:00</updated>
+  <updated>2017-09-30T22:50:39-07:00</updated>
   <id>http://tdongsi.github.io/javascript/</id>
   <author>
     <name><![CDATA[Cuong Dong-Si]]></name>
@@ -36,7 +36,10 @@ This post lists out steps to get started quickly for a JavaScript programming te
 
 <h3>Start an empty project</h3>
 
-<pre><code class="plain Starting a Node project"># Init by creating package.json file
+<pre><code class="plain Starting a Node project"># For new machine
+nvm install --lts
+
+# Init by creating package.json file
 npm init
 # Answer questions to create package.json file
 
