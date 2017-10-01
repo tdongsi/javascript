@@ -24,6 +24,9 @@ For example, build the followings:
 ### Start an empty project
 
 ``` plain Starting a Node project
+# For new machine
+nvm install --lts
+
 # Init by creating package.json file
 npm init
 # Answer questions to create package.json file
