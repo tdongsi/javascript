@@ -9,7 +9,7 @@
   <meta name="author" content="Cuong Dong-Si">
 
   
-  <meta name="description" content="Following up on Hive CLI, this post covers some lower-level details of Hive such as Hadoop runtime modes and metastore. ">
+  <meta name="description" content=" This post is about HiveQL&rsquo;s parts used to put data into tables and extract data from tables to the filesystem. ">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +66,263 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/javascript/blog/2015/12/12/programming-hive-hiveql-dml/">Learning Hive (Pt. 8): Data Manipulation in HiveQL</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-12-12T23:34:38-08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>12</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>11:34 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><!--
+<img class="center" src="/javascript/images/hive/cat.gif" title="Cover" >
+
+Chapter 5 of the book
+-->
+
+
+<p>This post is about HiveQL&rsquo;s parts used to put data into tables and extract data from tables to the filesystem.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/javascript/blog/2015/12/12/programming-hive-hiveql-dml/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/javascript/blog/2015/12/09/netezza-cli/">Netezza CLI Tools</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-12-09T18:34:12-08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>9</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>6:34 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>In addition to using third party GUI clients such as SQuirreLSQL, you can also interact with Netezza through its command line interface (CLI) tools.
+These are programs that let you do useful things like importing and exporting large volumes of data, invoking Netezza from bash scripts, controlling sessions and queries, etc.
+The following is a quick overview of just the <code>nzsql</code> and <code>nzload</code> commands.
+For a description of all the CLI tools, see the documentation <a href="http://www-01.ibm.com/support/knowledgecenter/SSULQD_7.2.0/com.ibm.nz.adm.doc/r_sysadm_summary_of_commands.html?lang=en">here</a>.
+You can install the Netezza CLI tools directly onto your system by following the instructions <a href="http://www-01.ibm.com/support/knowledgecenter/SSULQD_7.2.0/com.ibm.nz.adm.doc/c_sysadm_client_software_install.html">here</a>.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/javascript/blog/2015/12/09/netezza-cli/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/javascript/blog/2015/12/07/some-netezzas-nzsql-tips/">NZSQL Tips for New Netezza Users</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-12-07T11:11:06-08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>7</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>11:11 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Just like any SQL dialect, NZSQL has some quirks and odd conventions which could be really confusing to new Netezza users.
+This post has some tips for those new users.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/javascript/blog/2015/12/07/some-netezzas-nzsql-tips/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/javascript/blog/2015/12/06/programming-hive-partitioned-tables/">Learning Hive (Pt. 7): Partitioned Tables</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-12-06T21:09:51-08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>6</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>9:09 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><!--
+Chapter 4
+-->
+
+
+<p>Continued from the <a href="/javascript/blog/2015/12/02/programming-hive-hiveql-ddl/">previous</a> <a href="/javascript/blog/2015/12/05/programming-hive-ddl-table/">posts</a>, this post will look into more details of <strong>partitioned tables</strong>.
+Note that Hive does not support row-level inserts, updates, and deletes.
+However, Hive adds extensions such as table partitioning for better performance in the context of Hadoop.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/javascript/blog/2015/12/06/programming-hive-partitioned-tables/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/javascript/blog/2015/12/05/programming-hive-ddl-table/">Learning Hive (Pt. 6): HiveQL Data Definition</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-12-05T20:15:56-08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>5</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>8:15 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Continued from the previous <a href="/javascript/blog/2015/12/02/programming-hive-hiveql-ddl/">post</a>, this post covers data definition parts of HiveQL language, for creating, altering, and dropping <strong>tables</strong>.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/javascript/blog/2015/12/05/programming-hive-ddl-table/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/javascript/blog/2015/12/02/programming-hive-hiveql-ddl/">Learning Hive (Pt. 5): HiveQL Data Definition</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-12-02T18:32:21-08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>2</span><span class='date-suffix'>nd</span>, <span class='date-year'>2015</span></span> <span class='time'>6:32 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>This post covers data definition parts of HiveQL language, for creating, altering, and dropping <strong>databases</strong>.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/javascript/blog/2015/12/02/programming-hive-hiveql-ddl/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/javascript/blog/2015/11/26/programming-hive-data-types/">Learning Hive (Pt. 4): Data Types</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-11-26T18:01:37-08:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>26</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>6:01 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>This post covers different data types and file formats supported by Hive.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/javascript/blog/2015/11/26/programming-hive-data-types/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -177,170 +434,9 @@ Most of these posts are based on the <strong>Programming Hive</strong> book, wit
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/javascript/blog/2015/11/21/explaining-wordcount-example/">Overview of MapReduce: Explaining WordCount Example</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-11-21T02:37:20-08:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>21</span><span class='date-suffix'>st</span>, <span class='date-year'>2015</span></span> <span class='time'>2:37 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>MapReduce is a programming framework that decomposes large data processing jobs into individual tasks that can be executed in parallel across a cluster of servers.
-The name MapReduce comes from the fact that there are two fundamental data transformation operations: <em>map</em> and <em>reduce</em>.
-These MapReduce operations would be more clear if we walk through a simple example, such as WordCount in my last <a href="/javascript/blog/2015/11/20/wordcount-sample-in-cloudera-quickstart-vm/">post</a>.
-The process flow of the WordCount example is shown below:</p>
-
-<!---
-(from [here](https://www.safaribooksonline.com/library/view/programming-hive/9781449326944/ch01.html)):
-
-![Process Flow of WordCount Example](https://www.safaribooksonline.com/library/view/programming-hive/9781449326944/httpatomoreillycomsourceoreillyimages1321235.png)
--->
-
-
-<p><img class="center" src="/javascript/images/hive/wordcount.png" title="Process Flow of WordCount Example" ></p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/javascript/blog/2015/11/21/explaining-wordcount-example/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/javascript/blog/2015/11/20/wordcount-sample-in-cloudera-quickstart-vm/">WordCount Example in Cloudera Quickstart VM</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-11-20T11:47:51-08:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>20</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>11:47 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="https://wiki.apache.org/hadoop/WordCount">WordCount</a> is the Hadoop equivalent of “Hello World” example program.
-When you first start learning a new language or framework, you would want to run and look into some &ldquo;Hello World&rdquo; example to get a feel of the new development environment.
-Your first few programs in those new languages or frameworks are probably extended from those basic &ldquo;Hello World&rdquo; examples.</p>
-
-<p>Most Hadoop tutorials are quite overwhelming in text, but provide little guide on practical hands-on experiments (such as <a href="https://developer.yahoo.com/hadoop/tutorial/">this</a>).
-Although they are good and thorough tutorials, many new Hadoop users may be lost midway after walls of texts.</p>
-
-<p>The purpose of this post is to help new users dive into Hadoop more easily.
-After reading this, you should be able to:</p>
-
-<ol>
-<li>Get started with a simple, local Hadoop sandbox for hands-on experiments.</li>
-<li>Perform some simple tasks in HDFS.</li>
-<li>Run the most basic example program WordCount, using your own input data.</li>
-</ol>
-
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/javascript/blog/2015/11/20/wordcount-sample-in-cloudera-quickstart-vm/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/javascript/blog/2015/09/03/running-maven-tests-in-jenkins/">Running Maven Tests in Jenkins</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-09-03T01:10:36-07:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>3</span><span class='date-suffix'>rd</span>, <span class='date-year'>2015</span></span> <span class='time'>1:10 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>A few notes on executing Maven + TestNG tests in Jenkins.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/javascript/blog/2015/09/03/running-maven-tests-in-jenkins/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/javascript/blog/2015/08/21/bash-programming-cookbook/">Bash Programming Cookbook</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-08-21T12:05:05-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>21</span><span class='date-suffix'>st</span>, <span class='date-year'>2015</span></span> <span class='time'>12:05 pm</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>The blog lists some frequently used code snippets found in shell programming.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/javascript/blog/2015/08/21/bash-programming-cookbook/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
+    
+      <a class="prev" href="/javascript/posts/3">&larr; Older</a>
     
     <a href="/javascript/blog/archives">Blog Archives</a>
     
@@ -370,31 +466,31 @@ After reading this, you should be able to:</p>
       </li>
     
       <li class="post">
-        <a href="/javascript/blog/2015/12/12/programming-hive-hiveql-dml/">Learning Hive (Pt. 8): Data Manipulation in HiveQL</a>
+        <a href="/javascript/blog/2016/02/29/vertica-9-refresh-projections/">Vertica: Refresh Your Projections</a>
       </li>
     
       <li class="post">
-        <a href="/javascript/blog/2015/12/09/netezza-cli/">Netezza CLI Tools</a>
+        <a href="/javascript/blog/2016/02/13/vertica-8-performance-tuning/">Vertica: Performance Optimization Notes</a>
       </li>
     
       <li class="post">
-        <a href="/javascript/blog/2015/12/07/some-netezzas-nzsql-tips/">NZSQL Tips for New Netezza Users</a>
+        <a href="/javascript/blog/2016/02/07/vertica-7-projections/">Vertica Projections</a>
       </li>
     
       <li class="post">
-        <a href="/javascript/blog/2015/12/06/programming-hive-partitioned-tables/">Learning Hive (Pt. 7): Partitioned Tables</a>
+        <a href="/javascript/blog/2016/01/10/find-and-replace-a-string-in-multiple-files/">Using Virtual Machine for ETL Testing</a>
       </li>
     
       <li class="post">
-        <a href="/javascript/blog/2015/12/05/programming-hive-ddl-table/">Learning Hive (Pt. 6): HiveQL Data Definition</a>
+        <a href="/javascript/blog/2015/12/18/vertica-tip-find-empty-tables-in-a-schema/">Vertica Tip: Find Empty Tables</a>
       </li>
     
       <li class="post">
-        <a href="/javascript/blog/2015/12/02/programming-hive-hiveql-ddl/">Learning Hive (Pt. 5): HiveQL Data Definition</a>
+        <a href="/javascript/blog/2015/12/17/vertica-tip-using-vsql/">Vertica Tip: Using Vsql CLI</a>
       </li>
     
       <li class="post">
-        <a href="/javascript/blog/2015/11/26/programming-hive-data-types/">Learning Hive (Pt. 4): Data Types</a>
+        <a href="/javascript/blog/2015/12/16/vertica-tip-best-practices/">Vertica Tip: Best Practices</a>
       </li>
     
   </ul>
@@ -402,7 +498,7 @@ After reading this, you should be able to:</p>
 
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/javascript/blog/categories/bash/'>bash (1)</a></li><li><a href='/javascript/blog/categories/book/'>book (9)</a></li><li><a href='/javascript/blog/categories/database/'>database (2)</a></li><li><a href='/javascript/blog/categories/hadoop/'>hadoop (10)</a></li><li><a href='/javascript/blog/categories/hive/'>hive (8)</a></li><li><a href='/javascript/blog/categories/java/'>java (2)</a></li><li><a href='/javascript/blog/categories/javascript/'>javascript (2)</a></li><li><a href='/javascript/blog/categories/jdbc/'>jdbc (1)</a></li><li><a href='/javascript/blog/categories/jenkins/'>jenkins (1)</a></li><li><a href='/javascript/blog/categories/maven/'>maven (1)</a></li><li><a href='/javascript/blog/categories/questions/'>questions (1)</a></li><li><a href='/javascript/blog/categories/sql/'>sql (7)</a></li><li><a href='/javascript/blog/categories/testng/'>testng (1)</a></li><li><a href='/javascript/blog/categories/todo/'>todo (1)</a></li><li><a href='/javascript/blog/categories/tutorial/'>tutorial (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/javascript/blog/categories/bash/'>bash (2)</a></li><li><a href='/javascript/blog/categories/book/'>book (9)</a></li><li><a href='/javascript/blog/categories/centos/'>centos (1)</a></li><li><a href='/javascript/blog/categories/database/'>database (5)</a></li><li><a href='/javascript/blog/categories/git/'>git (1)</a></li><li><a href='/javascript/blog/categories/hadoop/'>hadoop (10)</a></li><li><a href='/javascript/blog/categories/hive/'>hive (8)</a></li><li><a href='/javascript/blog/categories/java/'>java (2)</a></li><li><a href='/javascript/blog/categories/javascript/'>javascript (2)</a></li><li><a href='/javascript/blog/categories/jdbc/'>jdbc (1)</a></li><li><a href='/javascript/blog/categories/jenkins/'>jenkins (1)</a></li><li><a href='/javascript/blog/categories/macosx/'>macosx (1)</a></li><li><a href='/javascript/blog/categories/maven/'>maven (1)</a></li><li><a href='/javascript/blog/categories/performance/'>performance (3)</a></li><li><a href='/javascript/blog/categories/questions/'>questions (1)</a></li><li><a href='/javascript/blog/categories/sql/'>sql (10)</a></li><li><a href='/javascript/blog/categories/testing/'>testing (1)</a></li><li><a href='/javascript/blog/categories/testng/'>testng (1)</a></li><li><a href='/javascript/blog/categories/todo/'>todo (1)</a></li><li><a href='/javascript/blog/categories/tutorial/'>tutorial (1)</a></li><li><a href='/javascript/blog/categories/vertica/'>vertica (7)</a></li></ul>
 </section>
 
 

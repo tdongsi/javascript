@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Vertica | Archived Blog Posts]]></title>
+  <link href="http://tdongsi.github.io/javascript/blog/categories/vertica/atom.xml" rel="self"/>
+  <link href="http://tdongsi.github.io/javascript/"/>
+  <updated>2021-03-11T07:27:25-08:00</updated>
+  <id>http://tdongsi.github.io/javascript/</id>
+  <author>
+    <name><![CDATA[Cuong Dong-Si]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Vertica: Refresh Your Projections]]></title>
+    <link href="http://tdongsi.github.io/javascript/blog/2016/02/29/vertica-9-refresh-projections/"/>
+    <updated>2016-02-29T00:54:02-08:00</updated>
+    <id>http://tdongsi.github.io/javascript/blog/2016/02/29/vertica-9-refresh-projections</id>
+    <content type="html"><![CDATA[<p>Most information presented in this post is directly quoted from <a href="https://community.dev.hpe.com/t5/Vertica-Knowledge-Base/Understanding-Vertica-Epochs/ta-p/233749">this page</a>.</p>
+
+<p><strong>Epoch</strong>: An epoch is 64-bit number that represents a logical time stamp for the data in Vertica.
+The epoch advances when the logical state of the system changes or when the data is committed with a DML operation (INSERT, UPDATE, MERGE, COPY, or DELETE).
+The <code>EPOCHS</code> system table contains the date and time of each closed epoch and the corresponding epoch number of the closed epoch.</p>
+
+<pre><code class="plain epochs table">=&gt; select * from epochs;
+
+epoch_close_time              epoch_number
+2016-03-04 21:44:24.192495  610131
+</code></pre>
+
+<p><strong>Ancient History Mark (AHM)</strong>: A large epoch map can increase the catalog size.
+The ancient history mark is the epoch prior to which historical data can be purged from physical storage.
+You cannot run any historical queries prior to the AHM.
+By default, Vertica advances the AHM at an interval of 5 minutes.</p>
+
+<p>There are scenarios that the ancient history marker does not advance: there is an unrefreshed <a href="/blog/2016/02/07/vertica-7-projections/">projection</a>.
+To find about the unrefreshed projection, use the following command:</p>
+
+<pre><code class="plain">SELECT * FROM projections where is_up_to_date = 'f';
+</code></pre>
+
+<p>It was already mentioned in the HPE page that AHM will not advance if there’s any projection not up to date.
+However, it also means that AHM will also not advance if there’s no activity (data insert/update or delete) on a table.
+AHM could lag behind at the create epoch of some unrefreshed projection.
+Therefore, we need to make sure we are <strong>always</strong> refreshing projections after creating them.</p>
+
+<p>Generally, you can refresh a projection by executing the <code>START_REFRESH</code> meta-function, which is a background process, or the <code>REFRESH</code> meta-function, which is a foreground process.</p>
+
+<pre><code class="plain">select START_REFRESH();
+</code></pre>
+
+<h3>Links</h3>
+
+<ol>
+<li><a href="https://community.dev.hpe.com/t5/Vertica-Knowledge-Base/Understanding-Vertica-Epochs/ta-p/233749">Epoch and AHM</a></li>
+<li><a href="https://community.dev.hpe.com/t5/Vertica-Blog/Best-Practices-for-Refreshing-Large-Projections/ba-p/229505">Best Practices</a></li>
+</ol>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Vertica: Performance Optimization Notes]]></title>
+    <link href="http://tdongsi.github.io/javascript/blog/2016/02/13/vertica-8-performance-tuning/"/>
+    <updated>2016-02-13T23:52:44-08:00</updated>
+    <id>http://tdongsi.github.io/javascript/blog/2016/02/13/vertica-8-performance-tuning</id>
+    <content type="html"><![CDATA[<p>In this post, most of optimization notes for Vertica performance are from our team&rsquo;s interaction with <a href="http://www.nexius.com/software-and-business-intelligence/">Nexius</a> consultants.
+Also see <a href="/blog/2015/12/16/vertica-tip-best-practices/">Vertica Best Practices</a>.</p>
+
+<!--more-->
+
+
+<h3><code>NOT IN</code> better than <code>NOT EXISTS</code></h3>
+
+<p>When we want to insert a row into a dimension table AND check for duplicates at the same time, we usually do this in DML scripts:</p>
+
+<pre><code class="sql BAD">SELECT 'United States', 'English' 
+WHERE NOT EXISTS (SELECT 'x' FROM dim_country WHERE country_name = 'United States')
+</code></pre>
+
+<p>However, for all such inserts, we were recently informed that it is better <strong>in Vertica</strong> to do <code>NOT IN</code> instead of <code>NOT EXISTS</code>.
+So, for example above:</p>
+
+<pre><code class="sql GOOD">SELECT 'United States', 'English' 
+WHERE 'United States' NOT IN (select country_name from dim_country)
+</code></pre>
+
+<h3>Avoid using <code>LEFT JOIN</code> to check existence</h3>
+
+<p>Let&rsquo;s say we have an ETL that regularly inserts new data into an existing dimension table.</p>
+
+<pre><code class="sql BAD">INSERT INTO dim_country                    
+(
+    country_id,
+    country_name,
+    country_language,
+) 
+SELECT ssp.country_id,
+    ssp.country_name,
+    ssp.country_language,
+FROM staging_table ssp
+LEFT JOIN dim_country dc on dc.country_id=ssp.country_id
+WHERE dc.country_id is NULL;
+</code></pre>
+
+<p>We are sometimes doing <code>LEFT JOIN</code> like this only to determine whether or not an entry already exists in the table.
+It would be faster to use a <code>WHERE</code> clause instead to perform that existence check.
+Although it might sound counter-intuitive, but reducing <code>JOIN</code> operations like this has been regularly recommended.</p>
+
+<pre><code class="sql GOOD">INSERT INTO dim_country                    
+(
+    country_id,
+    country_name,
+    country_language,
+) 
+SELECT ssp.country_id,
+    ssp.country_name,
+    ssp.country_language,
+FROM staging_table ssp
+WHERE ssp.country_id NOT IN (SELECT country_id FROM dim_country);
+</code></pre>
+
+<h3>Avoid function calls in <code>WHERE</code> and <code>JOIN</code> clauses</h3>
+
+<p>For this performance tip, we make a slight change to the example ETL in the last section above where <code>country_id</code> column is removed. In this case, we can use a normalized <code>country_name</code> as the ID to check for existing entries in the table:</p>
+
+<pre><code class="sql BAD">INSERT INTO dim_country                    
+(
+    country_name,
+    country_language,
+) SELECT ssp.country_name,
+    ssp.country_language,
+FROM staging_table ssp
+LEFT JOIN dim_country dc on lower(dc.country_name)=lower(ssp.country_name)
+WHERE dc.country_name is NULL;
+</code></pre>
+
+<p>In this example, we normalize <code>country_name</code> to lower case. Note that <code>WHERE</code> clause should be used instead of <code>LEFT JOIN</code> as discussed above.</p>
+
+<pre><code class="sql BETTER, but still BAD">INSERT INTO dim_country                    
+(
+    country_name,
+    country_language,
+) SELECT ssp.country_name,
+    ssp.country_language,
+FROM staging_table ssp
+WHERE lower(ssp.country_name) NOT IN (SELECT lower(country_name) FROM dim_country);;
+</code></pre>
+
+<p>However, such change still has bad performance because, in general, function calls in <code>WHERE</code> and <code>JOIN</code> clauses should be avoided in Vertica.
+In both examples above, calling functions like <code>LOWER</code> in <code>WHERE</code> and <code>JOIN</code> clauses will affect the performance of the ETLs.</p>
+
+<p>The solution for this scenario is that, since we control what goes into dimension tables, we can ensure that columns like <code>country_name</code> are always stored in lower-case.
+Then, we can do the same when creating the temporary table such as <code>staging_table</code> that we are comparing to for checking existence.</p>
+
+<h3>Use  <a href="https://my.vertica.com/docs/7.1.x/HTML/Content/Authoring/SQLReferenceManual/Functions/VerticaFunctions/ANALYZE_STATISTICS.htm">ANALYZE_STATISTICS</a></h3>
+
+<p>Make sure to run <code>ANALYZE_STATISTICS</code> after all data loads.
+Using this function, tables are analyzed for best performance in subsequent queries ran against it.
+Without information from <code>ANALYZE_STATISTICS</code>, the query optimizer assumes uniform distribution of data values and equal storage usage for all projections.</p>
+
+<p>Note that <code>ANALYZE_STATISTICS</code> is only supported on <em>local</em> temporary tables, but not on <em>global</em> temporary tables.
+In addition, when we add <code>ANALYZE_STATISTICS</code> function calls into our ETL scripts, errors might be thrown when a second <code>ANALYZE_STATISTICS</code> call is made while the first is still running.
+Those errors can be ignored but they must be caught accordingly to separate with other Vertica error messages.</p>
+
+<h3>Avoid creating temporary tables using <code>SELECT</code></h3>
+
+<p>Instead of creating temporary tables using <code>SELECT</code>, it is recommended to:</p>
+
+<ol>
+<li>Create the temporary table first without a projection.</li>
+<li>Create a super <a href="/blog/2016/02/07/vertica-post-7/">projection</a> with the correct column encodings and <code>ORDER BY</code> clause</li>
+<li>Populate it using <code>INSERT /*+ direct */ INTO</code>. Note the <code>/*+ direct */</code> hint to write data directly to disk, bypassing memory.</li>
+<li>Run <code>ANALYZE_STATISTICS</code>. See the last section.</li>
+</ol>
+
+
+<p>For example, in a Vertica ETL script that runs daily, we usually create a temporary table to retrieve the latest records from a source table like this:</p>
+
+<pre><code class="sql BAD">CREATE TEMPORARY TABLE customer_last_temp 
+ON COMMIT PRESERVE ROWS
+AS(
+  select * from (
+    select *,
+    row_number() OVER (PARTITION BY customer_id ORDER BY last_modify_date DESC) AS rank 
+    from  stg_customer rpt 
+  ) t1 where t1.rank =1
+);
+</code></pre>
+
+<p>In this example, <code>last_modify_date</code> is the <a href="https://en.wikipedia.org/wiki/Change_data_capture">CDC</a> column and <code>customer_id</code> is the primary key column.
+Although this SQL statement is simple and easy to understand, it is really slow for a large and growing <code>stg_customer</code> table that contains updates to all customers on multiple dates, with millions of <em>new</em> customer entries each day.
+Instead, the recommended coding pattern is to create a temporary table first without a projection:</p>
+
+<pre><code class="sql Create a temporary table without projection">CREATE LOCAL TEMPORARY TABLE customer_last_temp  ( 
+        customer_id                     int,
+        subscribe_date                  timestamp,
+        cancel_date                     timestamp,
+        last_modify_date                timestamp,
+)
+ON COMMIT PRESERVE ROWS NO PROJECTION;
+</code></pre>
+
+<p>It is also recommended that the column names are explicitly specified, so that only required columns are created in the temporary table.
+A <code>LOCAL</code> temporary table is created, instead of <code>GLOBAL</code>, so that we can use <code>ANALYZE_STATISTICS</code> functions as discussed above.
+Next, create a super projection with the correct column encodings and <code>ORDER BY</code> clause:</p>
+
+<pre><code class="sql Create a super projection">CREATE PROJECTION customer_last_temp_super (
+      customer_id ENCODING DELTARANGE_COMP 
+    , subscribe_date ENCODING GCDDELTA
+    , cancel_date ENCODING BLOCKDICT_COMP     
+    , last_modify_date ENCODING BLOCKDICT_COMP 
+)
+AS 
+SELECT customer_id 
+     , subscribe_date
+     , cancel_date
+     , last_modify_date
+  FROM customer_last_temp 
+ ORDER BY customer_id
+SEGMENTED BY HASH (customer_id) ALL NODES;
+</code></pre>
+
+<p>Finally, insert &ldquo;directly&rdquo; into the temporary table:</p>
+
+<pre><code class="sql Populate the table">INSERT /*+ direct */ INTO customer_last_temp (
+      customer_id 
+    , subscribe_date 
+    , cancel_date 
+    , last_modify_date 
+)
+WITH t1 AS (
+    SELECT company_id 
+         , subscribe_date 
+         , cancel_date 
+         , last_modify_date 
+         , ROW_NUMBER() OVER (PARTITION BY customer_id 
+                                  ORDER BY last_modify_date DESC) AS rank 
+      FROM stg_customer AS rpt 
+)
+SELECT company_id 
+     , subscribe_date 
+     , cancel_date 
+     , last_modify_date 
+FROM t1
+WHERE t1.rank = 1;  
+</code></pre>
+
+<p>The <code>WITH</code> clause is just a more readable way to write the sub-query in the original SQL statement (see <a href="/blog/2016/02/03/vertica-post-8/">WITH clause</a>).
+In addition, the wildcard <code>*</code> in the original SQL query is also avoided, in case the table <code>stg_customer</code> is a very wide table.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Vertica Projections]]></title>
+    <link href="http://tdongsi.github.io/javascript/blog/2016/02/07/vertica-7-projections/"/>
+    <updated>2016-02-07T00:50:44-08:00</updated>
+    <id>http://tdongsi.github.io/javascript/blog/2016/02/07/vertica-7-projections</id>
+    <content type="html"><![CDATA[<p>Projections are key in Vertica performance tuning.
+Details of Vertica projections are discussed in the following blog posts from HP-Vertica:</p>
+
+<ol>
+<li><a href="https://www.vertica.com/2011/09/01/the-power-of-projections-part-1/">https://www.vertica.com/2011/09/01/the-power-of-projections-part-1/</a></li>
+<li><a href="https://www.vertica.com/2011/09/02/the-power-of-projections-part-2/">https://www.vertica.com/2011/09/02/the-power-of-projections-part-2/</a></li>
+<li><a href="https://www.vertica.com/2011/09/06/the-power-of-projections-part-3/">https://www.vertica.com/2011/09/06/the-power-of-projections-part-3/</a></li>
+</ol>
+
+
+<p>In summary, Vertica projections represent collections of columns (like table) but they are optimized for analytics at the physical storage structure level and they are not constrained by the logical schema.
+For each regular table, Vertica requires a minimum of one projection, called a “superprojection”.
+Vertica creates a default super-projection when running CREATE TABLE statement.
+<a href="https://www.vertica.com/2011/09/06/the-power-of-projections-part-3/">Part 3</a> also compares Vertica projections with &ldquo;Materialized Views&rdquo; and &ldquo;Indexes&rdquo; in traditional databases.</p>
+
+<p>For Vertica performance tuning, we create multiple projections, customize them and parameters of each projection to achieve the best performance.
+Database Designer is a tool provided by Vertica to help us find the optimal projections, based on data statistics and frequent queries.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Using Virtual Machine for ETL Testing]]></title>
+    <link href="http://tdongsi.github.io/javascript/blog/2016/01/10/find-and-replace-a-string-in-multiple-files/"/>
+    <updated>2016-01-10T23:49:15-08:00</updated>
+    <id>http://tdongsi.github.io/javascript/blog/2016/01/10/find-and-replace-a-string-in-multiple-files</id>
+    <content type="html"><![CDATA[<p>When developing data-warehouse solutions in Vertica, you want to set up some test environment.
+Ideally, you should have separate schema for each developer.
+However, it is usually NOT possible in my experience: developers and test engineers have to share very few schemas in development environment.
+The explanation that I usually get is that having a schema for each developer will not scale in database maintenance and administration, and there are likely some limits in Vertica&rsquo;s commercial license.
+If that is the case, I recommend that we look into using Vertica Community Edition on <strong>Virtual Machines (VMs)</strong> for sandbox test environment, as a cheap alternative.</p>
+
+<!--more-->
+
+
+<h3>Vertica Virtual Machine as sandbox test environment</h3>
+
+<p>Are VMs really necessary in data-warehouse testing? When testing Extract-Transform-Load (ETL) processes, I find that many of test cases require regular set-up and tear-down, adding mock records to force rare logical branches and corner cases, and/or running ETLs multiple times to simulate daily runs of those processes.
+Regular tear-down requires dropping multiple tables regularly, which requires much greater care and drains much mental energy when working with others' data and tables.
+Similarly, adding mock records into some commonly shared tables might affect others when they assume the data is production-like.
+Running ETL scripts regularly, which could be computationally intensive, on a shared Vertica cluster might affect the performance or get affected by others' processes.
+In short, for these tests, I cannot use the common schema that is shared with others since it might interfere others and/or destroy valuable common data.
+Using a Vertica VM as the sandbox test environment helps us minimize interference to and from others' data and activities.</p>
+
+<h3>Single-node VM and KSAFE clause</h3>
+
+<p>I have been using a <strong>single-node</strong> Vertica VM to run tests for sometime. And it works wonderfully for testing purpose, especially when you want to isolate issues, for example, a corner case. The Vertica VM can be downloaded from HP Vertica&rsquo;s support website (NOTE: As of 2016 Jan 1st, the Vertica 7.1 VM is taken down while the Vertica 7.2 VM is not available).</p>
+
+<p>The only minor problem is when we add <code>KSAFE 1</code> in our DDL scripts (i.e., <code>CREATE TABLE</code> statements) for production purposes. This gives error on single-node VM when running DDL scripts to set up schema.
+The reason is that Vertica database with one or two hosts cannot be <em>k-safe</em> (i.e., it may lose data if it crashes) and three-node cluster is the minimum requirement to have <code>KSAFE 1</code> in <code>CREATE TABLE</code> statements to work.</p>
+
+<p>Even then, the workaround for running those DDL scripts in tests is easy enough if all DDL scripts are all located in a single folder. The idea is that since <code>KSAFE 1</code> does not affect ETL processes' transform logics, we can remove those KSAFE clauses to set up the test schema and go ahead with our ETL testing. Specifically, in my project, my workflow for ETL testing with <strong>Git</strong> is as follows:</p>
+
+<ul>
+<li>Branch the latest code (<code>develop</code> branch) into a temporary branch (e.g., <code>local/develop</code> branch).</li>
+<li>Find and remove <code>KSAFE 1</code> in all DDL files (see subsection below).</li>
+<li>While still in <code>local/develop</code> branch, commit all these changes in a <strong>single</strong> commit with some unique description (e.g., &ldquo;KSAFE REMOVAL&rdquo;).</li>
+<li>Add unit and functional tests to ETL scripts in this branch.</li>
+<li>After tests are properly developed and checked-in, reverse the &ldquo;KSAFE REMOVAL&rdquo; commit above.
+
+<ul>
+<li>In SourceTree, it could be done by a simple right-click on that commit and selecting &ldquo;Reverse Commit&rdquo;.</li>
+</ul>
+</li>
+<li>Merge <code>local/develop</code> branch into <code>develop</code> branch (create a pull request if needed). You will now have your tests with the latest codes in <code>develop</code> branch.</li>
+</ul>
+
+
+<h4>Find and replace a string in multiple files</h4>
+
+<p>There are times and times again that you find that you have to replace every single occurrences of some string in multiple files with another string. Finding and removing <code>KSAFE 1</code> like the above workflow is an example where &ldquo;removing string&rdquo; is a special case of &ldquo;replacing string&rdquo; with nothing. This operation can be quickly done by the following bash command:</p>
+
+<pre><code>grep -rl match_string your_dir/ | xargs sed -i 's/old_string/new_string/g'
+</code></pre>
+
+<p>If you are familiar with bash scripting, the above command is straight forward. This quick explanation is for anyone who does not understand the command:</p>
+
+<ul>
+<li><code>grep</code> command finds all files in <code>your_dir</code> directory that contain <code>match_string</code>. <code>-l</code> option makes sure it will return a list of files</li>
+<li><code>sed</code> command then execute the replacement regex on all those files. A regex tip: the forward slash <code>/</code> delimiter could be another delimiter (e.g., <code>#</code>). This might be useful if you need to search HTML files.</li>
+</ul>
+
+
+<p>Example: In my case, all the DDL scripts are in multiple sub-directories under <code>tables</code> directory. To find and remove all <code>KSAFE 1</code> occurrences, the command is:</p>
+
+<pre><code>grep -rl 'KSAFE 1' tables | xargs sed -i 's/KSAFE 1//g'
+</code></pre>
+
+<p>This will search for the string <code>KSAFE 1</code> in all files in the <code>tables</code> directory and replace <code>KSAFE 1</code> with nothing <code>''</code> for each occurrence of the string in each file.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Vertica Tip: Find Empty Tables]]></title>
+    <link href="http://tdongsi.github.io/javascript/blog/2015/12/18/vertica-tip-find-empty-tables-in-a-schema/"/>
+    <updated>2015-12-18T21:39:56-08:00</updated>
+    <id>http://tdongsi.github.io/javascript/blog/2015/12/18/vertica-tip-find-empty-tables-in-a-schema</id>
+    <content type="html"><![CDATA[<p>This post is a reminder of using Vertica&rsquo;s system tables for administrating and monitoring our own tables. One common house-cleaning operation when developing/testing in Vertica is to find and drop tables that are empty (truncated) and never used again.</p>
+
+<p>You might ask why the tables are not dropped directly when I truncated the table in the first place. The answer is that all those tables have some specific designs on projection segmentation and partition, and those information will be lost if I drop the tables. These tables are frequently populated with data and cleared for testing purposes, and truncating and inserting with <code>direct</code> <a href="https://my.vertica.com/docs/7.1.x/HTML/Content/Authoring/SQLReferenceManual/Statements/INSERT.htm">hint</a> will give a significant performance boost (see <a href="/blog/2015/12/16/vertica-tip-best-practices/">Best practices</a>).</p>
+
+<!--more-->
+
+
+<h3>v_monitor schema and COLUMN_STORAGE system table</h3>
+
+<p>The <a href="https://my.vertica.com/docs/7.1.x/HTML/index.htm#Authoring/SQLReferenceManual/SystemTables/MONITOR/COLUMN_STORAGE.htm">COLUMN_STORAGE system table</a> in <code>v_monitor</code> schema returns the &ldquo;amount of disk storage used by each column of each projection on each node&rdquo;. Therefore, to get the size of each table, you only need to aggregate the <code>used_byte</code> data, grouped by schema name and table name.</p>
+
+<pre><code class="sql Query to list tables' sizes in a schema">select anchor_table_schema, anchor_table_name, sum(used_bytes)
+FROM v_monitor.column_storage
+where anchor_table_schema = 'some_schema'
+group by anchor_table_schema, anchor_table_name
+</code></pre>
+
+<p>According to <a href="http://vertica.tips/2014/01/25/table-size/">here</a>, the number from the above query is the <em>compressed</em> size of the Vertica tables. To get the <em>raw</em> size of the tables, which probably only matters for license limit, perform a <em>license audit</em>, and query the system table <code>license_audits</code> in <code>v_catalog</code> schema. However, the most important takeaway is that empty tables will not appear in this <code>COLUMN_STORAGE</code> system table.</p>
+
+<h3>v_catalog schema and TABLES system table</h3>
+
+<p>The <a href="https://my.vertica.com/docs/7.1.x/HTML/index.htm#Authoring/SQLReferenceManual/SystemTables/CATALOG/TABLES.htm">TABLES system table</a> is probably more well-known. It contains all the information about all the tables in all the schemas. For example, to list all the tables in some schema:</p>
+
+<pre><code class="sql Query to list all tables in a schema">select table_schema, table_name from tables
+where table_schema = 'some_schema'
+</code></pre>
+
+<p>Another useful system table in <code>v_catalog</code> schema is <code>USER_FUNCTIONS</code> which lists all user-defined functions and their function signatures in the database.</p>
+
+<h3>Find all the empty (truncated) tables</h3>
+
+<p>Having all the tables in <code>v_catalog.tables</code> table and only non-empty tables in <code>v_monitor.column_storage</code> table, finding empty tables is pretty straight-forward in SQL:</p>
+
+<pre><code class="sql Query to find empty tables in a schema">select table_name
+from v_catalog.tables
+where table_schema = 'some_schema'
+EXCEPT
+select anchor_table_name
+from v_monitor.column_storage
+where anchor_table_schema = 'some_schema' 
+</code></pre>
+
+<h3>External Links</h3>
+
+<ol>
+<li><a href="http://vertica.tips/2014/01/25/table-size/">Finding table&rsquo;s compressed size</a></li>
+<li><a href="http://vertica.tips/2014/01/24/license-audit-utilization-raw-size/">Vertica License audit</a></li>
+<li><a href="https://my.vertica.com/docs/7.1.x/HTML/index.htm#Authoring/SQLReferenceManual/SystemTables/MONITOR/COLUMN_STORAGE.htm">COLUMN_STORAGE system table</a></li>
+<li><a href="https://my.vertica.com/docs/7.1.x/HTML/index.htm#Authoring/SQLReferenceManual/SystemTables/CATALOG/TABLES.htm">TABLES system table</a></li>
+<li><a href="https://my.vertica.com/docs/7.1.x/HTML/index.htm#Authoring/SQLReferenceManual/SystemTables/CATALOG/USER_FUNCTIONS.htm">USER_FUNCTIONS system table</a></li>
+</ol>
+
+]]></content>
+  </entry>
+  
+</feed>

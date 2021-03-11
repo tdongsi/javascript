@@ -176,7 +176,7 @@ This post lists out steps to get started quickly for a JavaScript programming te
       
   <header>
     
-      <h1 class="entry-title"><a href="/javascript/blog/2015/12/12/programming-hive-hiveql-dml/">Learning Hive (Pt. 8): Data Manipulation in HiveQL</a></h1>
+      <h1 class="entry-title"><a href="/javascript/blog/2016/02/29/vertica-9-refresh-projections/">Vertica: Refresh Your Projections</a></h1>
     
     
       <p class="meta">
@@ -185,27 +185,95 @@ This post lists out steps to get started quickly for a JavaScript programming te
 
 
 
-<time class='entry-date' datetime='2015-12-12T23:34:38-08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>12</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>11:34 pm</span></time>
+<time class='entry-date' datetime='2016-02-29T00:54:02-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>29</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span> <span class='time'>12:54 am</span></time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><!--
-<img class="center" src="/javascript/images/hive/cat.gif" title="Cover" >
+  <div class="entry-content"><p>Most information presented in this post is directly quoted from <a href="https://community.dev.hpe.com/t5/Vertica-Knowledge-Base/Understanding-Vertica-Epochs/ta-p/233749">this page</a>.</p>
 
-Chapter 5 of the book
--->
+<p><strong>Epoch</strong>: An epoch is 64-bit number that represents a logical time stamp for the data in Vertica.
+The epoch advances when the logical state of the system changes or when the data is committed with a DML operation (INSERT, UPDATE, MERGE, COPY, or DELETE).
+The <code>EPOCHS</code> system table contains the date and time of each closed epoch and the corresponding epoch number of the closed epoch.</p>
+
+<figure class='code'><figcaption><span>epochs table</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>=&gt; select * from epochs;
+</span><span class='line'>
+</span><span class='line'>epoch_close_time            epoch_number
+</span><span class='line'>2016-03-04 21:44:24.192495    610131</span></code></pre></td></tr></table></div></figure>
 
 
-<p>This post is about HiveQL&rsquo;s parts used to put data into tables and extract data from tables to the filesystem.</p>
+<p><strong>Ancient History Mark (AHM)</strong>: A large epoch map can increase the catalog size.
+The ancient history mark is the epoch prior to which historical data can be purged from physical storage.
+You cannot run any historical queries prior to the AHM.
+By default, Vertica advances the AHM at an interval of 5 minutes.</p>
+
+<p>There are scenarios that the ancient history marker does not advance: there is an unrefreshed <a href="/javascript/blog/2016/02/07/vertica-7-projections/">projection</a>.
+To find about the unrefreshed projection, use the following command:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>SELECT * FROM projections where is_up_to_date = 'f';</span></code></pre></td></tr></table></div></figure>
+
+
+<p>It was already mentioned in the HPE page that AHM will not advance if there’s any projection not up to date.
+However, it also means that AHM will also not advance if there’s no activity (data insert/update or delete) on a table.
+AHM could lag behind at the create epoch of some unrefreshed projection.
+Therefore, we need to make sure we are <strong>always</strong> refreshing projections after creating them.</p>
+
+<p>Generally, you can refresh a projection by executing the <code>START_REFRESH</code> meta-function, which is a background process, or the <code>REFRESH</code> meta-function, which is a foreground process.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>select START_REFRESH();</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Links</h3>
+
+<ol>
+<li><a href="https://community.dev.hpe.com/t5/Vertica-Knowledge-Base/Understanding-Vertica-Epochs/ta-p/233749">Epoch and AHM</a></li>
+<li><a href="https://community.dev.hpe.com/t5/Vertica-Blog/Best-Practices-for-Refreshing-Large-Projections/ba-p/229505">Best Practices</a></li>
+</ol>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/javascript/blog/2016/02/13/vertica-8-performance-tuning/">Vertica: Performance Optimization Notes</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2016-02-13T23:52:44-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>13</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span> <span class='time'>11:52 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>In this post, most of optimization notes for Vertica performance are from our team&rsquo;s interaction with <a href="http://www.nexius.com/software-and-business-intelligence/">Nexius</a> consultants.
+Also see <a href="/javascript/blog/2015/12/16/vertica-tip-best-practices/">Vertica Best Practices</a>.</p>
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/javascript/blog/2015/12/12/programming-hive-hiveql-dml/">Read on &rarr;</a>
+      <a rel="full-article" href="/javascript/blog/2016/02/13/vertica-8-performance-tuning/">Read on &rarr;</a>
     </footer>
   
 
@@ -217,7 +285,7 @@ Chapter 5 of the book
       
   <header>
     
-      <h1 class="entry-title"><a href="/javascript/blog/2015/12/09/netezza-cli/">Netezza CLI Tools</a></h1>
+      <h1 class="entry-title"><a href="/javascript/blog/2016/02/07/vertica-7-projections/">Vertica Projections</a></h1>
     
     
       <p class="meta">
@@ -226,24 +294,69 @@ Chapter 5 of the book
 
 
 
-<time class='entry-date' datetime='2015-12-09T18:34:12-08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>9</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>6:34 pm</span></time>
+<time class='entry-date' datetime='2016-02-07T00:50:44-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>7</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span> <span class='time'>12:50 am</span></time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>In addition to using third party GUI clients such as SQuirreLSQL, you can also interact with Netezza through its command line interface (CLI) tools.
-These are programs that let you do useful things like importing and exporting large volumes of data, invoking Netezza from bash scripts, controlling sessions and queries, etc.
-The following is a quick overview of just the <code>nzsql</code> and <code>nzload</code> commands.
-For a description of all the CLI tools, see the documentation <a href="http://www-01.ibm.com/support/knowledgecenter/SSULQD_7.2.0/com.ibm.nz.adm.doc/r_sysadm_summary_of_commands.html?lang=en">here</a>.
-You can install the Netezza CLI tools directly onto your system by following the instructions <a href="http://www-01.ibm.com/support/knowledgecenter/SSULQD_7.2.0/com.ibm.nz.adm.doc/c_sysadm_client_software_install.html">here</a>.</p>
+  <div class="entry-content"><p>Projections are key in Vertica performance tuning.
+Details of Vertica projections are discussed in the following blog posts from HP-Vertica:</p>
+
+<ol>
+<li><a href="https://www.vertica.com/2011/09/01/the-power-of-projections-part-1/">https://www.vertica.com/2011/09/01/the-power-of-projections-part-1/</a></li>
+<li><a href="https://www.vertica.com/2011/09/02/the-power-of-projections-part-2/">https://www.vertica.com/2011/09/02/the-power-of-projections-part-2/</a></li>
+<li><a href="https://www.vertica.com/2011/09/06/the-power-of-projections-part-3/">https://www.vertica.com/2011/09/06/the-power-of-projections-part-3/</a></li>
+</ol>
+
+
+<p>In summary, Vertica projections represent collections of columns (like table) but they are optimized for analytics at the physical storage structure level and they are not constrained by the logical schema.
+For each regular table, Vertica requires a minimum of one projection, called a “superprojection”.
+Vertica creates a default super-projection when running CREATE TABLE statement.
+<a href="https://www.vertica.com/2011/09/06/the-power-of-projections-part-3/">Part 3</a> also compares Vertica projections with &ldquo;Materialized Views&rdquo; and &ldquo;Indexes&rdquo; in traditional databases.</p>
+
+<p>For Vertica performance tuning, we create multiple projections, customize them and parameters of each projection to achieve the best performance.
+Database Designer is a tool provided by Vertica to help us find the optimal projections, based on data statistics and frequent queries.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/javascript/blog/2016/01/10/find-and-replace-a-string-in-multiple-files/">Using Virtual Machine for ETL Testing</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2016-01-10T23:49:15-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span> <span class='time'>11:49 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>When developing data-warehouse solutions in Vertica, you want to set up some test environment.
+Ideally, you should have separate schema for each developer.
+However, it is usually NOT possible in my experience: developers and test engineers have to share very few schemas in development environment.
+The explanation that I usually get is that having a schema for each developer will not scale in database maintenance and administration, and there are likely some limits in Vertica&rsquo;s commercial license.
+If that is the case, I recommend that we look into using Vertica Community Edition on <strong>Virtual Machines (VMs)</strong> for sandbox test environment, as a cheap alternative.</p>
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/javascript/blog/2015/12/09/netezza-cli/">Read on &rarr;</a>
+      <a rel="full-article" href="/javascript/blog/2016/01/10/find-and-replace-a-string-in-multiple-files/">Read on &rarr;</a>
     </footer>
   
 
@@ -255,7 +368,7 @@ You can install the Netezza CLI tools directly onto your system by following the
       
   <header>
     
-      <h1 class="entry-title"><a href="/javascript/blog/2015/12/07/some-netezzas-nzsql-tips/">NZSQL Tips for New Netezza Users</a></h1>
+      <h1 class="entry-title"><a href="/javascript/blog/2015/12/18/vertica-tip-find-empty-tables-in-a-schema/">Vertica Tip: Find Empty Tables</a></h1>
     
     
       <p class="meta">
@@ -264,21 +377,22 @@ You can install the Netezza CLI tools directly onto your system by following the
 
 
 
-<time class='entry-date' datetime='2015-12-07T11:11:06-08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>7</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>11:11 am</span></time>
+<time class='entry-date' datetime='2015-12-18T21:39:56-08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>18</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>9:39 pm</span></time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>Just like any SQL dialect, NZSQL has some quirks and odd conventions which could be really confusing to new Netezza users.
-This post has some tips for those new users.</p>
+  <div class="entry-content"><p>This post is a reminder of using Vertica&rsquo;s system tables for administrating and monitoring our own tables. One common house-cleaning operation when developing/testing in Vertica is to find and drop tables that are empty (truncated) and never used again.</p>
+
+<p>You might ask why the tables are not dropped directly when I truncated the table in the first place. The answer is that all those tables have some specific designs on projection segmentation and partition, and those information will be lost if I drop the tables. These tables are frequently populated with data and cleared for testing purposes, and truncating and inserting with <code>direct</code> <a href="https://my.vertica.com/docs/7.1.x/HTML/Content/Authoring/SQLReferenceManual/Statements/INSERT.htm">hint</a> will give a significant performance boost (see <a href="/javascript/blog/2015/12/16/vertica-tip-best-practices/">Best practices</a>).</p>
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/javascript/blog/2015/12/07/some-netezzas-nzsql-tips/">Read on &rarr;</a>
+      <a rel="full-article" href="/javascript/blog/2015/12/18/vertica-tip-find-empty-tables-in-a-schema/">Read on &rarr;</a>
     </footer>
   
 
@@ -290,7 +404,7 @@ This post has some tips for those new users.</p>
       
   <header>
     
-      <h1 class="entry-title"><a href="/javascript/blog/2015/12/06/programming-hive-partitioned-tables/">Learning Hive (Pt. 7): Partitioned Tables</a></h1>
+      <h1 class="entry-title"><a href="/javascript/blog/2015/12/17/vertica-tip-using-vsql/">Vertica Tip: Using Vsql CLI</a></h1>
     
     
       <p class="meta">
@@ -299,27 +413,20 @@ This post has some tips for those new users.</p>
 
 
 
-<time class='entry-date' datetime='2015-12-06T21:09:51-08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>6</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>9:09 pm</span></time>
+<time class='entry-date' datetime='2015-12-17T22:54:07-08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>17</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>10:54 pm</span></time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><!--
-Chapter 4
--->
-
-
-<p>Continued from the <a href="/javascript/blog/2015/12/02/programming-hive-hiveql-ddl/">previous</a> <a href="/javascript/blog/2015/12/05/programming-hive-ddl-table/">posts</a>, this post will look into more details of <strong>partitioned tables</strong>.
-Note that Hive does not support row-level inserts, updates, and deletes.
-However, Hive adds extensions such as table partitioning for better performance in the context of Hadoop.</p>
+  <div class="entry-content"><p>Some tips on using command-line tool <code>vsql</code> for connecting and interacting with Vertica database.</p>
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/javascript/blog/2015/12/06/programming-hive-partitioned-tables/">Read on &rarr;</a>
+      <a rel="full-article" href="/javascript/blog/2015/12/17/vertica-tip-using-vsql/">Read on &rarr;</a>
     </footer>
   
 
@@ -331,7 +438,7 @@ However, Hive adds extensions such as table partitioning for better performance 
       
   <header>
     
-      <h1 class="entry-title"><a href="/javascript/blog/2015/12/05/programming-hive-ddl-table/">Learning Hive (Pt. 6): HiveQL Data Definition</a></h1>
+      <h1 class="entry-title"><a href="/javascript/blog/2015/12/16/vertica-tip-best-practices/">Vertica Tip: Best Practices</a></h1>
     
     
       <p class="meta">
@@ -340,88 +447,20 @@ However, Hive adds extensions such as table partitioning for better performance 
 
 
 
-<time class='entry-date' datetime='2015-12-05T20:15:56-08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>5</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>8:15 pm</span></time>
+<time class='entry-date' datetime='2015-12-16T23:12:06-08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>16</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>11:12 pm</span></time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>Continued from the previous <a href="/javascript/blog/2015/12/02/programming-hive-hiveql-ddl/">post</a>, this post covers data definition parts of HiveQL language, for creating, altering, and dropping <strong>tables</strong>.</p>
+  <div class="entry-content"><p>This post lists some tips and tricks that I learnt when working with Vertica database.</p>
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/javascript/blog/2015/12/05/programming-hive-ddl-table/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/javascript/blog/2015/12/02/programming-hive-hiveql-ddl/">Learning Hive (Pt. 5): HiveQL Data Definition</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-12-02T18:32:21-08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>2</span><span class='date-suffix'>nd</span>, <span class='date-year'>2015</span></span> <span class='time'>6:32 pm</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>This post covers data definition parts of HiveQL language, for creating, altering, and dropping <strong>databases</strong>.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/javascript/blog/2015/12/02/programming-hive-hiveql-ddl/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/javascript/blog/2015/11/26/programming-hive-data-types/">Learning Hive (Pt. 4): Data Types</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-11-26T18:01:37-08:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>26</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>6:01 pm</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>This post covers different data types and file formats supported by Hive.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/javascript/blog/2015/11/26/programming-hive-data-types/">Read on &rarr;</a>
+      <a rel="full-article" href="/javascript/blog/2015/12/16/vertica-tip-best-practices/">Read on &rarr;</a>
     </footer>
   
 
@@ -458,31 +497,31 @@ However, Hive adds extensions such as table partitioning for better performance 
       </li>
     
       <li class="post">
-        <a href="/javascript/blog/2015/12/12/programming-hive-hiveql-dml/">Learning Hive (Pt. 8): Data Manipulation in HiveQL</a>
+        <a href="/javascript/blog/2016/02/29/vertica-9-refresh-projections/">Vertica: Refresh Your Projections</a>
       </li>
     
       <li class="post">
-        <a href="/javascript/blog/2015/12/09/netezza-cli/">Netezza CLI Tools</a>
+        <a href="/javascript/blog/2016/02/13/vertica-8-performance-tuning/">Vertica: Performance Optimization Notes</a>
       </li>
     
       <li class="post">
-        <a href="/javascript/blog/2015/12/07/some-netezzas-nzsql-tips/">NZSQL Tips for New Netezza Users</a>
+        <a href="/javascript/blog/2016/02/07/vertica-7-projections/">Vertica Projections</a>
       </li>
     
       <li class="post">
-        <a href="/javascript/blog/2015/12/06/programming-hive-partitioned-tables/">Learning Hive (Pt. 7): Partitioned Tables</a>
+        <a href="/javascript/blog/2016/01/10/find-and-replace-a-string-in-multiple-files/">Using Virtual Machine for ETL Testing</a>
       </li>
     
       <li class="post">
-        <a href="/javascript/blog/2015/12/05/programming-hive-ddl-table/">Learning Hive (Pt. 6): HiveQL Data Definition</a>
+        <a href="/javascript/blog/2015/12/18/vertica-tip-find-empty-tables-in-a-schema/">Vertica Tip: Find Empty Tables</a>
       </li>
     
       <li class="post">
-        <a href="/javascript/blog/2015/12/02/programming-hive-hiveql-ddl/">Learning Hive (Pt. 5): HiveQL Data Definition</a>
+        <a href="/javascript/blog/2015/12/17/vertica-tip-using-vsql/">Vertica Tip: Using Vsql CLI</a>
       </li>
     
       <li class="post">
-        <a href="/javascript/blog/2015/11/26/programming-hive-data-types/">Learning Hive (Pt. 4): Data Types</a>
+        <a href="/javascript/blog/2015/12/16/vertica-tip-best-practices/">Vertica Tip: Best Practices</a>
       </li>
     
   </ul>
@@ -490,7 +529,7 @@ However, Hive adds extensions such as table partitioning for better performance 
 
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/javascript/blog/categories/bash/'>bash (1)</a></li><li><a href='/javascript/blog/categories/book/'>book (9)</a></li><li><a href='/javascript/blog/categories/database/'>database (2)</a></li><li><a href='/javascript/blog/categories/hadoop/'>hadoop (10)</a></li><li><a href='/javascript/blog/categories/hive/'>hive (8)</a></li><li><a href='/javascript/blog/categories/java/'>java (2)</a></li><li><a href='/javascript/blog/categories/javascript/'>javascript (2)</a></li><li><a href='/javascript/blog/categories/jdbc/'>jdbc (1)</a></li><li><a href='/javascript/blog/categories/jenkins/'>jenkins (1)</a></li><li><a href='/javascript/blog/categories/maven/'>maven (1)</a></li><li><a href='/javascript/blog/categories/questions/'>questions (1)</a></li><li><a href='/javascript/blog/categories/sql/'>sql (7)</a></li><li><a href='/javascript/blog/categories/testng/'>testng (1)</a></li><li><a href='/javascript/blog/categories/todo/'>todo (1)</a></li><li><a href='/javascript/blog/categories/tutorial/'>tutorial (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/javascript/blog/categories/bash/'>bash (2)</a></li><li><a href='/javascript/blog/categories/book/'>book (9)</a></li><li><a href='/javascript/blog/categories/centos/'>centos (1)</a></li><li><a href='/javascript/blog/categories/database/'>database (5)</a></li><li><a href='/javascript/blog/categories/git/'>git (1)</a></li><li><a href='/javascript/blog/categories/hadoop/'>hadoop (10)</a></li><li><a href='/javascript/blog/categories/hive/'>hive (8)</a></li><li><a href='/javascript/blog/categories/java/'>java (2)</a></li><li><a href='/javascript/blog/categories/javascript/'>javascript (2)</a></li><li><a href='/javascript/blog/categories/jdbc/'>jdbc (1)</a></li><li><a href='/javascript/blog/categories/jenkins/'>jenkins (1)</a></li><li><a href='/javascript/blog/categories/macosx/'>macosx (1)</a></li><li><a href='/javascript/blog/categories/maven/'>maven (1)</a></li><li><a href='/javascript/blog/categories/performance/'>performance (3)</a></li><li><a href='/javascript/blog/categories/questions/'>questions (1)</a></li><li><a href='/javascript/blog/categories/sql/'>sql (10)</a></li><li><a href='/javascript/blog/categories/testing/'>testing (1)</a></li><li><a href='/javascript/blog/categories/testng/'>testng (1)</a></li><li><a href='/javascript/blog/categories/todo/'>todo (1)</a></li><li><a href='/javascript/blog/categories/tutorial/'>tutorial (1)</a></li><li><a href='/javascript/blog/categories/vertica/'>vertica (7)</a></li></ul>
 </section>
 
 
