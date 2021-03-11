@@ -4,7 +4,7 @@
   <title><![CDATA[Archived Blog Posts]]></title>
   <link href="http://tdongsi.github.io/javascript/atom.xml" rel="self"/>
   <link href="http://tdongsi.github.io/javascript/"/>
-  <updated>2021-03-11T07:44:21-08:00</updated>
+  <updated>2021-03-11T15:03:36-08:00</updated>
   <id>http://tdongsi.github.io/javascript/</id>
   <author>
     <name><![CDATA[Cuong Dong-Si]]></name>
@@ -379,6 +379,440 @@
   </entry>
   
   <entry>
+    <title type="html"><![CDATA[Jenkins World 2017]]></title>
+    <link href="http://tdongsi.github.io/javascript/blog/2017/08/29/jenkins-world-2017/"/>
+    <updated>2017-08-29T08:47:04-07:00</updated>
+    <id>http://tdongsi.github.io/javascript/blog/2017/08/29/jenkins-world-2017</id>
+    <content type="html"><![CDATA[<p>Some interesting talks in <a href="https://www.cloudbees.com/jenkinsworld/schedule">Jenkins World 2017</a> are summarized in this blog post.</p>
+
+<!--more-->
+
+
+<h3>Jenkins Pipeline on your Local Box to Reduce Cycle Time</h3>
+
+<p>Interesting proposal (with <strong>demo</strong>, a big plus) to resolve the following problems (added my own experience):</p>
+
+<ul>
+<li>Non repeatble builds due to allocated physical slaves with reused workspaces.
+
+<ul>
+<li>The idea is equivalent to use Dockerized Jenkins for local job runs before running on central Jenkins.</li>
+<li>My current alternative is to use containerized Jenkins slaves using Kubernetes plugin.</li>
+</ul>
+</li>
+<li>Merging of two companies (YNAP + GerritForge)
+
+<ul>
+<li>Not applicable. However, for large corporates, two product teams can feel like two companies.</li>
+</ul>
+</li>
+<li>Need for fast feedback
+
+<ul>
+<li>Same</li>
+</ul>
+</li>
+<li>One master cannot suit all: central CI not flexible to local team needs.
+
+<ul>
+<li>Maybe applicable for team CI and company-wide CI.</li>
+</ul>
+</li>
+<li>Scalability: central CI only handle <code>master</code> job runs instead of multiple feature job runs.</li>
+</ul>
+
+
+<p>Reference:</p>
+
+<ul>
+<li><a href="https://github.com/NET-A-PORTER/jenkinsworld-2017-sample-app">Code repo</a></li>
+</ul>
+
+
+<figure class='code'><figcaption><span>default Jenkinsfile</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='groovy'><span class='line'><span class="cp">#!/bin/env groovy</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">node</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">checkout</span> <span class="n">scm</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">echo</span> <span class="n">env</span><span class="o">.</span><span class="na">JENKINS_URL</span>
+</span><span class='line'>    <span class="nf">if</span><span class="o">(</span><span class="n">env</span><span class="o">.</span><span class="na">JENKINS_URL</span> <span class="o">==~</span> <span class="s">/.*central-pipeline.*/</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">echo</span> <span class="s2">&quot;loading central&quot;</span>
+</span><span class='line'>        <span class="n">load</span> <span class="s2">&quot;central/Jenkinsfile&quot;</span>
+</span><span class='line'>    <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">echo</span> <span class="s2">&quot;loading local&quot;</span>
+</span><span class='line'>        <span class="n">load</span> <span class="s2">&quot;local/Jenkinsfile&quot;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}()</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>local Jenkinsfile</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+</pre></td><td class='code'><pre><code class='groovy'><span class='line'><span class="o">{</span> <span class="o">-&gt;</span> <span class="n">docker</span><span class="o">.</span><span class="na">image</span><span class="o">(</span><span class="s1">&#39;slave-sbt&#39;</span><span class="o">).</span><span class="na">inside</span>
+</span><span class='line'>    <span class="o">{</span>
+</span><span class='line'>        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Build&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">sh</span> <span class="nf">sbt</span><span class="o">(</span><span class="s1">&#39;compile&#39;</span><span class="o">)</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Test&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">sh</span> <span class="nf">sbt</span><span class="o">(</span><span class="s1">&#39;test&#39;</span><span class="o">)</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Deploy Locally&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">sh</span> <span class="nf">sbt</span><span class="o">(</span><span class="s1">&#39;docker:publishLocal&#39;</span><span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="kt">def</span> <span class="n">dockerTag</span> <span class="o">=</span> <span class="o">(</span><span class="n">sh</span><span class="o">(</span><span class="nl">script:</span> <span class="s2">&quot;git describe --tags HEAD&quot;</span><span class="o">,</span> <span class="nl">returnStdout:</span> <span class="kc">true</span><span class="o">)).</span><span class="na">trim</span><span class="o">()</span>
+</span><span class='line'>            <span class="n">cleanUpOldContainers</span><span class="o">(</span><span class="n">dockerTag</span><span class="o">)</span>
+</span><span class='line'>            <span class="n">runContainer</span><span class="o">(</span><span class="n">dockerTag</span><span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="kt">def</span> <span class="n">containerUrl</span> <span class="o">=</span> <span class="n">getRunningContainerURL</span><span class="o">(</span><span class="n">dockerTag</span><span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="n">echo</span> <span class="s2">&quot;Running on $containerUrl&quot;</span>
+</span><span class='line'>            <span class="n">currentBuild</span><span class="o">.</span><span class="na">setDescription</span><span class="o">(</span><span class="s2">&quot;$containerUrl&quot;</span><span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Push to GitHub&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">withCredentials</span><span class="o">([[</span><span class="n">$class</span><span class="o">:</span> <span class="s1">&#39;UsernamePasswordMultiBinding&#39;</span><span class="o">,</span>
+</span><span class='line'>                              <span class="nl">credentialsId:</span> <span class="s1">&#39;github&#39;</span><span class="o">,</span>
+</span><span class='line'>                              <span class="nl">usernameVariable:</span> <span class="s1">&#39;USERNAME&#39;</span><span class="o">,</span> <span class="nl">passwordVariable:</span> <span class="s1">&#39;PASSWORD&#39;</span><span class="o">]])</span> <span class="o">{</span>
+</span><span class='line'>                <span class="n">sh</span> <span class="s2">&quot;git branch --list ${env.BRANCH_NAME} || git checkout -b ${env.BRANCH_NAME}&quot;</span>
+</span><span class='line'>                <span class="n">sh</span> <span class="s2">&quot;git push -f https://$USERNAME:$PASSWORD@github.com/NET-A-PORTER/jenkinsworld-2017-sample-app HEAD:refs/heads/${env.BRANCH_NAME}&quot;</span>
+</span><span class='line'>            <span class="o">}</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">...</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>central Jenkinsfile</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='groovy'><span class='line'><span class="o">{</span> <span class="o">-&gt;</span> <span class="n">docker</span><span class="o">.</span><span class="na">image</span><span class="o">(</span><span class="s1">&#39;slave-sbt&#39;</span><span class="o">).</span><span class="na">inside</span>
+</span><span class='line'>    <span class="o">{</span>
+</span><span class='line'>        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Build&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>                <span class="n">sh</span> <span class="nf">sbt</span><span class="o">(</span><span class="s1">&#39;compile&#39;</span><span class="o">)</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Creating Docker container&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>                <span class="n">sh</span> <span class="nf">sbt</span><span class="o">(</span><span class="s1">&#39;docker:stage&#39;</span><span class="o">)</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>        <span class="k">if</span> <span class="o">(</span><span class="n">env</span><span class="o">.</span><span class="na">BRANCH_NAME</span> <span class="o">==</span> <span class="s2">&quot;master&quot;</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Deploy to Heroku&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>                <span class="n">withCredentials</span><span class="o">([[</span><span class="n">$class</span><span class="o">:</span> <span class="s1">&#39;UsernamePasswordMultiBinding&#39;</span><span class="o">,</span>
+</span><span class='line'>                                  <span class="nl">credentialsId:</span> <span class="s1">&#39;heroku&#39;</span><span class="o">,</span>
+</span><span class='line'>                                  <span class="nl">usernameVariable:</span> <span class="s1">&#39;USERNAME&#39;</span><span class="o">,</span> <span class="nl">passwordVariable:</span> <span class="s1">&#39;PASSWORD&#39;</span><span class="o">]])</span> <span class="o">{</span>
+</span><span class='line'>                    <span class="n">sh</span> <span class="s2">&quot;echo &#39;machine git.heroku.com login $USERNAME password $PASSWORD&#39; &gt; ~/.netrc&quot;</span>
+</span><span class='line'>                    <span class="n">sh</span> <span class="s2">&quot;chmod 600 ~/.netrc&quot;</span>
+</span><span class='line'>                    <span class="n">sh</span> <span class="s2">&quot;git push -f https://git.heroku.com/jenkinsworld-2017-sample-app.git HEAD:master&quot;</span>
+</span><span class='line'>                <span class="o">}</span>
+</span><span class='line'>            <span class="o">}</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">def</span> <span class="nf">sbt</span><span class="o">(</span><span class="n">target</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="s2">&quot;sbt -no-colors $target&quot;</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Managing Jenkins with CloudBees Jenkins Team</h3>
+
+<p>CloudBees Jenkins is the Enterprise version of Jenkins, as opposed to Open-Source Jenkins.
+This enterprise version offers the following features:</p>
+
+<ul>
+<li>Beekeeper Upgrade Assistant: Plugin upgrade compatibility, Compliance report.</li>
+<li>Upgrade simulations to make sure the upgrade is compatible with current jobs/plugins.</li>
+</ul>
+
+
+<p>Like many other tools presented in the conference, you can do many &ldquo;awesome&rdquo; things <strong>IF</strong> you pay for it.
+The only problem is if you have the budget to pay for it.</p>
+
+<h3>Let&rsquo;s build a Jenkins Pipeline</h3>
+
+<p>Basic tutorial on Jenkinsfile with Declarative syntax.
+Not that interesting if you are already familiar with Jenkinsfile.</p>
+
+<ul>
+<li><a href="https://www.slideshare.net/secret/5d85kTqLfjOgdC">Slides</a></li>
+<li><a href="https://gist.github.com/ericlong/25fd60f197f6c4c7b8f265af7a351e75">Code snippets</a></li>
+</ul>
+
+
+<h3>Developing Pipeline Libraries Locally</h3>
+
+<p>If you have ever tried developing Pipeline Libraries, you may have noticed how long it takes to deploy a new version to server to discover just another syntax error. Oleg will show how to edit and test Pipeline libraries locally before committing to the repository (with Configuration-as-Code and Docker).</p>
+
+<ul>
+<li><a href="https://hub.docker.com/r/onenashev/demo-jenkins-config-as-code/">DockerHub repo</a></li>
+<li><a href="https://github.com/oleg-nenashev/demo-jenkins-config-as-code">Github repo</a></li>
+</ul>
+
+
+<!-- Photos:
+IMG_1097
+IMG_1098
+IMG_1099
+-->
+
+
+<h3>Securing a Jenkins Instance</h3>
+
+<p>See <a href="http://tdongsi.github.io/javascript/blog/2017/09/05/securing-jenkins-with-nginx/">this post</a>.</p>
+
+<!-- Photos:
+IMG_[1100..1107]
+-->
+
+
+<h3>Scaling Jenkins with Kubernetes</h3>
+
+<p>We are already using Kubernetes plugin in production.
+The talk mostly recaps how to use the plugin.</p>
+
+<ul>
+<li><a href="https://github.com/jenkinsci/kubernetes-plugin/tree/master/examples">Examples</a>
+
+<ul>
+<li>Interesting examples include <a href="https://github.com/jenkinsci/kubernetes-plugin/blob/master/examples/multi-container.groovy">multi-container</a>, <a href="https://github.com/jenkinsci/kubernetes-plugin/blob/master/examples/selenium.groovy">selenium</a>.</li>
+</ul>
+</li>
+</ul>
+
+
+<!-- Photos:
+IMG_[1117..1121]
+-->
+
+
+<h3>Declarative Pipelines in Jenkins</h3>
+
+<p>New features and improvements in Declarative Jenkinsfile are announced.
+Those include:</p>
+
+<ul>
+<li><code>changelog</code>: examines the commit log messages with a regular expression.</li>
+<li><code>changeset</code>: the affected file paths in the changelog.</li>
+</ul>
+
+
+<!-- Photos:
+IMG_[1123..1134]
+-->
+
+
+<h3>Codifying the Build and Release Process with a Jenkins Pipeline Shared Library</h3>
+
+<p>Almost all of the Jenkins workflows practiced at FireEye are already implemented in our Jenkins.
+It&rsquo;s assuring to know that we are using the best practices and not way behind the pack.
+However, I got a glimpse of potential struggles (mostly from inertia) migrating from a legacy Jenkins system (1.x) to Jenkinsfile-based system (2.x).</p>
+
+<!-- Photos:
+IMG_[1135..1138]
+-->
+
+
+
+
+<!-- Pimp my Blue Ocean
+Photos:
+IMG_[1139..1144]
+-->
+
+
+<h3>Mozilla’s Declarative + Shared Libraries Setup</h3>
+
+<p>How Mozilla is using <strong>Declarative</strong> Pipelines and shared libraries together.</p>
+
+<ul>
+<li><a href="https://github.com/mozilla/fxtest-jenkins-pipeline">Github repo</a></li>
+<li><a href="https://github.com/mozilla/mozillians-tests/blob/master/Jenkinsfile">Example Jenkinsfile</a></li>
+</ul>
+
+
+<!-- Photos:
+IMG_[1145..1150]
+-->
+
+
+<h3>Pipelines At Scale: How Big, How Fast, How Many?</h3>
+
+<p>Interesting point: Each pipeline step is similar to a database transaction: each step requires an atomic record in case of Jenkins restart.
+Therefore, it is better to have a large enough transaction than multiple small transactions (e.g., <code>sh</code> step).</p>
+
+<p>For comprehensive study of this topic (Jenkins performance), there are many articles/blog posts written by same author (Sam Van Oort).</p>
+
+<!-- Photos:
+IMG_[1151..1163]
+-->
+
+
+<h3>JenkinsPipelineUnit: Test your Continuous Delivery Pipeline</h3>
+
+<p>JenkinsPipelineUnit allows unit testing the Jenkinsfile locally by mocking the Pipeline steps.
+In my opinion, it seems only useful for reducing the <strong>syntax</strong> mistakes when developing Jenkinsfile OR global shared library.
+You still have to verify functionality in a real Jenkins system.
+Its compatibility with Declarative syntax is also questionable, admitted by the speakers/authors.
+In addition, it is NOT for developling a Jenkins plugin. In that case, use JenkinsRule.</p>
+
+<ul>
+<li><a href="https://github.com/lesfurets/JenkinsPipelineUnit">Github repo</a></li>
+</ul>
+
+
+<!-- Photos:
+IMG_[1164..1170]
+-->
+
+
+<h3>Securing a Jenkins Instance</h3>
+
+<p>Demo &ldquo;Securing a Jenkins Instance&rdquo; at Jenkins Booth in Jenkins World 2017 by Claudiu Guiman.</p>
+
+<blockquote><p>A set of minimum steps every Jenkins Admin should follow so his public-facing Jenkins instance doesn’t turn into a Bitcoin mine.</p></blockquote>
+
+
+
+
+<figure class='code'><figcaption><span>nginx configuration</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>server {
+</span><span class='line'>    listen 80;
+</span><span class='line'>    server_name demo-001.eastus.cloudapp.azure.com;
+</span><span class='line'>    location / {
+</span><span class='line'>        proxy_set_header        Host $host:$server_port;
+</span><span class='line'>        proxy_set_header        X-Real-IP $remote_addr;
+</span><span class='line'>        proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+</span><span class='line'>        proxy_set_header        X-Forwarded-Proto $scheme;
+</span><span class='line'>        proxy_pass              http://localhost:8080;
+</span><span class='line'>        proxy_redirect          http://localhost:8080 http://demo-001.eastus.cloudapp.azure.com;
+</span><span class='line'>        proxy_read_timeout      90;
+</span><span class='line'>    }
+</span><span class='line'>
+</span><span class='line'>    # block requests to /cli
+</span><span class='line'>    location /cli {
+</span><span class='line'>        deny all;
+</span><span class='line'>    }
+</span><span class='line'>
+</span><span class='line'>    # block requests to /login
+</span><span class='line'>    location ~ /login* {
+</span><span class='line'>        deny all;
+</span><span class='line'>    }
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>Running nginx</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ cp ~/demo/default /etc/nginx/sites-enabled/default
+</span><span class='line'>$ sudo service nginx restart
+</span><span class='line'>$ sudo ufw deny 8080</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If your Jenkins is hosted in AWS/Google Cloud, you should consider setting this up.</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Tutorial: Quick-start for JavaScript Programming Test]]></title>
     <link href="http://tdongsi.github.io/javascript/blog/2017/06/21/tutorial-quick-start-for-javascript-programming-test/"/>
     <updated>2017-06-21T00:58:03-07:00</updated>
@@ -646,6 +1080,411 @@ See above and <code>find-up</code> package for explanations.</p>
 <li><a href="https://github.com/istanbuljs/nyc">Istanbul nyc</a></li>
 <li><a href="https://github.com/istanbuljs/nyc/pull/391/files">nycrc implementation</a></li>
 </ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Kubernetes: Kube-router]]></title>
+    <link href="http://tdongsi.github.io/javascript/blog/2017/05/15/kubernetes-kube-router/"/>
+    <updated>2017-05-15T10:52:34-07:00</updated>
+    <id>http://tdongsi.github.io/javascript/blog/2017/05/15/kubernetes-kube-router</id>
+    <content type="html"><![CDATA[<p>Kubernetes is one of the <a href="http://www.infoworld.com/article/3118345/cloud-computing/why-kubernetes-is-winning-the-container-war.html">most active open-source project</a> right now.
+I&rsquo;m trying to keep up with interesting updates from the Kubernetes community.
+This <code>kube-router</code> project is one of them although I&rsquo;ve not get an idea how stable or useful it is.</p>
+
+<blockquote><p>Kube-router is a distributed load balancer, firewall and router for Kubernetes. Kube-router can be configured to provide on each cluster node:<br/>* IPVS/LVS based service proxy on each node for ClusterIP and NodePort service types, providing service discovery and load balancing<br/>* an ingress firewall for the pods running on the node as per the defined Kubernetes network policies using iptables and ipset<br/>* a BGP router to advertise and learn the routes to the pod IP's for cross-node pod-to-pod connectivity</p></blockquote>
+
+
+
+
+<!--more-->
+
+
+<p>A few notes on related works in Kubernetes community:</p>
+
+<ul>
+<li>The most obvious one is <code>kube-proxy</code> service, which is included in the standard Kubernetes installations. This <code>kube-router</code> can be a replacement for <code>kube-proxy</code> in the future.</li>
+<li>Another related work is <a href="https://github.com/kubernetes/kubernetes/issues/44063">IPVS-based in-cluster service load balancing</a>.
+Huawei presented this work at Kubecon 2016.
+IIRC, it is implemented as a flag to kube-proxy and considerable performance improvement was reported.</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Job DSL Plugin in Jenkins]]></title>
+    <link href="http://tdongsi.github.io/javascript/blog/2016/10/30/job-dsl-plugin-in-jenkins/"/>
+    <updated>2016-10-30T18:27:07-07:00</updated>
+    <id>http://tdongsi.github.io/javascript/blog/2016/10/30/job-dsl-plugin-in-jenkins</id>
+    <content type="html"><![CDATA[<p>How Job DSL plugin works and why it is losing its dominance to Jenkins Pipeline.</p>
+
+<!--more-->
+
+
+<h3>Job DSL</h3>
+
+<figure class='code'><figcaption><span>Minimal Job DSL</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='groovy'><span class='line'><span class="n">job</span><span class="o">(</span><span class="s1">&#39;Demo&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">description</span><span class="o">(</span><span class="s2">&quot;Starting pipeline&quot;</span><span class="o">)</span>
+</span><span class='line'>    <span class="n">logRotator</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">daysToKeep</span><span class="o">(</span><span class="mi">15</span><span class="o">)</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="n">steps</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">shell</span><span class="o">(</span><span class="s1">&#39;echo &quot;Hello World&quot;&#39;</span><span class="o">)</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>To illustrate the idea.
+Obviously, lots of work need to be done to make sure the final generated <code>config.xml</code> is valid, including escaping special characters.</p>
+
+<figure class='code'><figcaption><span>Simple implementation of Job DSL</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+</pre></td><td class='code'><pre><code class='groovy'><span class='line'><span class="kd">class</span> <span class="nc">GroovyDsl</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kt">def</span> <span class="nf">description</span><span class="o">(</span><span class="n">String</span> <span class="n">description</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">print</span> <span class="s1">&#39;&lt;description&gt;&#39;</span>
+</span><span class='line'>        <span class="n">print</span> <span class="n">description</span>
+</span><span class='line'>        <span class="n">println</span> <span class="s1">&#39;&lt;/description&gt;&#39;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kt">def</span> <span class="nf">logRotator</span><span class="o">(</span><span class="n">Closure</span> <span class="n">inner</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">println</span> <span class="s1">&#39;&lt;logRotator&gt;&#39;</span>
+</span><span class='line'>        <span class="n">inner</span><span class="o">()</span>
+</span><span class='line'>        <span class="n">println</span> <span class="s1">&#39;&lt;/logRotator&gt;&#39;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kt">def</span> <span class="nf">steps</span><span class="o">(</span><span class="n">Closure</span> <span class="n">inner</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">println</span> <span class="s1">&#39;&lt;builders&gt;&#39;</span>
+</span><span class='line'>        <span class="n">inner</span><span class="o">()</span>
+</span><span class='line'>        <span class="n">println</span> <span class="s1">&#39;&lt;/builders&gt;&#39;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">static</span> <span class="kt">void</span> <span class="nf">job</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">,</span> <span class="n">Closure</span> <span class="n">closure</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">GroovyDsl</span> <span class="n">body</span> <span class="o">=</span> <span class="k">new</span> <span class="n">GroovyDsl</span><span class="o">()</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">println</span> <span class="s2">&quot;Generating a Freestyle job $name&quot;</span>
+</span><span class='line'>        <span class="n">println</span> <span class="s2">&quot;Save the following into config.xml file&quot;</span>
+</span><span class='line'>        <span class="n">println</span> <span class="s1">&#39;&lt;project&gt;&#39;</span>
+</span><span class='line'>        <span class="n">body</span><span class="o">.</span><span class="na">with</span><span class="o">(</span><span class="n">closure</span><span class="o">)</span>
+</span><span class='line'>        <span class="n">println</span> <span class="s1">&#39;&lt;/project&gt;&#39;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">def</span> <span class="nf">daysToKeep</span><span class="o">(</span><span class="kt">int</span> <span class="n">num</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">println</span> <span class="s2">&quot;&lt;daysToKeep&gt;$num&lt;/daysToKeep&gt;&quot;</span>
+</span><span class='line'>    <span class="n">println</span> <span class="s1">&#39;&lt;numToKeep&gt;-1&lt;/numToKeep&gt;&#39;</span>
+</span><span class='line'>    <span class="n">println</span> <span class="s1">&#39;&lt;artifactDaysToKeep&gt;-1&lt;/artifactDaysToKeep&gt;&#39;</span>
+</span><span class='line'>    <span class="n">println</span> <span class="s1">&#39;&lt;artifactNumToKeep&gt;-1&lt;/artifactNumToKeep&gt;&#39;</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">def</span> <span class="nf">shell</span><span class="o">(</span><span class="n">String</span> <span class="n">cmd</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">println</span> <span class="s1">&#39;&lt;hudson.tasks.Shell&gt;&#39;</span>
+</span><span class='line'>    <span class="n">println</span> <span class="s1">&#39;&lt;command&gt;&#39;</span>
+</span><span class='line'>    <span class="n">println</span> <span class="n">cmd</span>
+</span><span class='line'>    <span class="n">println</span> <span class="s1">&#39;&lt;/command&gt;&#39;</span>
+</span><span class='line'>    <span class="n">println</span> <span class="s1">&#39;&lt;/hudson.tasks.Shell&gt;&#39;</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">GroovyDsl</span><span class="o">.</span><span class="na">job</span><span class="o">(</span><span class="s1">&#39;Demo&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">description</span><span class="o">(</span><span class="s2">&quot;Starting pipeline&quot;</span><span class="o">)</span>
+</span><span class='line'>    <span class="n">logRotator</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">daysToKeep</span><span class="o">(</span><span class="mi">15</span><span class="o">)</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="n">steps</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">shell</span><span class="o">(</span><span class="s1">&#39;echo &quot;Hello World&quot;&#39;</span><span class="o">)</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>Output of the above script</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'>Generating a Freestyle job Demo
+</span><span class='line'>Save the following into config.xml file
+</span><span class='line'><span class="nt">&lt;project&gt;</span>
+</span><span class='line'><span class="nt">&lt;description&gt;</span>Starting pipeline<span class="nt">&lt;/description&gt;</span>
+</span><span class='line'><span class="nt">&lt;logRotator&gt;</span>
+</span><span class='line'><span class="nt">&lt;daysToKeep&gt;</span>15<span class="nt">&lt;/daysToKeep&gt;</span>
+</span><span class='line'><span class="nt">&lt;numToKeep&gt;</span>-1<span class="nt">&lt;/numToKeep&gt;</span>
+</span><span class='line'><span class="nt">&lt;artifactDaysToKeep&gt;</span>-1<span class="nt">&lt;/artifactDaysToKeep&gt;</span>
+</span><span class='line'><span class="nt">&lt;artifactNumToKeep&gt;</span>-1<span class="nt">&lt;/artifactNumToKeep&gt;</span>
+</span><span class='line'><span class="nt">&lt;/logRotator&gt;</span>
+</span><span class='line'><span class="nt">&lt;builders&gt;</span>
+</span><span class='line'><span class="nt">&lt;hudson.tasks.Shell&gt;</span>
+</span><span class='line'><span class="nt">&lt;command&gt;</span>
+</span><span class='line'>echo &quot;Hello World&quot;
+</span><span class='line'><span class="nt">&lt;/command&gt;</span>
+</span><span class='line'><span class="nt">&lt;/hudson.tasks.Shell&gt;</span>
+</span><span class='line'><span class="nt">&lt;/builders&gt;</span>
+</span><span class='line'><span class="nt">&lt;/project&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Compared with the Jenkins config.xml of the Freestyle job generated by the same Job DSL, we can see that there is not much different.</p>
+
+<figure class='code'><figcaption><span>Output of config.xml in Jenkins</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;project&gt;</span>
+</span><span class='line'><span class="nt">&lt;actions/&gt;</span>
+</span><span class='line'><span class="nt">&lt;description&gt;</span>Starting pipeline<span class="nt">&lt;/description&gt;</span>
+</span><span class='line'><span class="nt">&lt;keepDependencies&gt;</span>false<span class="nt">&lt;/keepDependencies&gt;</span>
+</span><span class='line'><span class="nt">&lt;properties/&gt;</span>
+</span><span class='line'><span class="nt">&lt;scm</span> <span class="na">class=</span><span class="s">&quot;hudson.scm.NullSCM&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'><span class="nt">&lt;canRoam&gt;</span>true<span class="nt">&lt;/canRoam&gt;</span>
+</span><span class='line'><span class="nt">&lt;disabled&gt;</span>false<span class="nt">&lt;/disabled&gt;</span>
+</span><span class='line'><span class="nt">&lt;blockBuildWhenDownstreamBuilding&gt;</span>false<span class="nt">&lt;/blockBuildWhenDownstreamBuilding&gt;</span>
+</span><span class='line'><span class="nt">&lt;blockBuildWhenUpstreamBuilding&gt;</span>false<span class="nt">&lt;/blockBuildWhenUpstreamBuilding&gt;</span>
+</span><span class='line'><span class="nt">&lt;triggers/&gt;</span>
+</span><span class='line'><span class="nt">&lt;concurrentBuild&gt;</span>false<span class="nt">&lt;/concurrentBuild&gt;</span>
+</span><span class='line'><span class="nt">&lt;builders&gt;</span>
+</span><span class='line'><span class="nt">&lt;hudson.tasks.Shell&gt;</span>
+</span><span class='line'><span class="nt">&lt;command&gt;</span>echo &quot;Hello World&quot;<span class="nt">&lt;/command&gt;</span>
+</span><span class='line'><span class="nt">&lt;/hudson.tasks.Shell&gt;</span>
+</span><span class='line'><span class="nt">&lt;/builders&gt;</span>
+</span><span class='line'><span class="nt">&lt;publishers/&gt;</span>
+</span><span class='line'><span class="nt">&lt;buildWrappers/&gt;</span>
+</span><span class='line'><span class="nt">&lt;logRotator&gt;</span>
+</span><span class='line'><span class="nt">&lt;daysToKeep&gt;</span>15<span class="nt">&lt;/daysToKeep&gt;</span>
+</span><span class='line'><span class="nt">&lt;numToKeep&gt;</span>-1<span class="nt">&lt;/numToKeep&gt;</span>
+</span><span class='line'><span class="nt">&lt;artifactDaysToKeep&gt;</span>-1<span class="nt">&lt;/artifactDaysToKeep&gt;</span>
+</span><span class='line'><span class="nt">&lt;artifactNumToKeep&gt;</span>-1<span class="nt">&lt;/artifactNumToKeep&gt;</span>
+</span><span class='line'><span class="nt">&lt;/logRotator&gt;</span>
+</span><span class='line'><span class="nt">&lt;/project&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Git: Allow-empty When Squashing]]></title>
+    <link href="http://tdongsi.github.io/javascript/blog/2016/07/05/git-allow-empty-when-squashing/"/>
+    <updated>2016-07-05T00:15:57-07:00</updated>
+    <id>http://tdongsi.github.io/javascript/blog/2016/07/05/git-allow-empty-when-squashing</id>
+    <content type="html"><![CDATA[<p>Many times in Git, we commit some work only to realize that is a mistake, and we should do another way.
+The easy way to fix that is to revert the previous commit, a process in which Git creates another commit that undoes exactly everything in the last commit.
+After that, we move on with the other way and check in commits for that.
+Before pushing everything to the remote branch, as responsible software engineers :), we sometimes want to &ldquo;squash&rdquo; the commits to erase the mistake to keep the commit log clean.</p>
+
+<!--more-->
+
+
+<p>In the example shown below, my commit <code>daefc6e</code> was a mistake, and I reverted it with <code>f3886c2</code> commit, and then I checked in my correct solution in <code>b4cb02d</code> commit.
+I wanted to squash those commits in an interactive rebase session, as seen in the following:</p>
+
+<figure class='code'><figcaption><span>Rebase commands shown in text editor</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>pick daefc6e KSAFE REMOVAL.
+</span><span class='line'>squash f3886c2 Revert "KSAFE REMOVAL."
+</span><span class='line'>squash b4cb02d Update constants.
+</span><span class='line'>
+</span><span class='line'># Rebase 41ab184..b4cb02d onto 41ab184
+</span><span class='line'>#
+</span><span class='line'># Commands:
+</span><span class='line'>#  p, pick = use commit
+</span><span class='line'>#  r, reword = use commit, but edit the commit message
+</span><span class='line'>#  e, edit = use commit, but stop for amending
+</span><span class='line'>#  s, squash = use commit, but meld into previous commit
+</span><span class='line'>#  f, fixup = like "squash", but discard this commit's log message
+</span><span class='line'>#  x, exec = run command (the rest of the line) using shell
+</span><span class='line'>#
+</span><span class='line'># These lines can be re-ordered; they are executed from top to bottom.
+</span><span class='line'>#
+</span><span class='line'># If you remove a line here THAT COMMIT WILL BE LOST.
+</span><span class='line'>#
+</span><span class='line'># However, if you remove everything, the rebase will be aborted.
+</span><span class='line'>#
+</span><span class='line'># Note that empty commits are commented out</span></code></pre></td></tr></table></div></figure>
+
+
+<p>However, <code>git rebase</code> always fail in such situations with the following &ldquo;error&rdquo; message:</p>
+
+<figure class='code'><figcaption><span>git rebase fails</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ git rebase -i origin/feature/foobar
+</span><span class='line'>You asked to amend the most recent commit, but doing so would make
+</span><span class='line'>it empty. You can repeat your command with --allow-empty, or you can
+</span><span class='line'>remove the commit entirely with "git reset HEAD^".
+</span><span class='line'>rebase in progress; onto 41ab184
+</span><span class='line'>You are currently rebasing branch 'feature/foobar' on '41ab184'.
+</span><span class='line'>
+</span><span class='line'>No changes
+</span><span class='line'>
+</span><span class='line'>Could not apply f3886c23589e0964a4483f6454c6edeba7d63fb7... KSAFE REMOVAL.</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The error message is very confusing.
+When <code>daefc6e</code> and <code>f3886c2</code> commits are squashed, the net effect is nothing, which is the &ldquo;empty commit&rdquo; mentioned in that error message.
+However, retrying the <code>git rebase</code> command with <code>--allow-empty</code> as said does not work.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ git rebase --interactive --allow-empty 
+</span><span class='line'>error: unknown option `allow-empty' </span></code></pre></td></tr></table></div></figure>
+
+
+<p>Using <code>git rebase --continue</code> does not work as expected: it does not squash three commits into one.</p>
+
+<p>After some Google searching, it turns out that the above error message comes from <code>git commit --amend</code>, which is delegated by <code>git rebase</code> to handle the squash.
+When the message says &ldquo;repeat your command&rdquo;, it means repeating the <code>git commit --amend</code> command, something would never occurs to us.
+Therefore, the right thing to do here is repeat <code>commit</code> and continue with the interactive rebase session:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ git commit --amend --allow-empty
+</span><span class='line'>[detached HEAD 706f662] Revert "KSAFE REMOVAL."
+</span><span class='line'>
+</span><span class='line'>$ git rebase --continue
+</span><span class='line'>[detached HEAD 923477f] Revert "KSAFE REMOVAL."
+</span><span class='line'> 1 file changed, 3 insertions(+), 3 deletions(-)
+</span><span class='line'>Successfully rebased and updated refs/heads/feature/foobar.</span></code></pre></td></tr></table></div></figure>
+
+
+<p>By doing that, we will now have all three commits squashed into one and help cleaning up the commit log.</p>
+
+<!--
+http://git.661346.n2.nabble.com/Confusing-error-message-in-rebase-when-commit-becomes-empty-td7612948.html
+-->
 
 ]]></content>
   </entry>
@@ -2237,900 +3076,6 @@ As a toy example, suppose you have the following data in the local filesystem:</
 <li><a href="http://www-01.ibm.com/support/knowledgecenter/SSULQD_7.2.0/com.ibm.nz.adm.doc/r_sysadm_nzsql_command.html">Nzsql CLI tool</a></li>
 <li><a href="http://www-01.ibm.com/support/knowledgecenter/SSULQD_7.2.0/com.ibm.nz.load.doc/c_load_overview.html?cp=SSULQD_7.2.0%2F5&amp;lang=en">Nzload CLI tool</a></li>
 </ol>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[NZSQL Tips for New Netezza Users]]></title>
-    <link href="http://tdongsi.github.io/javascript/blog/2015/12/07/some-netezzas-nzsql-tips/"/>
-    <updated>2015-12-07T11:11:06-08:00</updated>
-    <id>http://tdongsi.github.io/javascript/blog/2015/12/07/some-netezzas-nzsql-tips</id>
-    <content type="html"><![CDATA[<p>Just like any SQL dialect, NZSQL has some quirks and odd conventions which could be really confusing to new Netezza users.
-This post has some tips for those new users.</p>
-
-<!--more-->
-
-
-<ul>
-<li>By default, identifiers are treated as UPPERCASE, even if you type them as LOWERCASE. So, for example, these create statements:</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">create</span> <span class="k">table</span> <span class="n">my_table</span> <span class="p">(</span><span class="n">name</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">80</span><span class="p">),</span> <span class="n">address</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">80</span><span class="p">));</span>
-</span><span class='line'><span class="k">create</span> <span class="k">table</span> <span class="n">my_table</span> <span class="p">(</span><span class="n">NaMe</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">80</span><span class="p">),</span> <span class="n">adDresS</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">80</span><span class="p">));</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>  are equivalent to:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">create</span> <span class="k">table</span> <span class="n">my_table</span> <span class="p">(</span><span class="n">NAME</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">80</span><span class="p">),</span> <span class="n">ADDRESS</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">80</span><span class="p">));</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>  The same is true for <code>SELECT</code> statements. These two SQL statements:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">select</span> <span class="n">name</span> <span class="k">from</span> <span class="n">my_table</span><span class="p">;</span>
-</span><span class='line'><span class="k">select</span> <span class="n">NaMe</span> <span class="k">from</span> <span class="n">my_table</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>  are equivalent to:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">select</span> <span class="n">NAME</span> <span class="k">from</span> <span class="n">my_table</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>The best practice is that you should never care or override the above default behavior: your identifiers should be case-insensitive. Unfortunately, if you have to override the above default behavior, then you must surround the identifier with double-quotes whenever you reference it. For example, if you create a table using this statement:</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">create</span> <span class="k">table</span> <span class="n">my_table</span> <span class="p">(</span><span class="ss">&quot;Name&quot;</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">80</span><span class="p">),</span> <span class="ss">&quot;Address&quot;</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">80</span><span class="p">));</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>
-then you must reference the identifiers by surrounding them with double-quotes. For example:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">select</span> <span class="ss">&quot;Name&quot;</span> <span class="k">from</span> <span class="n">my_table</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>The most perplexing feature for new Netezza users when reading a NZSQL script is probably the &ldquo;dot dot&rdquo; notation of database object names, i.e., the two dots in <code>my_dwh..companies</code>. It is simply the short-hand notation for database object names, <code>database-name..object-name</code>. The fully qualified form of object names in Netezza has <strong>three-level</strong> as <code>database-name.schema.object-name</code>. One example of using such notation is shown below:</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">select</span> <span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">from</span> <span class="p">(</span><span class="k">select</span> <span class="n">company_name</span> <span class="k">from</span> <span class="n">my_dwh</span><span class="p">..</span><span class="n">companies</span> <span class="k">where</span> <span class="n">company_name</span> <span class="k">like</span> <span class="s1">&#39;%e%&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">x</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h4>External Links</h4>
-
-<ol>
-<li><a href="https://www-304.ibm.com/support/knowledgecenter/SSULQD_7.2.0/com.ibm.nz.dbu.doc/c_dbuser_database_object_naming.html">Database Object Naming</a></li>
-</ol>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Learning Hive (Pt. 7): Partitioned Tables]]></title>
-    <link href="http://tdongsi.github.io/javascript/blog/2015/12/06/programming-hive-partitioned-tables/"/>
-    <updated>2015-12-06T21:09:51-08:00</updated>
-    <id>http://tdongsi.github.io/javascript/blog/2015/12/06/programming-hive-partitioned-tables</id>
-    <content type="html"><![CDATA[<!--
-Chapter 4
--->
-
-
-<p>Continued from the <a href="http://tdongsi.github.io/javascript/blog/2015/12/02/programming-hive-hiveql-ddl/">previous</a> <a href="http://tdongsi.github.io/javascript/blog/2015/12/05/programming-hive-ddl-table/">posts</a>, this post will look into more details of <strong>partitioned tables</strong>.
-Note that Hive does not support row-level inserts, updates, and deletes.
-However, Hive adds extensions such as table partitioning for better performance in the context of Hadoop.</p>
-
-<!--more-->
-
-
-<h3>Partitioned Managed Tables</h3>
-
-<p>In general, partitioning data means distributing data load horizontally, moving data physically closer to its most frequent users. In Hive, partitioning tables changes how Hive structures its data storage for some performance gain.</p>
-
-<p>In &ldquo;Programming Hive&rdquo;, the authors present a hypothetical problem where one will regularly query some <code>employees</code> table by country and state, e.g., all employees in California, US or Alberta, Canada. Therefore, partitioning this table by country and state is a logical thing to do.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">employees</span> <span class="p">(</span>
-</span><span class='line'>  <span class="n">name</span>         <span class="n">STRING</span><span class="p">,</span>
-</span><span class='line'>  <span class="n">salary</span>       <span class="nb">FLOAT</span><span class="p">,</span>
-</span><span class='line'>  <span class="n">subordinates</span> <span class="nb">ARRAY</span><span class="o">&lt;</span><span class="n">STRING</span><span class="o">&gt;</span><span class="p">,</span>
-</span><span class='line'>  <span class="n">deductions</span>   <span class="k">MAP</span><span class="o">&lt;</span><span class="n">STRING</span><span class="p">,</span> <span class="nb">FLOAT</span><span class="o">&gt;</span><span class="p">,</span>
-</span><span class='line'>  <span class="n">address</span>      <span class="n">STRUCT</span><span class="o">&lt;</span><span class="n">street</span><span class="p">:</span><span class="n">STRING</span><span class="p">,</span> <span class="n">city</span><span class="p">:</span><span class="n">STRING</span><span class="p">,</span> <span class="k">state</span><span class="p">:</span><span class="n">STRING</span><span class="p">,</span> <span class="n">zip</span><span class="p">:</span><span class="nb">INT</span><span class="o">&gt;</span>
-</span><span class='line'><span class="p">)</span>
-</span><span class='line'><span class="n">PARTITIONED</span> <span class="k">BY</span> <span class="p">(</span><span class="n">country</span> <span class="n">STRING</span><span class="p">,</span> <span class="k">state</span> <span class="n">STRING</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Without <code>PARTITIONED BY</code> clause, Hive will store data for these tables in a subdirectory <code>employees</code> under the directory defined by <code>hive.metastore.warehouse.dir</code> (see <a href="http://tdongsi.github.io/javascript/blog/2015/12/05/programming-hive-ddl-table/">Managed tables</a>). However, Hive will now create subdirectories inside <code>employees</code> directory for the above partitioning structure:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>...
-</span><span class='line'>.../employees/country<span class="o">=</span>CA/state<span class="o">=</span>AB
-</span><span class='line'>.../employees/country<span class="o">=</span>CA/state<span class="o">=</span>BC
-</span><span class='line'>...
-</span><span class='line'>.../employees/country<span class="o">=</span>US/state<span class="o">=</span>AL
-</span><span class='line'>.../employees/country<span class="o">=</span>US/state<span class="o">=</span>AK
-</span><span class='line'>...
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The actual directory names depends on values of <em>partition keys</em> (e.g., country and state). For very large data sets, partitioning can improve query performance, but only if the partitioning scheme reflects common range filtering (e.g., by countries or states). When we add predicates to WHERE clauses that filter on partition values, these predicates are called <em>partition filters</em> (e.g., <code>WHERE state = 'CA'</code>).</p>
-
-<p>You can view the partitions in a table with <code>SHOW PARTITIONS</code>, as shown in examples below:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">SHOW</span> <span class="n">PARTITIONS</span> <span class="n">college</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="cm">/* DESCRIBE EXTENDED also shows partition keys */</span>
-</span><span class='line'><span class="k">SHOW</span> <span class="n">PARTITIONS</span> <span class="n">employees</span> <span class="n">PARTITION</span><span class="p">(</span> <span class="n">country</span><span class="o">=</span><span class="err">‘</span><span class="n">US</span><span class="err">’</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h4>Strict mode</h4>
-
-<p>Given a partitioned table, a query across all partitions can result in a enormous MapReduce job, especially for a huge data set. It is probably desirable to put in place a safety measure which prohibits queries without any filter on partitions. Hive has a &ldquo;strict&rdquo; mode for that.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>hive&gt; <span class="nb">set </span>hive.mapred.mode<span class="p">;</span>
-</span><span class='line'>hive.mapred.mode<span class="o">=</span>nonstrict
-</span><span class='line'>
-</span><span class='line'>hive&gt; <span class="nb">set </span>hive.mapred.mode <span class="o">=</span> strict<span class="p">;</span>
-</span><span class='line'>hive&gt; SELECT e.name FROM employees e<span class="p">;</span> /* does not work */
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Partitioned External Tables</h3>
-
-<p>You can use partitioning with external tables. The combination gives you a way to “share” data with other tools, while still optimizing query performance. While LOCATION clause is required for non-partitioned external table to specify data location, it is not required for external partitioned tables. Instead, <code>ALTER TABLE</code> statement is used to add data in each partition separately.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">CREATE</span> <span class="k">EXTERNAL</span> <span class="k">TABLE</span> <span class="n">IF</span> <span class="k">NOT</span> <span class="k">EXISTS</span> <span class="n">log_messages</span> <span class="p">(</span>
-</span><span class='line'>  <span class="n">hms</span>             <span class="nb">INT</span><span class="p">,</span>
-</span><span class='line'>  <span class="n">severity</span>        <span class="n">STRING</span><span class="p">,</span>
-</span><span class='line'>  <span class="n">server</span>          <span class="n">STRING</span><span class="p">,</span>
-</span><span class='line'>  <span class="n">process_id</span>      <span class="nb">INT</span><span class="p">,</span>
-</span><span class='line'>  <span class="n">message</span>         <span class="n">STRING</span><span class="p">)</span>
-</span><span class='line'><span class="n">PARTITIONED</span> <span class="k">BY</span> <span class="p">(</span><span class="k">year</span> <span class="nb">INT</span><span class="p">,</span> <span class="k">month</span> <span class="nb">INT</span><span class="p">,</span> <span class="k">day</span> <span class="nb">INT</span><span class="p">)</span>
-</span><span class='line'><span class="k">ROW</span> <span class="n">FORMAT</span> <span class="n">DELIMITED</span> <span class="n">FIELDS</span> <span class="n">TERMINATED</span> <span class="k">BY</span> <span class="s1">&#39;\t&#39;</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">log_messages</span> <span class="k">ADD</span> <span class="n">PARTITION</span><span class="p">(</span><span class="k">year</span> <span class="o">=</span> <span class="mi">2012</span><span class="p">,</span> <span class="k">month</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="k">day</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
-</span><span class='line'><span class="k">LOCATION</span> <span class="s1">&#39;hdfs://master_server/data/log_messages/2012/01/02&#39;</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">DESCRIBE</span> <span class="n">EXTENDED</span> <span class="n">log_messages</span> <span class="n">PARTITION</span> <span class="p">(</span><span class="k">year</span><span class="o">=</span><span class="mi">2012</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Note that <code>ALTER TABLE … ADD PARTITION</code> is not limited to external tables. You can use it with managed tables, too. However, it is not recommended since you have to manually keep track of this partition and remember to delete data in case you want to completely drop the managed table.</p>
-
-<h4>Example use case of partitioned external tables</h4>
-
-<p>For example, each day we might use the following procedure to move data older than a month to S3:</p>
-
-<p>1) Copy the data for the partition being moved to S3. For example, you can use the hadoop distcp command:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'> hadoop distcp /data/log_messages/2011/12/02 s3n://ourbucket/logs/2011/12/02
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>2) Alter the table to point the partition to the S3 location:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='sql'><span class='line'> <span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">log_messages</span> <span class="n">PARTITION</span><span class="p">(</span><span class="k">year</span> <span class="o">=</span> <span class="mi">2011</span><span class="p">,</span> <span class="k">month</span> <span class="o">=</span> <span class="mi">12</span><span class="p">,</span> <span class="k">day</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
-</span><span class='line'> <span class="k">SET</span> <span class="k">LOCATION</span> <span class="s1">&#39;s3n://ourbucket/logs/2011/01/02&#39;</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>3) Remove the HDFS copy of the partition using the hadoop fs -rmr command:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'> hadoop fs -rmr /data/log_messages/2011/01/02
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Altering Partitioned Tables</h3>
-
-<p>Some basic <code>ALTER TABLE</code> statements for manipulating table partitions are shown in the following examples:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="cm">/* Add partition */</span>
-</span><span class='line'><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">log_messages</span> <span class="k">ADD</span> <span class="n">IF</span> <span class="k">NOT</span> <span class="k">EXISTS</span>
-</span><span class='line'><span class="n">PARTITION</span> <span class="p">(</span><span class="k">year</span> <span class="o">=</span> <span class="mi">2011</span><span class="p">,</span> <span class="k">month</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
-</span><span class='line'><span class="k">LOCATION</span> <span class="err">‘</span><span class="o">/</span><span class="n">logs</span><span class="o">/</span><span class="mi">2011</span><span class="o">/</span><span class="mi">01</span><span class="err">&#39;</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="cm">/* Change partition location */</span>
-</span><span class='line'><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">log_messages</span> <span class="n">PARTITION</span> <span class="p">(</span><span class="k">year</span> <span class="o">=</span> <span class="mi">2011</span><span class="p">,</span> <span class="k">month</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
-</span><span class='line'><span class="k">SET</span> <span class="k">LOCATION</span> <span class="err">‘</span><span class="o">/</span><span class="n">bucket</span><span class="o">/</span><span class="n">logs</span><span class="o">/</span><span class="mi">2011</span><span class="o">/</span><span class="mi">01</span><span class="err">’</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="cm">/* Drop partition */</span>
-</span><span class='line'><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">log_messages</span> <span class="k">DROP</span> <span class="n">IF</span> <span class="k">EXISTS</span> <span class="n">PARTITION</span> <span class="p">(</span><span class="k">year</span> <span class="o">=</span> <span class="mi">2011</span><span class="p">,</span> <span class="k">month</span> <span class="o">=</span> <span class="mi">1</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'><span class="cm">/* Alter storage properties of partition */</span>
-</span><span class='line'><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">log_messages</span>
-</span><span class='line'><span class="n">PARTITION</span><span class="p">(</span><span class="k">year</span> <span class="o">=</span> <span class="mi">2012</span><span class="p">,</span> <span class="k">month</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="k">day</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
-</span><span class='line'><span class="k">SET</span> <span class="n">FILEFORMAT</span> <span class="n">SEQUENCEFILE</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="cm">/* Archive partition */</span>
-</span><span class='line'><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">log_messages</span> <span class="n">ARCHIVE</span>
-</span><span class='line'><span class="n">PARTITION</span><span class="p">(</span><span class="k">year</span> <span class="o">=</span> <span class="mi">2012</span><span class="p">,</span> <span class="k">month</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="k">day</span> <span class="o">=</span> <span class="mi">1</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The <code>ALTER TABLE ... ARCHIVE PARTITION</code> statement captures the partition files into a Hadoop archive (HAR) file. This only reduces the number of files in the filesystem, reducing the load on the NameNode, but doesn’t provide any space savings. To reverse the operation, substitute UNARCHIVE for ARCHIVE. This feature is only available for individual partitions of partitioned tables.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Learning Hive (Pt. 6): HiveQL Data Definition]]></title>
-    <link href="http://tdongsi.github.io/javascript/blog/2015/12/05/programming-hive-ddl-table/"/>
-    <updated>2015-12-05T20:15:56-08:00</updated>
-    <id>http://tdongsi.github.io/javascript/blog/2015/12/05/programming-hive-ddl-table</id>
-    <content type="html"><![CDATA[<p>Continued from the previous <a href="http://tdongsi.github.io/javascript/blog/2015/12/02/programming-hive-hiveql-ddl/">post</a>, this post covers data definition parts of HiveQL language, for creating, altering, and dropping <strong>tables</strong>.</p>
-
-<!--more-->
-
-
-<h3>Creating Tables</h3>
-
-<p>Some basic HiveQL&rsquo;s table DDL commands are shown in the following examples:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="cm">/* NOTE: the LOCATION clause uses the default location */</span>
-</span><span class='line'><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">IF</span> <span class="k">NOT</span> <span class="k">EXISTS</span> <span class="n">college</span><span class="p">.</span><span class="n">student</span> <span class="p">(</span>
-</span><span class='line'>  <span class="n">name</span> <span class="n">STRING</span> <span class="k">COMMENT</span> <span class="s1">&#39;Student name&#39;</span><span class="p">,</span>
-</span><span class='line'>  <span class="n">sid</span> <span class="nb">INT</span> <span class="k">COMMENT</span> <span class="s1">&#39;Student ID&#39;</span><span class="p">,</span>
-</span><span class='line'><span class="p">)</span>
-</span><span class='line'><span class="k">COMMENT</span> <span class="s1">&#39;Description of the table&#39;</span> <span class="n">TBLPROPERTIES</span> <span class="p">(</span> <span class="s1">&#39;creator&#39;</span> <span class="o">=</span> <span class="s1">&#39;me&#39;</span> <span class="p">)</span>
-</span><span class='line'><span class="k">LOCATION</span> <span class="s1">&#39;/user/hive/warehouse/college.db/student&#39;</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="cm">/* </span>
-</span><span class='line'><span class="cm"> * copy the schema of an existing table</span>
-</span><span class='line'><span class="cm"> * you can specify optional LOCATION but no other can be defined</span>
-</span><span class='line'><span class="cm"> */</span>
-</span><span class='line'><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">IF</span> <span class="k">NOT</span> <span class="k">EXISTS</span> <span class="n">mydb</span><span class="p">.</span><span class="n">clone</span> <span class="k">LIKE</span> <span class="n">mydb</span><span class="p">.</span><span class="n">employees</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="cm">/*</span>
-</span><span class='line'><span class="cm">* Create external table</span>
-</span><span class='line'><span class="cm">* Read all data files with comma-delimited format</span>
-</span><span class='line'><span class="cm">* from /data/stocks</span>
-</span><span class='line'><span class="cm">* LOCATION is required for external table</span>
-</span><span class='line'><span class="cm">*/</span>
-</span><span class='line'><span class="k">CREATE</span> <span class="k">EXTERNAL</span> <span class="k">TABLE</span> <span class="n">IF</span> <span class="k">NOT</span> <span class="k">EXISTS</span> <span class="n">stocks</span> <span class="p">(</span>
-</span><span class='line'>  <span class="n">exchange</span>        <span class="n">STRING</span><span class="p">,</span>
-</span><span class='line'>  <span class="n">symbol</span>          <span class="n">STRING</span><span class="p">,</span>
-</span><span class='line'>  <span class="n">volume</span>          <span class="nb">INT</span><span class="p">,</span>
-</span><span class='line'>  <span class="n">price_adj_close</span> <span class="nb">FLOAT</span><span class="p">)</span>
-</span><span class='line'><span class="k">ROW</span> <span class="n">FORMAT</span> <span class="n">DELIMITED</span> <span class="n">FIELDS</span> <span class="n">TERMINATED</span> <span class="k">BY</span> <span class="s1">&#39;,&#39;</span>
-</span><span class='line'><span class="k">LOCATION</span> <span class="s1">&#39;/data/stocks&#39;</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="cm">/*</span>
-</span><span class='line'><span class="cm">* Copy external table schema.</span>
-</span><span class='line'><span class="cm">*/</span>
-</span><span class='line'><span class="k">CREATE</span> <span class="k">EXTERNAL</span> <span class="k">TABLE</span> <span class="n">IF</span> <span class="k">NOT</span> <span class="k">EXISTS</span> <span class="n">ext_clone</span>
-</span><span class='line'><span class="k">LIKE</span> <span class="n">stocks</span>
-</span><span class='line'><span class="k">LOCATION</span> <span class="s1">&#39;/path/to/data&#39;</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="cm">/*</span>
-</span><span class='line'><span class="cm">* Drop table</span>
-</span><span class='line'><span class="cm">* For managed tables, the table metadata and data are deleted.</span>
-</span><span class='line'><span class="cm">* For external tables, the metadata is deleted but the data is not.</span>
-</span><span class='line'><span class="cm">*/</span>
-</span><span class='line'><span class="k">DROP</span> <span class="k">TABLE</span> <span class="n">IF</span> <span class="k">EXISTS</span> <span class="n">college</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Note that in the first <code>CREATE TABLE</code> command, you can prefix a database name, e.g. <code>mydb</code>, even when it is not your current working database. As usual, the optional <code>IF NOT EXISTS</code> clause will ignore the statement if the table already exists, even when the schema does not match (no warning from Hive). The second <code>CREATE TABLE</code> command is useful to copy the schema of an existing table. The corresponding commands for <strong>external</strong> table are also shown above (note <code>EXTERNAL TABLE</code>). The concept of external table in Hive will be discussed shortly.</p>
-
-<p>The <code>SHOW TABLES</code> command lists the tables. You use different variants of that command to find tables of interest as shown below:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>hive&gt; use college<span class="p">;</span>
-</span><span class='line'>OK
-</span><span class='line'>Time taken: 0.048 seconds
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>/* Show list of tables in current database */
-</span><span class='line'>hive&gt; show tables<span class="p">;</span>
-</span><span class='line'>OK
-</span><span class='line'>apply
-</span><span class='line'>college
-</span><span class='line'>student
-</span><span class='line'>Time taken: 0.031 seconds, Fetched: <span class="m">3</span> row<span class="o">(</span>s<span class="o">)</span>
-</span><span class='line'>
-</span><span class='line'>/* Show list of tables in the specified database */
-</span><span class='line'>hive&gt; show tables in college<span class="p">;</span>
-</span><span class='line'>OK
-</span><span class='line'>apply
-</span><span class='line'>college
-</span><span class='line'>student
-</span><span class='line'>Time taken: 0.034 seconds, Fetched: <span class="m">3</span> row<span class="o">(</span>s<span class="o">)</span>
-</span><span class='line'>
-</span><span class='line'>/* use regex to search tables in current database */
-</span><span class='line'>hive&gt; show tables <span class="s1">&#39;.*e.*&#39;</span><span class="p">;</span>
-</span><span class='line'>OK
-</span><span class='line'>college
-</span><span class='line'>student
-</span><span class='line'>Time taken: 0.025 seconds, Fetched: <span class="m">2</span> row<span class="o">(</span>s<span class="o">)</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>/* Show table properties */
-</span><span class='line'>hive&gt; show tblproperties student<span class="p">;</span>
-</span><span class='line'>OK
-</span><span class='line'>COLUMN_STATS_ACCURATE <span class="nb">true</span>
-</span><span class='line'>comment   List of students
-</span><span class='line'>numFiles  1
-</span><span class='line'>numRows   0
-</span><span class='line'>rawDataSize   0
-</span><span class='line'>totalSize 213
-</span><span class='line'>transient_lastDdlTime 1421796179
-</span><span class='line'>Time taken: 0.28 seconds, Fetched: <span class="m">7</span> row<span class="o">(</span>s<span class="o">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>You can use <code>DESCRIBE</code> command to display table information as shown below:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>hive&gt; describe extended student<span class="p">;</span>
-</span><span class='line'>OK
-</span><span class='line'>sid                   int                     Student ID
-</span><span class='line'>sname                 string                  Student name
-</span><span class='line'>gpa                   float                   Student GPA
-</span><span class='line'>sizehs                int                     Size of student highschool
-</span><span class='line'>      
-</span><span class='line'>Detailed Table Information    Table<span class="o">(</span>tableName:student, dbName:college, owner:cloudera, createTime:1421796178, lastAccessTime:0, retention:0,
-</span><span class='line'>sd:StorageDescriptor<span class="o">(</span>cols:<span class="o">[</span>FieldSchema<span class="o">(</span>name:sid, <span class="nb">type</span>:int, comment:Student ID<span class="o">)</span>, FieldSchema<span class="o">(</span>name:sname, <span class="nb">type</span>:string, comment:Student name<span class="o">)</span>, ...
-</span><span class='line'>Time taken: 0.119 seconds, Fetched: <span class="m">6</span> row<span class="o">(</span>s<span class="o">)</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>/* more readable and verbose */
-</span><span class='line'>hive&gt; describe formatted student<span class="p">;</span>
-</span><span class='line'>OK
-</span><span class='line'><span class="c"># col_name                data_type               comment             </span>
-</span><span class='line'>      
-</span><span class='line'>sid                   int                     Student ID
-</span><span class='line'>sname                 string                  Student name
-</span><span class='line'>gpa                   float                   Student GPA
-</span><span class='line'>sizehs                int                     Size of student highschool
-</span><span class='line'>      
-</span><span class='line'><span class="c"># Detailed Table Information       </span>
-</span><span class='line'>Database:             college                 
-</span><span class='line'>Owner:                cloudera                
-</span><span class='line'>CreateTime:           Tue Jan <span class="m">20</span> 15:22:58 PST 2015 
-</span><span class='line'>LastAccessTime:       UNKNOWN                 
-</span><span class='line'>Protect Mode:         None                    
-</span><span class='line'>Retention:            <span class="m">0</span>                    
-</span><span class='line'>Location:             hdfs://quickstart.cloudera:8020/user/hive/warehouse/college.db/student  
-</span><span class='line'>Table Type:           MANAGED_TABLE           
-</span><span class='line'>Table Parameters:     
-</span><span class='line'>  COLUMN_STATS_ACCURATE   <span class="nb">true                </span>
-</span><span class='line'><span class="nb"> </span>comment              List of students
-</span><span class='line'>  numFiles                <span class="m">1</span>
-</span><span class='line'>  numRows                 <span class="m">0</span>
-</span><span class='line'>  rawDataSize             <span class="m">0</span>
-</span><span class='line'>  totalSize               <span class="m">213</span>
-</span><span class='line'>  transient_lastDdlTime   <span class="m">1421796179</span>
-</span><span class='line'>      
-</span><span class='line'><span class="c"># Storage Information      </span>
-</span><span class='line'>SerDe Library:        org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe  
-</span><span class='line'>InputFormat:          org.apache.hadoop.mapred.TextInputFormat    
-</span><span class='line'>OutputFormat:         org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat  
-</span><span class='line'>Compressed:           No                      
-</span><span class='line'>Num Buckets:          -1                      
-</span><span class='line'>Bucket Columns:       <span class="o">[]</span>                   
-</span><span class='line'>Sort Columns:         <span class="o">[]</span>                   
-</span><span class='line'>Storage Desc Params:      
-</span><span class='line'>  field.delim             <span class="p">;</span>
-</span><span class='line'>  serialization.format    <span class="p">;</span>
-</span><span class='line'>Time taken: 0.108 seconds, Fetched: <span class="m">36</span> row<span class="o">(</span>s<span class="o">)</span>
-</span><span class='line'>
-</span><span class='line'>/* see schema <span class="k">for</span> a column */
-</span><span class='line'>hive&gt; describe student.sid<span class="p">;</span>
-</span><span class='line'>OK
-</span><span class='line'>sid                   int                     from deserializer
-</span><span class='line'>Time taken: 0.315 seconds, Fetched: <span class="m">1</span> row<span class="o">(</span>s<span class="o">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Managed tables vs. External tables</h3>
-
-<p><code>CREATE TABLE</code> commands (without <code>EXTERNAL</code>) create <em>managed tables</em> or <em>internal tables</em>.
-It is internal/managed because the life cycle of their data is managed by Hive.
-By default, Hive stores data for these tables in a subdirectory under the directory defined by <code>hive.metastore.warehouse.dir</code>, as illustrated below (see <a href="http://tdongsi.github.io/javascript/blog/2015/11/23/programming-hive-hive-cli/">Hive CLI</a> for <code>SET</code> and <code>dfs</code> commands).
-When we drop a managed table with <code>DROP TABLE</code> command, the data in the table will be deleted.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>hive&gt; SET hive.metastore.warehouse.dir<span class="p">;</span>
-</span><span class='line'>hive.metastore.warehouse.dir<span class="o">=</span>/user/hive/warehouse
-</span><span class='line'>hive&gt; dfs -ls /user/hive/warehouse/college.db<span class="p">;</span>
-</span><span class='line'>Found <span class="m">3</span> items
-</span><span class='line'>drwxrwxrwx   - hive hive          <span class="m">0</span> 2015-01-21 11:29 /user/hive/warehouse/college.db/apply
-</span><span class='line'>drwxrwxrwx   - hive hive          <span class="m">0</span> 2015-12-03 15:16 /user/hive/warehouse/college.db/college
-</span><span class='line'>drwxrwxrwx   - hive hive          <span class="m">0</span> 2015-01-28 15:26 /user/hive/warehouse/college.db/student
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>As mentioned in <a href="http://tdongsi.github.io/javascript/blog/2015/11/26/programming-hive-data-types/">Schema on Read</a>, Hive does not have control over the underlying storage, even for <em>managed table</em>: for example, you can totally use another <code>dfs</code> command in the last example to modify files on HDFS.</p>
-
-<p>Managed tables are not convenient for sharing data with other tools.
-Instead, <em>external tables</em> can be defined to point to that data, but don&rsquo;t take ownership of data.
-In the <code>CREATE EXTERNAL TABLE</code> command example at the beginning of this post, the data files are in HDFS at <code>/data/stocks</code> and the external table will be created and populated by reading all comma-delimited data files in that location.
-The <code>LOCATION</code> clause is required for external table, to tell Hive where it is located.
-Dropping an external table does not delete the data since Hive does not <em>own</em> the data.
-However, the <em>metadata</em> for that table will be deleted.</p>
-
-<p>To tell whether if a table is managed or external, use the command <code>DESCRIBE FORMATTED</code>. In the example in the last section, we see that the table <code>college.student</code> is a managed table because of its output:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>Location:            hdfs://quickstart.cloudera:8020/user/hive/warehouse/college.db/student  
-</span><span class='line'>Table Type:           MANAGED_TABLE
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>For external tables, the output will be like <code>Table Type: EXTERNAL_TABLE</code>.</p>
-
-<h3>Altering Tables</h3>
-
-<p>The <code>ALTER TABLE</code> statements <em>only</em> change <em>metadata</em> of the table, but not the data in the table. It&rsquo;s up to us to ensure that any schema modifications are consistent with the actual data.</p>
-
-<p>Some basic <code>ALTER TABLE</code> statements for renaming table and changing table columns are shown in the following examples:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="cm">/* Renaming table */</span>
-</span><span class='line'><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">college</span> <span class="k">RENAME</span> <span class="k">TO</span> <span class="n">university</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="cm">/*</span>
-</span><span class='line'><span class="cm"> * Change columns: rename, change its position, type, or comment.</span>
-</span><span class='line'><span class="cm"> * The keyword COLUMN is optional, as well as COMMENT clause.</span>
-</span><span class='line'><span class="cm"> * This command changes metadata only. </span>
-</span><span class='line'><span class="cm"> * The data has to be moved to match the new columns if needed.</span>
-</span><span class='line'><span class="cm"> * Use FIRST, instead of AFTER, if the column is moved to first.</span>
-</span><span class='line'><span class="cm"> */</span>
-</span><span class='line'><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">log_messages</span>
-</span><span class='line'><span class="n">CHANGE</span> <span class="k">COLUMN</span> <span class="n">hms</span> <span class="n">hours_minutes_seconds</span> <span class="nb">INT</span>
-</span><span class='line'><span class="k">COMMENT</span> <span class="s1">&#39;New comment&#39;</span>
-</span><span class='line'><span class="k">AFTER</span> <span class="n">severity</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="cm">/*</span>
-</span><span class='line'><span class="cm"> * Add columns, to the end of existing columns.</span>
-</span><span class='line'><span class="cm"> * Use CHANGE COLUMN to rearrange if needed.</span>
-</span><span class='line'><span class="cm"> */</span>
-</span><span class='line'><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">log_messages</span>
-</span><span class='line'><span class="k">ADD</span> <span class="n">COLUMNS</span> <span class="p">(</span>
-</span><span class='line'><span class="n">app_name</span> <span class="n">STRING</span> <span class="k">COMMENT</span> <span class="s1">&#39;New column 1&#39;</span><span class="p">,</span>
-</span><span class='line'><span class="n">session_id</span> <span class="nb">INT</span> <span class="k">COMMENT</span> <span class="s1">&#39;New column 2&#39;</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'><span class="cm">/*</span>
-</span><span class='line'><span class="cm"> * Remove all the existing columns and replaces with new </span>
-</span><span class='line'><span class="cm"> * specified columns.</span>
-</span><span class='line'><span class="cm"> */</span>
-</span><span class='line'><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">log_messages</span>
-</span><span class='line'><span class="k">REPLACE</span> <span class="n">COLUMNS</span> <span class="p">(</span>
-</span><span class='line'><span class="n">app_name</span> <span class="n">STRING</span> <span class="k">COMMENT</span> <span class="s1">&#39;New column 1&#39;</span><span class="p">,</span>
-</span><span class='line'><span class="n">session_id</span> <span class="nb">INT</span> <span class="k">COMMENT</span> <span class="s1">&#39;New column 2&#39;</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'><span class="cm">/* </span>
-</span><span class='line'><span class="cm"> * You can add table properties or set current properties,</span>
-</span><span class='line'><span class="cm"> * but not remove them </span>
-</span><span class='line'><span class="cm"> */</span>
-</span><span class='line'><span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">log_messages</span>
-</span><span class='line'><span class="k">SET</span> <span class="n">TBLPROPERTIES</span> <span class="p">(</span>
-</span><span class='line'><span class="s1">&#39;some_key&#39;</span> <span class="o">=</span> <span class="s1">&#39;some_value&#39;</span>
-</span><span class='line'><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Learning Hive (Pt. 5): HiveQL Data Definition]]></title>
-    <link href="http://tdongsi.github.io/javascript/blog/2015/12/02/programming-hive-hiveql-ddl/"/>
-    <updated>2015-12-02T18:32:21-08:00</updated>
-    <id>http://tdongsi.github.io/javascript/blog/2015/12/02/programming-hive-hiveql-ddl</id>
-    <content type="html"><![CDATA[<p>This post covers data definition parts of HiveQL language, for creating, altering, and dropping <strong>databases</strong>.</p>
-
-<!--more-->
-
-
-<h3>Databases</h3>
-
-<p>In Hive, the concept of a database is basically just a namespace of tables. The keyword SCHEMA can be used instead of DATABASE in all the database-related commands. If you don’t specify a database, the <code>default</code> database is used.</p>
-
-<p>Some basic HiveQL&rsquo;s database commands is shown in the following examples:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">CREATE</span> <span class="k">DATABASE</span> <span class="n">college</span><span class="p">;</span>
-</span><span class='line'><span class="k">CREATE</span> <span class="k">DATABASE</span> <span class="n">IF</span> <span class="k">NOT</span> <span class="k">EXISTS</span> <span class="n">college</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">SHOW</span> <span class="n">DATABASES</span><span class="p">;</span>
-</span><span class='line'><span class="k">SHOW</span> <span class="n">DATABASES</span> <span class="k">LIKE</span> <span class="s1">&#39;h.*&#39;</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">CREATE</span> <span class="k">DATABASE</span> <span class="n">college</span>
-</span><span class='line'><span class="k">LOCATION</span> <span class="s1">&#39;/my/preferred/directory&#39;</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="cm">/* add comments to table */</span>
-</span><span class='line'><span class="k">CREATE</span> <span class="k">DATABASE</span> <span class="n">college</span> <span class="k">COMMENT</span> <span class="s1">&#39;A college admission database&#39;</span><span class="p">;</span>
-</span><span class='line'><span class="cm">/* show comments */</span>
-</span><span class='line'><span class="k">DESCRIBE</span> <span class="k">DATABASE</span> <span class="n">college</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="cm">/* add properties */</span>
-</span><span class='line'><span class="k">CREATE</span> <span class="k">DATABASE</span> <span class="n">college</span> <span class="k">WITH</span> <span class="n">DBPROPERTIES</span> <span class="p">(</span> <span class="s1">&#39;creator&#39;</span> <span class="o">=</span> <span class="s1">&#39;CD&#39;</span><span class="p">,</span> <span class="s1">&#39;date&#39;</span> <span class="o">=</span> <span class="s1">&#39;today&#39;</span> <span class="p">);</span>
-</span><span class='line'><span class="cm">/* show properties */</span>
-</span><span class='line'><span class="k">DESCRIBE</span> <span class="k">DATABASE</span> <span class="n">EXTENDED</span> <span class="n">college</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="cm">/* set working database */</span>
-</span><span class='line'><span class="n">USE</span> <span class="n">college</span><span class="p">;</span>
-</span><span class='line'><span class="cm">/* this will show tables in this database */</span>
-</span><span class='line'><span class="k">SHOW</span> <span class="n">TABLES</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">DROP</span> <span class="k">DATABASE</span> <span class="n">IF</span> <span class="k">EXISTS</span> <span class="n">college</span><span class="p">;</span>
-</span><span class='line'><span class="cm">/* Drop tables if there is any table in the database */</span>
-</span><span class='line'><span class="k">DROP</span> <span class="k">DATABASE</span> <span class="n">IF</span> <span class="k">EXISTS</span> <span class="n">college</span> <span class="k">CASCADE</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="cm">/* You can set additional key-value pairs in properties.</span>
-</span><span class='line'><span class="cm"> * No other metadata about the database can be changed. No way to delete a DB PROPERTY.</span>
-</span><span class='line'><span class="cm"> */</span>
-</span><span class='line'><span class="k">ALTER</span> <span class="k">DATABASE</span> <span class="n">college</span> <span class="k">SET</span> <span class="n">DBPROPERTIES</span> <span class="p">(</span><span class="s1">&#39;editor&#39;</span> <span class="o">=</span> <span class="s1">&#39;DC&#39;</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Note that Hive will create separate directory for each database. The exception is the <code>default</code> database, which doesn&rsquo;t have its own directory. Tables in each database will be stored in subdirectories of the database directory. The location of the database directory is specified by the property <code>hive.metastore.warehouse.dir</code>. To help us understand better, these are illustrated by the Hive CLI commands as follows:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span>cloudera@quickstart temp<span class="o">]</span><span class="nv">$ </span>hive
-</span><span class='line'>
-</span><span class='line'>Logging initialized using configuration in file:/etc/hive/conf.dist/hive-log4j.properties
-</span><span class='line'>hive&gt; describe database default<span class="p">;</span>
-</span><span class='line'>OK
-</span><span class='line'>default   Default Hive database   hdfs://quickstart.cloudera:8020/user/hive/warehouse public  ROLE    
-</span><span class='line'>Time taken: 0.01 seconds, Fetched: <span class="m">1</span> row<span class="o">(</span>s<span class="o">)</span>
-</span><span class='line'>hive&gt; describe database college<span class="p">;</span>
-</span><span class='line'>OK
-</span><span class='line'>college       hdfs://quickstart.cloudera:8020/user/hive/warehouse/college.db  cloudera    USER    
-</span><span class='line'>Time taken: 0.011 seconds, Fetched: <span class="m">1</span> row<span class="o">(</span>s<span class="o">)</span>
-</span><span class='line'>
-</span><span class='line'>hive&gt; SET hive.metastore.warehouse.dir<span class="p">;</span>
-</span><span class='line'>hive.metastore.warehouse.dir<span class="o">=</span>/user/hive/warehouse
-</span><span class='line'>
-</span><span class='line'>hive&gt; dfs -ls hdfs://quickstart.cloudera:8020/user/hive/warehouse/college.db<span class="p">;</span>
-</span><span class='line'>Found <span class="m">3</span> items
-</span><span class='line'>drwxrwxrwx   - hive hive          <span class="m">0</span> 2015-01-21 11:29 hdfs://quickstart.cloudera:8020/user/hive/warehouse/college.db/apply
-</span><span class='line'>drwxrwxrwx   - hive hive          <span class="m">0</span> 2015-01-20 15:22 hdfs://quickstart.cloudera:8020/user/hive/warehouse/college.db/college
-</span><span class='line'>drwxrwxrwx   - hive hive          <span class="m">0</span> 2015-01-28 15:26 hdfs://quickstart.cloudera:8020/user/hive/warehouse/college.db/student
-</span><span class='line'>hive&gt; dfs -ls hdfs://quickstart.cloudera:8020/user/hive/warehouse/college.db/student<span class="p">;</span>
-</span><span class='line'>Found <span class="m">1</span> items
-</span><span class='line'>-rwxrwxrwx   <span class="m">1</span> cloudera hive        <span class="m">213</span> 2015-01-20 15:22 hdfs://quickstart.cloudera:8020/user/hive/warehouse/college.db/student/student.data
-</span><span class='line'>hive&gt; dfs -ls hdfs://quickstart.cloudera:8020/user/hive/warehouse/college.db/college<span class="p">;</span>
-</span><span class='line'>Found <span class="m">1</span> items
-</span><span class='line'>-rwxrwxrwx   <span class="m">1</span> cloudera hive         <span class="m">66</span> 2015-01-20 15:22 hdfs://quickstart.cloudera:8020/user/hive/warehouse/college.db/college/college.data
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>In the output of the <code>DESCRIBE DATABASE</code> commands above, the directory location of the database is shown, with <code>hdfs</code> as URI scheme. Note that <code>hdfs://quickstart.cloudera:8020/user/hive/warehouse/college.db</code> is equivalent to <code>hdfs://user/hive/warehouse/college.db</code>, where <code>quickstart.cloudera:8020</code> is simply the master node’s DNS name and port on Cloudera Quickstart VM. The name of the database directory is always <code>database_name.db</code>, with <code>.db</code> suffix added to database name. The three tables <code>college</code>, <code>student</code>, and <code>apply</code> in the <code>college</code> database are created as sub-directories in that <code>college.db</code> directory, as shown above. When a database is dropped, its directory is also deleted. By default, Hive will not allow you to drop a database that contains tables. The second <code>DROP DATABASE</code> command with <code>CASCADE</code> will force Hive to drop the database by dropping the tables in the database first.</p>
-
-<p>There is no command to show the current working database. When in doubt, it is safe to use the command <code>USE database_name;</code> repeatedly since there is no nesting of databases in Hive. Otherwise, you can set a property to show the current working database in Hive CLI prompt as follows:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>hive&gt; <span class="nb">set </span>hive.cli.print.current.db<span class="o">=</span><span class="nb">true</span><span class="p">;</span>
-</span><span class='line'>hive <span class="o">(</span>default<span class="o">)</span>&gt; USE college<span class="p">;</span>
-</span><span class='line'>OK
-</span><span class='line'>Time taken: 0.278 seconds
-</span><span class='line'>hive <span class="o">(</span>college<span class="o">)</span>&gt;
-</span></code></pre></td></tr></table></div></figure>
 
 ]]></content>
   </entry>

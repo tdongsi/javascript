@@ -9,8 +9,8 @@
   <meta name="author" content="Cuong Dong-Si">
 
   
-  <meta name="description" content="When developing data-warehouse solutions in Vertica, you want to set up some test environment.
-Ideally, you should have separate schema for each &hellip;">
+  <meta name="description" content="In this post, most of optimization notes for Vertica performance are from our team&rsquo;s interaction with Nexius consultants.
+Also see Vertica Best &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -67,6 +67,155 @@ Ideally, you should have separate schema for each &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/javascript/blog/2016/02/13/vertica-8-performance-tuning/">Vertica: Performance Optimization Notes</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2016-02-13T23:52:44-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>13</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span> <span class='time'>11:52 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>In this post, most of optimization notes for Vertica performance are from our team&rsquo;s interaction with <a href="http://www.nexius.com/software-and-business-intelligence/">Nexius</a> consultants.
+Also see <a href="/javascript/blog/2015/12/16/vertica-tip-best-practices/">Vertica Best Practices</a>.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/javascript/blog/2016/02/13/vertica-8-performance-tuning/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/javascript/blog/2016/02/07/vertica-7-projections/">Vertica Projections</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2016-02-07T00:50:44-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>7</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span> <span class='time'>12:50 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Projections are key in Vertica performance tuning.
+Details of Vertica projections are discussed in the following blog posts from HP-Vertica:</p>
+
+<ol>
+<li><a href="https://www.vertica.com/2011/09/01/the-power-of-projections-part-1/">https://www.vertica.com/2011/09/01/the-power-of-projections-part-1/</a></li>
+<li><a href="https://www.vertica.com/2011/09/02/the-power-of-projections-part-2/">https://www.vertica.com/2011/09/02/the-power-of-projections-part-2/</a></li>
+<li><a href="https://www.vertica.com/2011/09/06/the-power-of-projections-part-3/">https://www.vertica.com/2011/09/06/the-power-of-projections-part-3/</a></li>
+</ol>
+
+
+<p>In summary, Vertica projections represent collections of columns (like table) but they are optimized for analytics at the physical storage structure level and they are not constrained by the logical schema.
+For each regular table, Vertica requires a minimum of one projection, called a “superprojection”.
+Vertica creates a default super-projection when running CREATE TABLE statement.
+<a href="https://www.vertica.com/2011/09/06/the-power-of-projections-part-3/">Part 3</a> also compares Vertica projections with &ldquo;Materialized Views&rdquo; and &ldquo;Indexes&rdquo; in traditional databases.</p>
+
+<p>For Vertica performance tuning, we create multiple projections, customize them and parameters of each projection to achieve the best performance.
+Database Designer is a tool provided by Vertica to help us find the optimal projections, based on data statistics and frequent queries.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/javascript/blog/2016/01/18/aws-developing-with-amazon-s3/">AWS: Developing With Amazon S3</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2016-01-18T17:13:28-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>18</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span> <span class='time'>5:13 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Amazon Simple Storage Service or S3 is a simple, scalable web services to store and retrieve data.
+This post talks about basic concepts of buckets and objects in S3, basic and advanced operations on objects in S3, and standard development considerations when working with S3 using SDK.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/javascript/blog/2016/01/18/aws-developing-with-amazon-s3/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/javascript/blog/2016/01/17/aws-set-up-aws-credentials-on-mac-osx/">AWS: Getting Started on Mac OSX</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2016-01-17T20:57:35-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>17</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span> <span class='time'>8:57 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Quick-start guide on AWS development in Java and Python.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/javascript/blog/2016/01/17/aws-set-up-aws-credentials-on-mac-osx/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -289,150 +438,6 @@ You can install the Netezza CLI tools directly onto your system by following the
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/javascript/blog/2015/12/07/some-netezzas-nzsql-tips/">NZSQL Tips for New Netezza Users</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-12-07T11:11:06-08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>7</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>11:11 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Just like any SQL dialect, NZSQL has some quirks and odd conventions which could be really confusing to new Netezza users.
-This post has some tips for those new users.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/javascript/blog/2015/12/07/some-netezzas-nzsql-tips/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/javascript/blog/2015/12/06/programming-hive-partitioned-tables/">Learning Hive (Pt. 7): Partitioned Tables</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-12-06T21:09:51-08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>6</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>9:09 pm</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><!--
-Chapter 4
--->
-
-
-<p>Continued from the <a href="/javascript/blog/2015/12/02/programming-hive-hiveql-ddl/">previous</a> <a href="/javascript/blog/2015/12/05/programming-hive-ddl-table/">posts</a>, this post will look into more details of <strong>partitioned tables</strong>.
-Note that Hive does not support row-level inserts, updates, and deletes.
-However, Hive adds extensions such as table partitioning for better performance in the context of Hadoop.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/javascript/blog/2015/12/06/programming-hive-partitioned-tables/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/javascript/blog/2015/12/05/programming-hive-ddl-table/">Learning Hive (Pt. 6): HiveQL Data Definition</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-12-05T20:15:56-08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>5</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>8:15 pm</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Continued from the previous <a href="/javascript/blog/2015/12/02/programming-hive-hiveql-ddl/">post</a>, this post covers data definition parts of HiveQL language, for creating, altering, and dropping <strong>tables</strong>.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/javascript/blog/2015/12/05/programming-hive-ddl-table/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/javascript/blog/2015/12/02/programming-hive-hiveql-ddl/">Learning Hive (Pt. 5): HiveQL Data Definition</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-12-02T18:32:21-08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>2</span><span class='date-suffix'>nd</span>, <span class='date-year'>2015</span></span> <span class='time'>6:32 pm</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>This post covers data definition parts of HiveQL language, for creating, altering, and dropping <strong>databases</strong>.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/javascript/blog/2015/12/02/programming-hive-hiveql-ddl/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/javascript/posts/3">&larr; Older</a>
@@ -457,11 +462,27 @@ However, Hive adds extensions such as table partitioning for better performance 
       </li>
     
       <li class="post">
+        <a href="/javascript/blog/2017/08/29/jenkins-world-2017/">Jenkins World 2017</a>
+      </li>
+    
+      <li class="post">
         <a href="/javascript/blog/2017/06/21/tutorial-quick-start-for-javascript-programming-test/">Tutorial: Quick-start for JavaScript Programming Test</a>
       </li>
     
       <li class="post">
         <a href="/javascript/blog/2017/05/23/code-coverage-instanbul-slash-nyc/">Code Coverage: Istanbul & Nyc</a>
+      </li>
+    
+      <li class="post">
+        <a href="/javascript/blog/2017/05/15/kubernetes-kube-router/">Kubernetes: Kube-router</a>
+      </li>
+    
+      <li class="post">
+        <a href="/javascript/blog/2016/10/30/job-dsl-plugin-in-jenkins/">Job DSL Plugin in Jenkins</a>
+      </li>
+    
+      <li class="post">
+        <a href="/javascript/blog/2016/07/05/git-allow-empty-when-squashing/">Git: Allow-empty When Squashing</a>
       </li>
     
       <li class="post">
@@ -476,28 +497,12 @@ However, Hive adds extensions such as table partitioning for better performance 
         <a href="/javascript/blog/2016/02/29/vertica-9-refresh-projections/">Vertica: Refresh Your Projections</a>
       </li>
     
-      <li class="post">
-        <a href="/javascript/blog/2016/02/13/vertica-8-performance-tuning/">Vertica: Performance Optimization Notes</a>
-      </li>
-    
-      <li class="post">
-        <a href="/javascript/blog/2016/02/07/vertica-7-projections/">Vertica Projections</a>
-      </li>
-    
-      <li class="post">
-        <a href="/javascript/blog/2016/01/18/aws-developing-with-amazon-s3/">AWS: Developing With Amazon S3</a>
-      </li>
-    
-      <li class="post">
-        <a href="/javascript/blog/2016/01/17/aws-set-up-aws-credentials-on-mac-osx/">AWS: Getting Started on Mac OSX</a>
-      </li>
-    
   </ul>
 </section>
 
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/javascript/blog/categories/aws/'>aws (2)</a></li><li><a href='/javascript/blog/categories/bash/'>bash (2)</a></li><li><a href='/javascript/blog/categories/book/'>book (9)</a></li><li><a href='/javascript/blog/categories/centos/'>centos (1)</a></li><li><a href='/javascript/blog/categories/database/'>database (5)</a></li><li><a href='/javascript/blog/categories/git/'>git (1)</a></li><li><a href='/javascript/blog/categories/hadoop/'>hadoop (10)</a></li><li><a href='/javascript/blog/categories/hive/'>hive (8)</a></li><li><a href='/javascript/blog/categories/java/'>java (6)</a></li><li><a href='/javascript/blog/categories/javascript/'>javascript (2)</a></li><li><a href='/javascript/blog/categories/jdbc/'>jdbc (1)</a></li><li><a href='/javascript/blog/categories/jenkins/'>jenkins (2)</a></li><li><a href='/javascript/blog/categories/junit/'>junit (1)</a></li><li><a href='/javascript/blog/categories/macosx/'>macosx (2)</a></li><li><a href='/javascript/blog/categories/maven/'>maven (2)</a></li><li><a href='/javascript/blog/categories/performance/'>performance (3)</a></li><li><a href='/javascript/blog/categories/python/'>python (2)</a></li><li><a href='/javascript/blog/categories/questions/'>questions (1)</a></li><li><a href='/javascript/blog/categories/sql/'>sql (10)</a></li><li><a href='/javascript/blog/categories/testing/'>testing (3)</a></li><li><a href='/javascript/blog/categories/testng/'>testng (3)</a></li><li><a href='/javascript/blog/categories/todo/'>todo (1)</a></li><li><a href='/javascript/blog/categories/tutorial/'>tutorial (1)</a></li><li><a href='/javascript/blog/categories/vertica/'>vertica (7)</a></li></ul>
+    <ul id="category-list"><li><a href='/javascript/blog/categories/automation/'>automation (1)</a></li><li><a href='/javascript/blog/categories/aws/'>aws (2)</a></li><li><a href='/javascript/blog/categories/bash/'>bash (2)</a></li><li><a href='/javascript/blog/categories/book/'>book (9)</a></li><li><a href='/javascript/blog/categories/centos/'>centos (1)</a></li><li><a href='/javascript/blog/categories/database/'>database (5)</a></li><li><a href='/javascript/blog/categories/git/'>git (2)</a></li><li><a href='/javascript/blog/categories/groovy/'>groovy (1)</a></li><li><a href='/javascript/blog/categories/hadoop/'>hadoop (10)</a></li><li><a href='/javascript/blog/categories/hive/'>hive (8)</a></li><li><a href='/javascript/blog/categories/java/'>java (6)</a></li><li><a href='/javascript/blog/categories/javascript/'>javascript (2)</a></li><li><a href='/javascript/blog/categories/jdbc/'>jdbc (1)</a></li><li><a href='/javascript/blog/categories/jenkins/'>jenkins (4)</a></li><li><a href='/javascript/blog/categories/junit/'>junit (1)</a></li><li><a href='/javascript/blog/categories/kubernetes/'>kubernetes (1)</a></li><li><a href='/javascript/blog/categories/macosx/'>macosx (2)</a></li><li><a href='/javascript/blog/categories/maven/'>maven (2)</a></li><li><a href='/javascript/blog/categories/performance/'>performance (3)</a></li><li><a href='/javascript/blog/categories/perl/'>perl (1)</a></li><li><a href='/javascript/blog/categories/python/'>python (2)</a></li><li><a href='/javascript/blog/categories/questions/'>questions (1)</a></li><li><a href='/javascript/blog/categories/sql/'>sql (10)</a></li><li><a href='/javascript/blog/categories/testing/'>testing (3)</a></li><li><a href='/javascript/blog/categories/testng/'>testng (3)</a></li><li><a href='/javascript/blog/categories/todo/'>todo (1)</a></li><li><a href='/javascript/blog/categories/tutorial/'>tutorial (1)</a></li><li><a href='/javascript/blog/categories/vertica/'>vertica (7)</a></li><li><a href='/javascript/blog/categories/windows/'>windows (1)</a></li></ul>
 </section>
 
 
