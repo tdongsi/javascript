@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: Tutorial | Personal Interview Notes]]></title>
+  <title><![CDATA[Category: Tutorial | Archived Blog Posts]]></title>
   <link href="http://tdongsi.github.io/javascript/blog/categories/tutorial/atom.xml" rel="self"/>
   <link href="http://tdongsi.github.io/javascript/"/>
-  <updated>2021-03-11T06:01:44-08:00</updated>
+  <updated>2021-03-11T06:58:34-08:00</updated>
   <id>http://tdongsi.github.io/javascript/</id>
   <author>
     <name><![CDATA[Cuong Dong-Si]]></name>
@@ -71,114 +71,6 @@ npm install --save-dev jasmine
 # Run your tests
 npm test
 </code></pre>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Tutorial: Getting Started With MEAN Stack]]></title>
-    <link href="http://tdongsi.github.io/javascript/blog/2016/09/09/tutorial-mean-stack/"/>
-    <updated>2016-09-09T21:43:51-07:00</updated>
-    <id>http://tdongsi.github.io/javascript/blog/2016/09/09/tutorial-mean-stack</id>
-    <content type="html"><![CDATA[<p>An example web application with MongoDB, ExpressJS, and NodeJS.</p>
-
-<!--more-->
-
-
-<h3>Final application</h3>
-
-<p>I would go through the final version of the example application before going from the ground up.
-You can find the final example application <a href="https://github.com/tdongsi/mongodb/tree/develop/DevInt/rest">here</a>.
-To run it:</p>
-
-<ul>
-<li>Make sure that MongoDB are running with port 27017.
-
-<ul>
-<li>In Windows, run MongoDB as: <code>mongod.exe --dbpath C:\data\db</code></li>
-</ul>
-</li>
-<li>Change directory to the <code>rest</code> folder.</li>
-<li><code>npm install</code></li>
-<li><code>node index.js</code></li>
-<li>From the browser or <a href="https://www.getpostman.com/">POSTman</a> application, run HTTP methods against <code>http://localhost:3000/api/widgets/</code>.</li>
-</ul>
-
-
-<h4>References</h4>
-
-<ul>
-<li>MongoDB installation
-
-<ul>
-<li><a href="http://stackoverflow.com/questions/20796714/what-is-the-way-to-start-mongo-db-from-windows-7-64-bit">Windows</a>.
-
-<ul>
-<li>Note that Windows 7 requires <a href="https://support.microsoft.com/en-us/kb/2731284">a hotfix from Microsoft</a>, based on <a href="https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/">MongoDB instruction</a>.</li>
-</ul>
-</li>
-<li>Mac: <code>brew install mongodb</code> works for me.</li>
-</ul>
-</li>
-<li><a href="https://www.getpostman.com/">https://www.getpostman.com/</a></li>
-</ul>
-
-
-<h3>First version</h3>
-
-<h3>Second version: Database separation</h3>
-
-<h3>Third version: Routing</h3>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[JavaScript Quick Recap]]></title>
-    <link href="http://tdongsi.github.io/javascript/blog/2016/09/05/javascript-quick-recap/"/>
-    <updated>2016-09-05T22:34:53-07:00</updated>
-    <id>http://tdongsi.github.io/javascript/blog/2016/09/05/javascript-quick-recap</id>
-    <content type="html"><![CDATA[<p>What to review before a JavaScript interview.</p>
-
-<!--more-->
-
-
-<h3>Basic</h3>
-
-<p>Types in Javascript:</p>
-
-<ul>
-<li>number: 2, 3.5</li>
-<li>string: &lsquo;3&rsquo;, &ldquo;3&rdquo;</li>
-<li>boolean: true, false</li>
-<li>object: e.g., typeof console</li>
-<li>function: e.g., typeof console.log</li>
-</ul>
-
-
-<h3>Advanced</h3>
-
-<p>TODO</p>
-
-<h3>References</h3>
-
-<p>Library documentation</p>
-
-<ul>
-<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math</a></li>
-</ul>
-
-
-<p>Video courses</p>
-
-<ul>
-<li>Pluralsight: Learning to Program (with Node.JS) (Beginner)</li>
-<li>Safari: Learning Path: Beginning JavaScript
-
-<ul>
-<li>Safari: Beginning Programming with JavaScript (Beginner)</li>
-</ul>
-</li>
-</ul>
-
 ]]></content>
   </entry>
   
