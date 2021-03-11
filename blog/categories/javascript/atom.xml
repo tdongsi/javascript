@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Javascript | Archived Blog Posts]]></title>
   <link href="http://tdongsi.github.io/javascript/blog/categories/javascript/atom.xml" rel="self"/>
   <link href="http://tdongsi.github.io/javascript/"/>
-  <updated>2021-03-11T07:27:25-08:00</updated>
+  <updated>2021-03-11T07:44:21-08:00</updated>
   <id>http://tdongsi.github.io/javascript/</id>
   <author>
     <name><![CDATA[Cuong Dong-Si]]></name>
@@ -14,71 +14,10 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Tutorial: Quick-start for JavaScript Programming Test]]></title>
-    <link href="http://tdongsi.github.io/javascript/blog/2017/06/21/tutorial-quick-start-for-javascript-programming-test/"/>
-    <updated>2017-06-21T00:58:03-07:00</updated>
-    <id>http://tdongsi.github.io/javascript/blog/2017/06/21/tutorial-quick-start-for-javascript-programming-test</id>
-    <content type="html"><![CDATA[<p>For timed programming tests, new test-takers usually underestimate how short two and a half hours can be (more <a href="https://tdongsi.github.io/java/blog/2016/08/29/tutorial-timed-programming-test/">here</a>).
-This post lists out steps to get started quickly for a JavaScript programming test, using React.</p>
-
-<!--more-->
-
-
-<p>Using this boiler plate <a href="https://github.com/davezuko/react-redux-starter-kit">https://github.com/davezuko/react-redux-starter-kit</a></p>
-
-<p>For example, build the followings:</p>
-
-<ul>
-<li>As a player I want to move my objects around the screen using the keyboard (or any preferred input device)</li>
-<li>If the object meets other objects in the screen, give some feedback.</li>
-</ul>
-
-
-<h3>Start an empty project</h3>
-
-<pre><code class="plain Starting a Node project"># For new machine
-nvm install --lts
-
-# Init by creating package.json file
-npm init
-# Answer questions to create package.json file
-
-# Adding grunt
-npm install grunt --save-dev
-npm install grunt-jslint --save-dev
-npm install load-grunt-tasks --save-dev
-
-# Initalizing Gruntfile
-npm install grunt-init -g
-grunt-init gruntfile
-# grunt-init node
-</code></pre>
-
-<p>At the end of these steps, you have a basic <code>package.json</code> and <code>Gruntfile</code>.
-For large scale project, you may want to further <a href="http://tdongsi.github.io/blog/2017/09/15/keep-gruntfile-clean-with-load-grunt-config/">clean up your Gruntfile using <code>load-grunt-config</code> plugin</a>.</p>
-
-<h3>Add unit testing</h3>
-
-<pre><code class="plain Unit testing with Jasmine"># Add Jasmine to your package.json
-npm install --save-dev jasmine
-
-# Initialize Jasmine in your project
-./node_modules/.bin/jasmine init
-
-# Set jasmine as your test script in your package.json
-"scripts": { "test": "jasmine" }
-
-# Run your tests
-npm test
-</code></pre>
-]]></content>
-  </entry>
-  
-  <entry>
     <title type="html"><![CDATA[Question Bank]]></title>
-    <link href="http://tdongsi.github.io/javascript/blog/2016/09/06/question-bank/"/>
-    <updated>2016-09-06T22:34:25-07:00</updated>
-    <id>http://tdongsi.github.io/javascript/blog/2016/09/06/question-bank</id>
+    <link href="http://tdongsi.github.io/javascript/blog/2017/09/06/question-bank/"/>
+    <updated>2017-09-06T22:34:25-07:00</updated>
+    <id>http://tdongsi.github.io/javascript/blog/2017/09/06/question-bank</id>
     <content type="html"><![CDATA[<p>Extracted from this <a href="https://github.com/h5bp/Front-end-Developer-Interview-Questions">Github</a> on September 6th 2016.</p>
 
 <!--more-->
@@ -400,6 +339,67 @@ console.log('three');
 <p>This document started in 2009 as a collaboration of <a href="https://twitter.com/paul_irish">@paul_irish</a> <a href="https://twitter.com/bentruyman">@bentruyman</a> <a href="https://twitter.com/cowboy">@cowboy</a> <a href="https://twitter.com/ajpiano">@ajpiano</a>  <a href="https://twitter.com/slexaxton">@SlexAxton</a> <a href="https://twitter.com/boazsender">@boazsender</a> <a href="https://twitter.com/miketaylr">@miketaylr</a> <a href="https://twitter.com/vladikoff">@vladikoff</a> <a href="https://twitter.com/gf3">@gf3</a> <a href="https://twitter.com/jon_neal">@jon_neal</a> <a href="https://twitter.com/sambreed">@sambreed</a> and <a href="https://twitter.com/iansym">@iansym</a>.</p>
 
 <p>It has since received contributions from over <a href="https://github.com/h5bp/Front-end-Developer-Interview-Questions/graphs/contributors">100 developers</a>.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Tutorial: Quick-start for JavaScript Programming Test]]></title>
+    <link href="http://tdongsi.github.io/javascript/blog/2017/06/21/tutorial-quick-start-for-javascript-programming-test/"/>
+    <updated>2017-06-21T00:58:03-07:00</updated>
+    <id>http://tdongsi.github.io/javascript/blog/2017/06/21/tutorial-quick-start-for-javascript-programming-test</id>
+    <content type="html"><![CDATA[<p>For timed programming tests, new test-takers usually underestimate how short two and a half hours can be (more <a href="https://tdongsi.github.io/java/blog/2016/08/29/tutorial-timed-programming-test/">here</a>).
+This post lists out steps to get started quickly for a JavaScript programming test, using React.</p>
+
+<!--more-->
+
+
+<p>Using this boiler plate <a href="https://github.com/davezuko/react-redux-starter-kit">https://github.com/davezuko/react-redux-starter-kit</a></p>
+
+<p>For example, build the followings:</p>
+
+<ul>
+<li>As a player I want to move my objects around the screen using the keyboard (or any preferred input device)</li>
+<li>If the object meets other objects in the screen, give some feedback.</li>
+</ul>
+
+
+<h3>Start an empty project</h3>
+
+<pre><code class="plain Starting a Node project"># For new machine
+nvm install --lts
+
+# Init by creating package.json file
+npm init
+# Answer questions to create package.json file
+
+# Adding grunt
+npm install grunt --save-dev
+npm install grunt-jslint --save-dev
+npm install load-grunt-tasks --save-dev
+
+# Initalizing Gruntfile
+npm install grunt-init -g
+grunt-init gruntfile
+# grunt-init node
+</code></pre>
+
+<p>At the end of these steps, you have a basic <code>package.json</code> and <code>Gruntfile</code>.
+For large scale project, you may want to further <a href="http://tdongsi.github.io/blog/2017/09/15/keep-gruntfile-clean-with-load-grunt-config/">clean up your Gruntfile using <code>load-grunt-config</code> plugin</a>.</p>
+
+<h3>Add unit testing</h3>
+
+<pre><code class="plain Unit testing with Jasmine"># Add Jasmine to your package.json
+npm install --save-dev jasmine
+
+# Initialize Jasmine in your project
+./node_modules/.bin/jasmine init
+
+# Set jasmine as your test script in your package.json
+"scripts": { "test": "jasmine" }
+
+# Run your tests
+npm test
+</code></pre>
 ]]></content>
   </entry>
   

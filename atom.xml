@@ -4,7 +4,7 @@
   <title><![CDATA[Archived Blog Posts]]></title>
   <link href="http://tdongsi.github.io/javascript/atom.xml" rel="self"/>
   <link href="http://tdongsi.github.io/javascript/"/>
-  <updated>2021-03-11T07:27:25-08:00</updated>
+  <updated>2021-03-11T07:44:21-08:00</updated>
   <id>http://tdongsi.github.io/javascript/</id>
   <author>
     <name><![CDATA[Cuong Dong-Si]]></name>
@@ -14,282 +14,10 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Tutorial: Quick-start for JavaScript Programming Test]]></title>
-    <link href="http://tdongsi.github.io/javascript/blog/2017/06/21/tutorial-quick-start-for-javascript-programming-test/"/>
-    <updated>2017-06-21T00:58:03-07:00</updated>
-    <id>http://tdongsi.github.io/javascript/blog/2017/06/21/tutorial-quick-start-for-javascript-programming-test</id>
-    <content type="html"><![CDATA[<p>For timed programming tests, new test-takers usually underestimate how short two and a half hours can be (more <a href="https://tdongsi.github.io/java/blog/2016/08/29/tutorial-timed-programming-test/">here</a>).
-This post lists out steps to get started quickly for a JavaScript programming test, using React.</p>
-
-<!--more-->
-
-
-<p>Using this boiler plate <a href="https://github.com/davezuko/react-redux-starter-kit">https://github.com/davezuko/react-redux-starter-kit</a></p>
-
-<p>For example, build the followings:</p>
-
-<ul>
-<li>As a player I want to move my objects around the screen using the keyboard (or any preferred input device)</li>
-<li>If the object meets other objects in the screen, give some feedback.</li>
-</ul>
-
-
-<h3>Start an empty project</h3>
-
-<figure class='code'><figcaption><span>Starting a Node project</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># For new machine
-</span><span class='line'>nvm install --lts
-</span><span class='line'>
-</span><span class='line'># Init by creating package.json file
-</span><span class='line'>npm init
-</span><span class='line'># Answer questions to create package.json file
-</span><span class='line'>
-</span><span class='line'># Adding grunt
-</span><span class='line'>npm install grunt --save-dev
-</span><span class='line'>npm install grunt-jslint --save-dev
-</span><span class='line'>npm install load-grunt-tasks --save-dev
-</span><span class='line'>
-</span><span class='line'># Initalizing Gruntfile
-</span><span class='line'>npm install grunt-init -g
-</span><span class='line'>grunt-init gruntfile
-</span><span class='line'># grunt-init node</span></code></pre></td></tr></table></div></figure>
-
-
-<p>At the end of these steps, you have a basic <code>package.json</code> and <code>Gruntfile</code>.
-For large scale project, you may want to further <a href="http://tdongsi.github.io/blog/2017/09/15/keep-gruntfile-clean-with-load-grunt-config/">clean up your Gruntfile using <code>load-grunt-config</code> plugin</a>.</p>
-
-<h3>Add unit testing</h3>
-
-<figure class='code'><figcaption><span>Unit testing with Jasmine</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># Add Jasmine to your package.json
-</span><span class='line'>npm install --save-dev jasmine
-</span><span class='line'>
-</span><span class='line'># Initialize Jasmine in your project
-</span><span class='line'>./node_modules/.bin/jasmine init
-</span><span class='line'>
-</span><span class='line'># Set jasmine as your test script in your package.json
-</span><span class='line'>"scripts": { "test": "jasmine" }
-</span><span class='line'>
-</span><span class='line'># Run your tests
-</span><span class='line'>npm test</span></code></pre></td></tr></table></div></figure>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Code Coverage: Istanbul & Nyc]]></title>
-    <link href="http://tdongsi.github.io/javascript/blog/2017/05/23/code-coverage-instanbul-slash-nyc/"/>
-    <updated>2017-05-23T21:54:01-07:00</updated>
-    <id>http://tdongsi.github.io/javascript/blog/2017/05/23/code-coverage-instanbul-slash-nyc</id>
-    <content type="html"><![CDATA[<p>Code coverage for NodeJS projects.</p>
-
-<!--more-->
-
-
-<h3>Settings in <code>.nycrc</code> file</h3>
-
-<p>What is the standard code coverage settings look like?</p>
-
-<figure class='code'><figcaption><span>Example nycrc file</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-</pre></td><td class='code'><pre><code class='json'><span class='line'><span class="p">{</span>
-</span><span class='line'>  <span class="nt">&quot;reporter&quot;</span><span class="p">:</span> <span class="p">[</span>
-</span><span class='line'>    <span class="s2">&quot;text-summary&quot;</span><span class="p">,</span>
-</span><span class='line'>    <span class="s2">&quot;html&quot;</span><span class="p">,</span>
-</span><span class='line'>    <span class="s2">&quot;lcov&quot;</span>
-</span><span class='line'>  <span class="p">],</span>
-</span><span class='line'>  <span class="nt">&quot;lines&quot;</span><span class="p">:</span> <span class="mi">46</span><span class="p">,</span>
-</span><span class='line'>  <span class="nt">&quot;statements&quot;</span><span class="p">:</span> <span class="mi">47</span><span class="p">,</span>
-</span><span class='line'>  <span class="nt">&quot;functions&quot;</span><span class="p">:</span> <span class="mi">44</span><span class="p">,</span>
-</span><span class='line'>  <span class="nt">&quot;branches&quot;</span><span class="p">:</span> <span class="mi">35</span><span class="p">,</span>
-</span><span class='line'>  <span class="nt">&quot;exclude&quot;</span><span class="p">:</span> <span class="p">[</span>
-</span><span class='line'>    <span class="s2">&quot;**/node_modules/**&quot;</span><span class="p">,</span>
-</span><span class='line'>    <span class="s2">&quot;**/grunt/**&quot;</span><span class="p">,</span>
-</span><span class='line'>    <span class="s2">&quot;**/public/**&quot;</span><span class="p">,</span>
-</span><span class='line'>    <span class="s2">&quot;**/test/**&quot;</span><span class="p">,</span>
-</span><span class='line'>    <span class="s2">&quot;i18n-express.js&quot;</span><span class="p">,</span>
-</span><span class='line'>    <span class="s2">&quot;newrelic.js&quot;</span><span class="p">,</span>
-</span><span class='line'>    <span class="s2">&quot;app.js&quot;</span><span class="p">,</span>
-</span><span class='line'>    <span class="s2">&quot;Gruntfile.js&quot;</span><span class="p">,</span>
-</span><span class='line'>    <span class="s2">&quot;scripts/**&quot;</span><span class="p">,</span>
-</span><span class='line'>    <span class="s2">&quot;build/**&quot;</span>
-</span><span class='line'>  <span class="p">],</span>
-</span><span class='line'>  <span class="nt">&quot;extension&quot;</span><span class="p">:</span> <span class="p">[</span>
-</span><span class='line'>    <span class="s2">&quot;.js&quot;</span><span class="p">,</span>
-</span><span class='line'>    <span class="s2">&quot;.jsx&quot;</span>
-</span><span class='line'>  <span class="p">],</span>
-</span><span class='line'>  <span class="nt">&quot;require&quot;</span><span class="p">:</span> <span class="p">[</span>
-</span><span class='line'>    <span class="s2">&quot;babel/register&quot;</span>
-</span><span class='line'>  <span class="p">],</span>
-</span><span class='line'>  <span class="nt">&quot;all&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
-</span><span class='line'>  <span class="nt">&quot;check-coverage&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
-</span><span class='line'>  <span class="nt">&quot;cache&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
-</span><span class='line'>  <span class="nt">&quot;report-dir&quot;</span><span class="p">:</span> <span class="s2">&quot;./build/coverage&quot;</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3><code>nyc</code> settings</h3>
-
-<p>Is it possible to specify the custom location of <code>.nycrc</code> file? Short answer: NO. Long answer: Depending on the custom location in question.</p>
-
-<p>nycrc support is implemented in <a href="https://github.com/istanbuljs/nyc/pull/391/files">this PR</a>.
-The relevant code for processing <code>.nycrc</code> file is in <a href="https://github.com/istanbuljs/nyc/blob/master/lib/config-util.js">this file</a>:</p>
-
-<figure class='code'><figcaption><span>.nycrc processing, extracted on May 20th 2017</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kr">const</span> <span class="nx">findUp</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;find-up&#39;</span><span class="p">)</span>
-</span><span class='line'><span class="p">...</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// load config from a cascade of sources:</span>
-</span><span class='line'><span class="c1">// * command line arguments</span>
-</span><span class='line'><span class="c1">// * package.json</span>
-</span><span class='line'><span class="c1">// * .nycrc</span>
-</span><span class='line'><span class="nx">Config</span><span class="p">.</span><span class="nx">loadConfig</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">argv</span><span class="p">,</span> <span class="nx">cwd</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="nx">cwd</span> <span class="o">=</span> <span class="nx">cwd</span> <span class="o">||</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">NYC_CWD</span> <span class="o">||</span> <span class="nx">process</span><span class="p">.</span><span class="nx">cwd</span><span class="p">()</span>
-</span><span class='line'>  <span class="kd">var</span> <span class="nx">pkgPath</span> <span class="o">=</span> <span class="nx">findUp</span><span class="p">.</span><span class="nx">sync</span><span class="p">(</span><span class="s1">&#39;package.json&#39;</span><span class="p">,</span> <span class="p">{</span><span class="nx">cwd</span><span class="o">:</span> <span class="nx">cwd</span><span class="p">})</span>
-</span><span class='line'>  <span class="kd">var</span> <span class="nx">rcPath</span> <span class="o">=</span> <span class="nx">findUp</span><span class="p">.</span><span class="nx">sync</span><span class="p">(</span><span class="s1">&#39;.nycrc&#39;</span><span class="p">,</span> <span class="p">{</span><span class="nx">cwd</span><span class="o">:</span> <span class="nx">cwd</span><span class="p">})</span>
-</span><span class='line'>  <span class="kd">var</span> <span class="nx">rcConfig</span> <span class="o">=</span> <span class="kc">null</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="nx">rcPath</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="nx">rcConfig</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span>
-</span><span class='line'>      <span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="nx">rcPath</span><span class="p">,</span> <span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">)</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">...</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The <a href="https://www.npmjs.com/package/find-up"><code>find-up</code></a> returns valid path if the file <code>.nycrc</code> is in the parent folders.
-In Jenkins environment, it means that if you can place that file into a parent folder of the workspace, then <code>.nycrc</code> can be found.</p>
-
-<p>The commandline arguments and their default values can be retrieved from <code>nyc help</code>, as shown belows:</p>
-
-<figure class='code'><figcaption><span>Installing nyc</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>mymac:learn_grunt tdongsi$ npm i nyc -g
-</span><span class='line'>/Users/tdongsi/.nvm/versions/node/v4.6.1/bin/nyc -&gt; /Users/tdongsi/.nvm/versions/node/v4.6.1/lib/node_modules/nyc/bin/nyc.js
-</span><span class='line'>nyc@10.3.2 /Users/tdongsi/.nvm/versions/node/v4.6.1/lib/node_modules/nyc
-</span><span class='line'>
-</span><span class='line'>mymac:learn_grunt tdongsi$ which nyc
-</span><span class='line'>/Users/tdongsi/.nvm/versions/node/v4.6.1/bin/nyc
-</span><span class='line'>
-</span><span class='line'>mymac:learn_grunt tdongsi$ nyc help config
-</span><span class='line'>nyc [command] [options]
-</span><span class='line'>
-</span><span class='line'>run your tests with the nyc bin to instrument them with coverage</span></code></pre></td></tr></table></div></figure>
-
-
-<h4>Related problem</h4>
-
-<p>The problem with code coverage thresholds in <code>.nycrc</code> is explained in <a href="https://stackoverflow.com/questions/44148412/increase-code-coverage-gate-for-protected-master-branch-in-github-enterprise">this question</a>.
-In summary, if a person wants to increase code coverage threshold in <code>.nycrc</code> file sitting in a Github repository with protected branches, the PR cannot be merged because the test run fails.
-The easy way to work around this is to disable &ldquo;Include adminstrators&rdquo; under &ldquo;Require status checks to pass before merging&rdquo; in Repository settings -> Branches -> master, then add the manager into the Admin group.
-However, in this approach, sneaky developers can still reduce the code coverage threshold in their branches and merge their PRs.
-For larger teams, the file <code>.nycrc</code> should be separated from the repository in question.
-Instead, that file should be included into the Docker image for running that job (assumption: containerized Jenkins system with Kubernetes plugin) and symlinked to workspace folder or its parent directory accordingly.
-See above and <code>find-up</code> package for explanations.</p>
-
-<h3>References</h3>
-
-<ul>
-<li><a href="https://github.com/istanbuljs/nyc">Istanbul nyc</a></li>
-<li><a href="https://github.com/istanbuljs/nyc/pull/391/files">nycrc implementation</a></li>
-</ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
     <title type="html"><![CDATA[Question Bank]]></title>
-    <link href="http://tdongsi.github.io/javascript/blog/2016/09/06/question-bank/"/>
-    <updated>2016-09-06T22:34:25-07:00</updated>
-    <id>http://tdongsi.github.io/javascript/blog/2016/09/06/question-bank</id>
+    <link href="http://tdongsi.github.io/javascript/blog/2017/09/06/question-bank/"/>
+    <updated>2017-09-06T22:34:25-07:00</updated>
+    <id>http://tdongsi.github.io/javascript/blog/2017/09/06/question-bank</id>
     <content type="html"><![CDATA[<p>Extracted from this <a href="https://github.com/h5bp/Front-end-Developer-Interview-Questions">Github</a> on September 6th 2016.</p>
 
 <!--more-->
@@ -647,6 +375,379 @@ See above and <code>find-up</code> package for explanations.</p>
 <p>This document started in 2009 as a collaboration of <a href="https://twitter.com/paul_irish">@paul_irish</a> <a href="https://twitter.com/bentruyman">@bentruyman</a> <a href="https://twitter.com/cowboy">@cowboy</a> <a href="https://twitter.com/ajpiano">@ajpiano</a>  <a href="https://twitter.com/slexaxton">@SlexAxton</a> <a href="https://twitter.com/boazsender">@boazsender</a> <a href="https://twitter.com/miketaylr">@miketaylr</a> <a href="https://twitter.com/vladikoff">@vladikoff</a> <a href="https://twitter.com/gf3">@gf3</a> <a href="https://twitter.com/jon_neal">@jon_neal</a> <a href="https://twitter.com/sambreed">@sambreed</a> and <a href="https://twitter.com/iansym">@iansym</a>.</p>
 
 <p>It has since received contributions from over <a href="https://github.com/h5bp/Front-end-Developer-Interview-Questions/graphs/contributors">100 developers</a>.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Tutorial: Quick-start for JavaScript Programming Test]]></title>
+    <link href="http://tdongsi.github.io/javascript/blog/2017/06/21/tutorial-quick-start-for-javascript-programming-test/"/>
+    <updated>2017-06-21T00:58:03-07:00</updated>
+    <id>http://tdongsi.github.io/javascript/blog/2017/06/21/tutorial-quick-start-for-javascript-programming-test</id>
+    <content type="html"><![CDATA[<p>For timed programming tests, new test-takers usually underestimate how short two and a half hours can be (more <a href="https://tdongsi.github.io/java/blog/2016/08/29/tutorial-timed-programming-test/">here</a>).
+This post lists out steps to get started quickly for a JavaScript programming test, using React.</p>
+
+<!--more-->
+
+
+<p>Using this boiler plate <a href="https://github.com/davezuko/react-redux-starter-kit">https://github.com/davezuko/react-redux-starter-kit</a></p>
+
+<p>For example, build the followings:</p>
+
+<ul>
+<li>As a player I want to move my objects around the screen using the keyboard (or any preferred input device)</li>
+<li>If the object meets other objects in the screen, give some feedback.</li>
+</ul>
+
+
+<h3>Start an empty project</h3>
+
+<figure class='code'><figcaption><span>Starting a Node project</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># For new machine
+</span><span class='line'>nvm install --lts
+</span><span class='line'>
+</span><span class='line'># Init by creating package.json file
+</span><span class='line'>npm init
+</span><span class='line'># Answer questions to create package.json file
+</span><span class='line'>
+</span><span class='line'># Adding grunt
+</span><span class='line'>npm install grunt --save-dev
+</span><span class='line'>npm install grunt-jslint --save-dev
+</span><span class='line'>npm install load-grunt-tasks --save-dev
+</span><span class='line'>
+</span><span class='line'># Initalizing Gruntfile
+</span><span class='line'>npm install grunt-init -g
+</span><span class='line'>grunt-init gruntfile
+</span><span class='line'># grunt-init node</span></code></pre></td></tr></table></div></figure>
+
+
+<p>At the end of these steps, you have a basic <code>package.json</code> and <code>Gruntfile</code>.
+For large scale project, you may want to further <a href="http://tdongsi.github.io/blog/2017/09/15/keep-gruntfile-clean-with-load-grunt-config/">clean up your Gruntfile using <code>load-grunt-config</code> plugin</a>.</p>
+
+<h3>Add unit testing</h3>
+
+<figure class='code'><figcaption><span>Unit testing with Jasmine</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># Add Jasmine to your package.json
+</span><span class='line'>npm install --save-dev jasmine
+</span><span class='line'>
+</span><span class='line'># Initialize Jasmine in your project
+</span><span class='line'>./node_modules/.bin/jasmine init
+</span><span class='line'>
+</span><span class='line'># Set jasmine as your test script in your package.json
+</span><span class='line'>"scripts": { "test": "jasmine" }
+</span><span class='line'>
+</span><span class='line'># Run your tests
+</span><span class='line'>npm test</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Code Coverage: Istanbul & Nyc]]></title>
+    <link href="http://tdongsi.github.io/javascript/blog/2017/05/23/code-coverage-instanbul-slash-nyc/"/>
+    <updated>2017-05-23T21:54:01-07:00</updated>
+    <id>http://tdongsi.github.io/javascript/blog/2017/05/23/code-coverage-instanbul-slash-nyc</id>
+    <content type="html"><![CDATA[<p>Code coverage for NodeJS projects.</p>
+
+<!--more-->
+
+
+<h3>Settings in <code>.nycrc</code> file</h3>
+
+<p>What is the standard code coverage settings look like?</p>
+
+<figure class='code'><figcaption><span>Example nycrc file</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+</pre></td><td class='code'><pre><code class='json'><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="nt">&quot;reporter&quot;</span><span class="p">:</span> <span class="p">[</span>
+</span><span class='line'>    <span class="s2">&quot;text-summary&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;html&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;lcov&quot;</span>
+</span><span class='line'>  <span class="p">],</span>
+</span><span class='line'>  <span class="nt">&quot;lines&quot;</span><span class="p">:</span> <span class="mi">46</span><span class="p">,</span>
+</span><span class='line'>  <span class="nt">&quot;statements&quot;</span><span class="p">:</span> <span class="mi">47</span><span class="p">,</span>
+</span><span class='line'>  <span class="nt">&quot;functions&quot;</span><span class="p">:</span> <span class="mi">44</span><span class="p">,</span>
+</span><span class='line'>  <span class="nt">&quot;branches&quot;</span><span class="p">:</span> <span class="mi">35</span><span class="p">,</span>
+</span><span class='line'>  <span class="nt">&quot;exclude&quot;</span><span class="p">:</span> <span class="p">[</span>
+</span><span class='line'>    <span class="s2">&quot;**/node_modules/**&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;**/grunt/**&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;**/public/**&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;**/test/**&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;i18n-express.js&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;newrelic.js&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;app.js&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;Gruntfile.js&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;scripts/**&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;build/**&quot;</span>
+</span><span class='line'>  <span class="p">],</span>
+</span><span class='line'>  <span class="nt">&quot;extension&quot;</span><span class="p">:</span> <span class="p">[</span>
+</span><span class='line'>    <span class="s2">&quot;.js&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;.jsx&quot;</span>
+</span><span class='line'>  <span class="p">],</span>
+</span><span class='line'>  <span class="nt">&quot;require&quot;</span><span class="p">:</span> <span class="p">[</span>
+</span><span class='line'>    <span class="s2">&quot;babel/register&quot;</span>
+</span><span class='line'>  <span class="p">],</span>
+</span><span class='line'>  <span class="nt">&quot;all&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+</span><span class='line'>  <span class="nt">&quot;check-coverage&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+</span><span class='line'>  <span class="nt">&quot;cache&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+</span><span class='line'>  <span class="nt">&quot;report-dir&quot;</span><span class="p">:</span> <span class="s2">&quot;./build/coverage&quot;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3><code>nyc</code> settings</h3>
+
+<p>Is it possible to specify the custom location of <code>.nycrc</code> file? Short answer: NO. Long answer: Depending on the custom location in question.</p>
+
+<p>nycrc support is implemented in <a href="https://github.com/istanbuljs/nyc/pull/391/files">this PR</a>.
+The relevant code for processing <code>.nycrc</code> file is in <a href="https://github.com/istanbuljs/nyc/blob/master/lib/config-util.js">this file</a>:</p>
+
+<figure class='code'><figcaption><span>.nycrc processing, extracted on May 20th 2017</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kr">const</span> <span class="nx">findUp</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;find-up&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="p">...</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// load config from a cascade of sources:</span>
+</span><span class='line'><span class="c1">// * command line arguments</span>
+</span><span class='line'><span class="c1">// * package.json</span>
+</span><span class='line'><span class="c1">// * .nycrc</span>
+</span><span class='line'><span class="nx">Config</span><span class="p">.</span><span class="nx">loadConfig</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">argv</span><span class="p">,</span> <span class="nx">cwd</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">cwd</span> <span class="o">=</span> <span class="nx">cwd</span> <span class="o">||</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">NYC_CWD</span> <span class="o">||</span> <span class="nx">process</span><span class="p">.</span><span class="nx">cwd</span><span class="p">()</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">pkgPath</span> <span class="o">=</span> <span class="nx">findUp</span><span class="p">.</span><span class="nx">sync</span><span class="p">(</span><span class="s1">&#39;package.json&#39;</span><span class="p">,</span> <span class="p">{</span><span class="nx">cwd</span><span class="o">:</span> <span class="nx">cwd</span><span class="p">})</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">rcPath</span> <span class="o">=</span> <span class="nx">findUp</span><span class="p">.</span><span class="nx">sync</span><span class="p">(</span><span class="s1">&#39;.nycrc&#39;</span><span class="p">,</span> <span class="p">{</span><span class="nx">cwd</span><span class="o">:</span> <span class="nx">cwd</span><span class="p">})</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">rcConfig</span> <span class="o">=</span> <span class="kc">null</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="nx">rcPath</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">rcConfig</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span>
+</span><span class='line'>      <span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="nx">rcPath</span><span class="p">,</span> <span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">)</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">...</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The <a href="https://www.npmjs.com/package/find-up"><code>find-up</code></a> returns valid path if the file <code>.nycrc</code> is in the parent folders.
+In Jenkins environment, it means that if you can place that file into a parent folder of the workspace, then <code>.nycrc</code> can be found.</p>
+
+<p>The commandline arguments and their default values can be retrieved from <code>nyc help</code>, as shown belows:</p>
+
+<figure class='code'><figcaption><span>Installing nyc</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>mymac:learn_grunt tdongsi$ npm i nyc -g
+</span><span class='line'>/Users/tdongsi/.nvm/versions/node/v4.6.1/bin/nyc -&gt; /Users/tdongsi/.nvm/versions/node/v4.6.1/lib/node_modules/nyc/bin/nyc.js
+</span><span class='line'>nyc@10.3.2 /Users/tdongsi/.nvm/versions/node/v4.6.1/lib/node_modules/nyc
+</span><span class='line'>
+</span><span class='line'>mymac:learn_grunt tdongsi$ which nyc
+</span><span class='line'>/Users/tdongsi/.nvm/versions/node/v4.6.1/bin/nyc
+</span><span class='line'>
+</span><span class='line'>mymac:learn_grunt tdongsi$ nyc help config
+</span><span class='line'>nyc [command] [options]
+</span><span class='line'>
+</span><span class='line'>run your tests with the nyc bin to instrument them with coverage</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Related problem</h4>
+
+<p>The problem with code coverage thresholds in <code>.nycrc</code> is explained in <a href="https://stackoverflow.com/questions/44148412/increase-code-coverage-gate-for-protected-master-branch-in-github-enterprise">this question</a>.
+In summary, if a person wants to increase code coverage threshold in <code>.nycrc</code> file sitting in a Github repository with protected branches, the PR cannot be merged because the test run fails.
+The easy way to work around this is to disable &ldquo;Include adminstrators&rdquo; under &ldquo;Require status checks to pass before merging&rdquo; in Repository settings -> Branches -> master, then add the manager into the Admin group.
+However, in this approach, sneaky developers can still reduce the code coverage threshold in their branches and merge their PRs.
+For larger teams, the file <code>.nycrc</code> should be separated from the repository in question.
+Instead, that file should be included into the Docker image for running that job (assumption: containerized Jenkins system with Kubernetes plugin) and symlinked to workspace folder or its parent directory accordingly.
+See above and <code>find-up</code> package for explanations.</p>
+
+<h3>References</h3>
+
+<ul>
+<li><a href="https://github.com/istanbuljs/nyc">Istanbul nyc</a></li>
+<li><a href="https://github.com/istanbuljs/nyc/pull/391/files">nycrc implementation</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Unit Tests Pass on Local but Fail on CI]]></title>
+    <link href="http://tdongsi.github.io/javascript/blog/2016/06/30/java-intermittent-test-failures/"/>
+    <updated>2016-06-30T17:51:13-07:00</updated>
+    <id>http://tdongsi.github.io/javascript/blog/2016/06/30/java-intermittent-test-failures</id>
+    <content type="html"><![CDATA[<p>We have all seen it before: intermittent unit test failures.
+It could be agonizing that unit tests pass locally, but then fail in the Jenkins unit test build.</p>
+
+<!--more-->
+
+
+<p>In our experience, one of the most common causes is:
+<strong>static initialization code that dynamically sets a static member variable from a config file value.</strong></p>
+
+<p>What happens locally?
+If you’re running from the command line, you probably have some environment variables set.
+These allow some ConfigHelper class to find the resource properties files and load them.
+In the end, code that looks like the following often ends up succeeding:</p>
+
+<figure class='code'><figcaption><span>DbQueue class</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">MY_CONFIG</span> <span class="o">=</span> <span class="n">ConfigHelper</span><span class="o">.</span><span class="na">getBoolean</span><span class="o">(</span><span class="s">&quot;config_key&quot;</span><span class="o">,</span> <span class="kc">false</span><span class="o">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>But the unit tests on the CI server run without being set up for a Tomcat application server run.
+Instead, they run using some mock framework such as JMockit.
+Mocking in this scenario is a good, desirable thing.
+However, it also means that code like that ends up failing to find those resources.
+In the example above, the class <code>DbQueue</code>&rsquo;s static code was invoked <strong>even though the class itself has been mocked out</strong>.
+And very often, classes like that throw some misleading exceptions, especially when trying to load and convert to a numeric value from a resource.</p>
+
+<p>So, how do we fix it?
+How do we prevent that class static member initialization code from being invoked in Jenkins test build?
+The answer is when we mock the class in JMockit using the <code>@Mocked</code> annotation, we can provide the <code>stubOutClassInitialization=true</code> parameter, like this:</p>
+
+<figure class='code'><figcaption><span>Mock with JMockit</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyTest</span> <span class="o">{</span>
+</span><span class='line'>    <span class="nd">@Mocked</span><span class="o">(</span> <span class="n">stubOutClassInitialization</span> <span class="o">=</span> <span class="kc">true</span> <span class="o">)</span>
+</span><span class='line'>    <span class="n">DbQueue</span> <span class="n">queue</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="o">...</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>That will prevent the static code in the class <code>DbQueue</code> from running in Jenkins unit test builds.
+The additional benefit of doing this <em>correctly</em> and <em>completely</em> is that we’ll be able to run our unit tests from inside Eclipse WITHOUT setting the <code>–DSBNHOME=</code> environment variable and the test will still complete as desired.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Java: Unit Test Performance]]></title>
+    <link href="http://tdongsi.github.io/javascript/blog/2016/06/06/java-unit-test-performance/"/>
+    <updated>2016-06-06T22:47:42-07:00</updated>
+    <id>http://tdongsi.github.io/javascript/blog/2016/06/06/java-unit-test-performance</id>
+    <content type="html"><![CDATA[<p>According to <a href="https://www.youtube.com/watch?v=wEhu57pih5w">this</a>, the right way of automated testing is that we have lots of unit tests as majority of our overall automated tests, supplemented by a smaller set of functional tests and even fewer sets of integration tests (a.k.a., Test Automation Pyramid).
+However, for that strategy to work, we should pay attention to unit test performance.
+It is not productive for us developers to wait 30+ minutes to run unit tests locally, especially when we have multiple check-ins per day.
+In addition, the runtime will get compounded as we add more unit tests.
+Here, I list out few commonly observed mistakes to avoid and suggestions that frequently improve Java unit test performance.</p>
+
+<!--more-->
+
+
+<p>1) Do NOT add loggings/printing to your tests.
+Use TestNG assertions instead of checking screen output.
+Remove from the test classes all the <code>System.out.println</code> statements (that we might add when we start writing unit tests).
+The logs don&rsquo;t matter when we&rsquo;re running in parallel.
+Moreover, it could add 5-10 minutes to the build time, regardless of running in sequential or parallel.</p>
+
+<p>2) Another common mistake is to override the default <code>System.out</code> by calling <code>System.setOut(PrintStream)</code> and verify by asserting against log statements.
+This tactic is often used to verify expected method invocations, which will subsequently generate some specific log entries.
+For such behavior testing, consider using <a href="https://jmockit.googlecode.com/svn-history/r2056/trunk/www/tutorial/BehaviorBasedTesting.html">Jmockit Verifications</a> instead of depending on output of logs generated.</p>
+
+<p>3) Mock logging and config classes if applicable.
+Otherwise, we might encountered errors like &ldquo;Exception encountered, logging will be disabled&rdquo;, probably thrown by JMockit.
+If there is any static initialization block in the mocked class for logging and configuration purposes, consider using <code>(stubOutClassInitialization = true)</code> (see <a href="http://tdongsi.github.io/javascript/blog/2016/06/30/java-intermittent-test-failures/">this</a>).</p>
+
+<p>4) Choosing the right parallel execution settings can substantially improve the execution time.
+However, for parallel test runs, consider splitting big test classes (> 100 tests) that are taking much longer than others.
+As we are running test classes in parallel across multiple JVMs, it is often the case that all JVMs are shut down except for one or two which are running some big test classes.
+Splitting those classes into multiple smaller classes will distribute the load equally across multiple JVMs.</p>
+
+<p>5) Out of all the <code>maven-surefire</code> options for running tests in parallel, the one that worked considering JMockit limitations with parallel execution (and our test structure) are as below:</p>
+
+<figure class='code'><figcaption><span>Maven-surefire options</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;parallel&gt;</span>classes<span class="nt">&lt;/parallel&gt;</span>
+</span><span class='line'><span class="nt">&lt;forkCount&gt;</span>${forkCount}<span class="nt">&lt;/forkCount&gt;</span>
+</span><span class='line'><span class="nt">&lt;reuseForks&gt;</span>false<span class="nt">&lt;/resuseForks&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
 ]]></content>
   </entry>
   
@@ -1023,6 +1124,334 @@ Vertica creates a default super-projection when running CREATE TABLE statement.
 
 <p>For Vertica performance tuning, we create multiple projections, customize them and parameters of each projection to achieve the best performance.
 Database Designer is a tool provided by Vertica to help us find the optimal projections, based on data statistics and frequent queries.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[AWS: Developing With Amazon S3]]></title>
+    <link href="http://tdongsi.github.io/javascript/blog/2016/01/18/aws-developing-with-amazon-s3/"/>
+    <updated>2016-01-18T17:13:28-08:00</updated>
+    <id>http://tdongsi.github.io/javascript/blog/2016/01/18/aws-developing-with-amazon-s3</id>
+    <content type="html"><![CDATA[<p>Amazon Simple Storage Service or S3 is a simple, scalable web services to store and retrieve data.
+This post talks about basic concepts of buckets and objects in S3, basic and advanced operations on objects in S3, and standard development considerations when working with S3 using SDK.</p>
+
+<!--more-->
+
+
+<h3>S3 Buckets and Objects</h3>
+
+<p>Files of any kind such as text, video, photo are stored as objects in S3 <em>buckets</em>.
+The bucket name must be globally unique across Amazon S3. It is your responsibility to ensure uniqueness of the bucket name.
+A bucket can be <em>versioning-enabled</em>, it will store every version of every object in the bucket.</p>
+
+<p>Each <em>object</em> in S3 is identified by a unique key. The object key is used for upload and retrieval. Alphanumeric characters and <code>!-_.*'/</code> are allowed in a key name.</p>
+
+<p>Bucket naming tips:</p>
+
+<ul>
+<li>To ensure uniqueness, you might prefix the bucket name with the name of your organization.</li>
+<li>Avoid using a period in the bucket name. Buckets that have a period in the bucket name can cause certificate exception when accessing with HTTPS-based URLs.</li>
+</ul>
+
+
+<p>Object key naming tips:</p>
+
+<ul>
+<li>Use prefixes and <code>/</code> (or other delimiters) to logically group your objects. For example, <code>prog/java/arrays.html</code>. There is no hierarchy of objects (e.g., folder) or nested buckets in S3.
+
+<ul>
+<li>However, the Amazon S3 console supports the <a href="http://docs.aws.amazon.com/AmazonS3/latest/UG/FolderOperations.html">folder concept</a> for convenience and usability. Amazon S3 does this by using key name prefixes for objects.</li>
+</ul>
+</li>
+<li>For performance and scalability, consider using hash as the outermost prefix, in addition to other logical grouping prefixes. See &ldquo;Programming Considerations&rdquo; section below.</li>
+</ul>
+
+
+<h3>Operations on Objects</h3>
+
+<p>Basic operations on S3 objects and buckets are:</p>
+
+<ul>
+<li>Put: upload or copy object, up to 5 GB. You can use multi-part upload API for larger objects up to 5 TB.</li>
+<li>Get: Retrieve a whole object or part of an object.</li>
+<li><a href="http://docs.aws.amazon.com/AmazonS3/latest/dev/ListingKeysHierarchy.html">List Keys</a>: List object keys by prefix and delimiter.</li>
+<li>Delete: Delete one or more objects.
+
+<ul>
+<li>If versioning is not enabled, an object is permanently deleted by specifying its key.</li>
+<li>If versioning is enabled, you delete an object by specifying a key and version ID. You must delete all versions of an object to remove it.</li>
+<li>If versioning is enabled and version is not specified, S3 adds a delete marker to current version of the object. Trying to retrieve an object with a delete marker will returns a &ldquo;404 Not Found&rdquo; error by S3.</li>
+</ul>
+</li>
+<li>Restore: Restore an object archived on Amazon Glacier.</li>
+</ul>
+
+
+<h4>Other operations in S3</h4>
+
+<p>Advanced operations that you should know when situations arise.</p>
+
+<p><strong>Scenario 1</strong>: You want to let users upload files to your buckets for some time duration.
+<strong>Solution 1</strong>: You should never share your AWS credentials to let users upload files to your buckets.
+Instead, generate a <strong>pre-signed URL</strong> with your security credentials, bucket name, object key, HTTP method (PUT or GET), and expiration date and time.
+You share this pre-signed URL to users who will use this to access your S3 buckets.</p>
+
+<p><strong>Scenario 2</strong>: Encryption and strict data security is required.
+<strong>Solution 2</strong>: You can enable:</p>
+
+<ul>
+<li>Securing data in transit.
+
+<ul>
+<li>SSL-encrypted data transfer by using HTTPS</li>
+<li><a href="http://docs.aws.amazon.com/AmazonS3/latest/dev/UsingClientSideEncryption.html">Client-side encryption</a></li>
+</ul>
+</li>
+<li>Securing data at rest on AWS server.
+
+<ul>
+<li><a href="http://docs.aws.amazon.com/AmazonS3/latest/dev/serv-side-encryption.html">Server-side encryption</a></li>
+</ul>
+</li>
+</ul>
+
+
+<p><strong>Scenario 3</strong>: You want your web applications that are loaded in one domain to interact with S3 resources in a different domain.
+<strong>Solution 3</strong>: Check out <a href="http://docs.aws.amazon.com/AmazonS3/latest/dev/cors.html">CORS</a>.</p>
+
+<h3>Programming considerations</h3>
+
+<ul>
+<li>According to <a href="http://docs.aws.amazon.com/AmazonS3/latest/dev/request-rate-perf-considerations.html">this guideline</a>, <strong>avoid</strong> using some sequential prefix (e.g., timestamp or alphabetical sequence) for your objects' key names. Instead, prefix the key name with its hash and, optionally, store the original key name in the object&rsquo;s metadata. See examples in the link for more information.</li>
+<li>If your application uses fixed buckets, avoid unnecessary requests by checking the existence of buckets. Instead, handle <a href="http://docs.aws.amazon.com/AmazonS3/latest/API/ErrorResponses.html">NoSuchBucket errors</a> when buckets do not exist.</li>
+<li>Set the object metadata before uploading an object. Otherwise, you will have extra requests to do copy operation to update metadata.</li>
+<li>Cache bucket and key names if possible.</li>
+<li>Set bucket region closest to latency-sensitive users.</li>
+<li>Compress objects to reduce the size of data transferred and storage used.</li>
+<li>Use an exponential back-off algorithm to retry after failed connection attempts. See <a href="http://docs.aws.amazon.com/general/latest/gr/api-retries.html">here</a>.</li>
+<li>Enable application logging. For example, <a href="http://docs.aws.amazon.com/AWSSdkDocsJava/latest/DeveloperGuide/java-dg-logging.html">in Java</a>.</li>
+<li>Enable <a href="http://docs.aws.amazon.com/AmazonS3/latest/dev/ServerLogs.html">server access logging</a>.</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[AWS: Getting Started on Mac OSX]]></title>
+    <link href="http://tdongsi.github.io/javascript/blog/2016/01/17/aws-set-up-aws-credentials-on-mac-osx/"/>
+    <updated>2016-01-17T20:57:35-08:00</updated>
+    <id>http://tdongsi.github.io/javascript/blog/2016/01/17/aws-set-up-aws-credentials-on-mac-osx</id>
+    <content type="html"><![CDATA[<p>Quick-start guide on AWS development in Java and Python.</p>
+
+<!--more-->
+
+
+<h3>Set up AWS development environment</h3>
+
+<p>First, you need to set up your AWS credentials on your Mac by creating the following files at the following specific locations:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>MTVL1288aeea2-82:~ cdongsi$ mkdir ~/.aws
+</span><span class='line'>MTVL1288aeea2-82:~ cdongsi$ touch ~/.aws/credentials
+</span><span class='line'>MTVL1288aeea2-82:~ cdongsi$ touch ~/.aws/config</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In Windows, the locations of those files will be <code>C:\Users\USERNAME\.aws\credentials</code> and <code>C:\Users\USERNAME\.aws\config</code>, respectively.
+You <em>must</em> fill in your AWS access credentials (Access Key ID and Secret Access Key) into the file <code>credentials</code>. Optionally, you can set the default region in the <code>config</code> file.
+The content of the files will look like the following:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>MTVL1288aeea2-82:~ cdongsi$ cat ~/.aws/credentials
+</span><span class='line'>[default]
+</span><span class='line'>aws_access_key_id = your_access_key_id
+</span><span class='line'>aws_secret_access_key = your_secret_access_key
+</span><span class='line'>
+</span><span class='line'>MTVL1288aeea2-82:~ cdongsi$ cat ~/.aws/config
+</span><span class='line'>[default]
+</span><span class='line'>region=us-west-2</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>HelloAws using Java</h3>
+
+<p>Now, you can install AWS Toolkit for Eclipse from <a href="http://aws.amazon.com/eclipse/">this link</a>. Follow the instruction in that page to install AWS Toolkit.</p>
+
+<p>After AWS Toolkit is installed, you are ready to run the first <code>HelloAws</code> Java application. In Eclipse, create a AWS Console application.</p>
+
+<ol>
+<li>Click the new orange button on Eclipse taskbar named &ldquo;AWS Toolkit for Eclipse&rdquo;.</li>
+<li>Click the link named &ldquo;Create a New AWS Java Project&rdquo;.</li>
+<li>Fill in &ldquo;Project name&rdquo; as &ldquo;HelloAws&rdquo;. Check &ldquo;AWS Console Application&rdquo; from &ldquo;AWS SDK for Java Samples&rdquo; panel.</li>
+</ol>
+
+
+<p>Note that the sample generated has the following instruction in its main class. If you haven&rsquo;t do it, follow the steps above to set up your AWS access credentials.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">AwsConsoleApp</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="cm">/*</span>
+</span><span class='line'><span class="cm">     * Before running the code:</span>
+</span><span class='line'><span class="cm">     *      Fill in your AWS access credentials in the provided credentials</span>
+</span><span class='line'><span class="cm">     *      file template, and be sure to move the file to the default location</span>
+</span><span class='line'><span class="cm">     *      (/Users/cdongsi/.aws/credentials) where the sample code will load the</span>
+</span><span class='line'><span class="cm">     *      credentials from.</span>
+</span><span class='line'><span class="cm">     *      https://console.aws.amazon.com/iam/home?#security_credential</span>
+</span><span class='line'><span class="cm">     *</span>
+</span><span class='line'><span class="cm">     * WARNING:</span>
+</span><span class='line'><span class="cm">     *      To avoid accidental leakage of your credentials, DO NOT keep</span>
+</span><span class='line'><span class="cm">     *      the credentials file in your source directory.</span>
+</span><span class='line'><span class="cm">     */</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">static</span> <span class="n">AmazonEC2</span>      <span class="n">ec2</span><span class="o">;</span>
+</span><span class='line'>    <span class="kd">static</span> <span class="n">AmazonS3</span>       <span class="n">s3</span><span class="o">;</span>
+</span><span class='line'>    <span class="kd">static</span> <span class="n">AmazonSimpleDB</span> <span class="n">sdb</span><span class="o">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If your AWS credentials are ready, simply run the sample AWS console code as &ldquo;Java Application&rdquo;. The output will look something like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>===========================================
+</span><span class='line'>Welcome to the AWS Java SDK!
+</span><span class='line'>===========================================
+</span><span class='line'>You have access to 4 Availability Zones.
+</span><span class='line'>You have 0 Amazon EC2 instance(s) running.
+</span><span class='line'>You have 0 Amazon SimpleDB domain(s)containing a total of 0 items.
+</span><span class='line'>You have 0 Amazon S3 bucket(s), containing 0 objects with a total size of 0 bytes.</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>HelloAws using Python</h3>
+
+<p>To install <a href="http://aws.amazon.com/sdk-for-python/">AWS SDK for Python</a>, run the following the command as instructed in that page:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>pip install boto3
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In my case, I used a slightly different command to avoid permission errors on Mac OSX:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>pip install boto3 --user</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I use PyCharm/IntelliJ as IDE for Python and, apparently, there is no Python sample for it. In PyCharm, you can use the following Python script as your <code>HelloAws</code> program:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">import</span> <span class="nn">boto3</span>
+</span><span class='line'><span class="kn">from</span> <span class="nn">botocore.exceptions</span> <span class="kn">import</span> <span class="n">ClientError</span><span class="p">,</span><span class="n">NoCredentialsError</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">sys</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">getS3BucketNumber</span><span class="p">():</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">try</span><span class="p">:</span>
+</span><span class='line'>        <span class="n">s3</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">resource</span><span class="p">(</span><span class="s">&#39;s3&#39;</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">buckets</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span class='line'>    <span class="k">except</span> <span class="n">NoCredentialsError</span><span class="p">:</span>
+</span><span class='line'>        <span class="k">print</span> <span class="s">&quot;No AWS Credentials&quot;</span>
+</span><span class='line'>        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">try</span><span class="p">:</span>
+</span><span class='line'>        <span class="n">bucket_num</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">s3</span><span class="o">.</span><span class="n">buckets</span><span class="o">.</span><span class="n">all</span><span class="p">()))</span>
+</span><span class='line'>        <span class="k">print</span> <span class="s">&quot;Number of buckets: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">bucket_num</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">bucket_num</span>
+</span><span class='line'>    <span class="k">except</span> <span class="n">ClientError</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+</span><span class='line'>        <span class="k">print</span><span class="p">(</span><span class="n">ex</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">return</span> <span class="mi">0</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+</span><span class='line'>    <span class="n">getS3BucketNumber</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note that it is based on the <a href="https://github.com/boto/boto3#quick-start">Quick start on Github</a>. In PyCharm, running the above Python should print the following output:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Number of buckets: 0</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Quick note on Python API vs. Java API</h3>
+
+<p>Note that Boto3 SDK for Python support <a href="http://boto3.readthedocs.org/en/latest/guide/resources.html">&ldquo;Resource API&rdquo;</a>.
+As opposed to &ldquo;Service Client API&rdquo; like AWS SDK for Java, Resource API provides a higher level interface to the service and it is easier to understand and simpler to use.</p>
+
+<p>For example, the generated example for AWS&rsquo;s Java SDK uses a Service Client API. It uses a class AmazonS3Client that controls the requests you make to the S3 service.
+Meanwhile, the Boto3 SDK for Python has classes representing the conceptual resources (e.g., s3.Bucket) that you interact with when using the S3 service.
+This is a higher level abstraction compared to a client class like AmazonS3Client making low-level calls to the service API.</p>
+
+<h3>External Links</h3>
+
+<ul>
+<li>Python
+
+<ul>
+<li><a href="https://boto3.readthedocs.org/en/latest/guide/index.html">Developer Guide</a></li>
+<li><a href="https://boto3.readthedocs.org/en/latest/reference/core/index.html">API Documentation</a></li>
+</ul>
+</li>
+<li>Java
+
+<ul>
+<li><a href="http://docs.aws.amazon.com/AWSSdkDocsJava/latest/DeveloperGuide/welcome.html">Developer Guide</a></li>
+<li><a href="http://docs.aws.amazon.com/AWSJavaSDK/latest/javadoc/index.html">API Documentation</a></li>
+</ul>
+</li>
+</ul>
+
 ]]></content>
   </entry>
   
@@ -2702,597 +3131,6 @@ However, the <em>metadata</em> for that table will be deleted.</p>
 </span><span class='line'>Time taken: 0.278 seconds
 </span><span class='line'>hive <span class="o">(</span>college<span class="o">)</span>&gt;
 </span></code></pre></td></tr></table></div></figure>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Learning Hive (Pt. 4): Data Types]]></title>
-    <link href="http://tdongsi.github.io/javascript/blog/2015/11/26/programming-hive-data-types/"/>
-    <updated>2015-11-26T18:01:37-08:00</updated>
-    <id>http://tdongsi.github.io/javascript/blog/2015/11/26/programming-hive-data-types</id>
-    <content type="html"><![CDATA[<p>This post covers different data types and file formats supported by Hive.</p>
-
-<!--more-->
-
-
-<h3>Data Types</h3>
-
-<p>The following primitive data types are supported:</p>
-
-<ul>
-<li>TINYINT: 1 byte signed integer</li>
-<li>SMALLINT: 2 bytes</li>
-<li>INT: 4 bytes</li>
-<li>BIGINT: 8 bytes</li>
-<li>BOOLEAN</li>
-<li>FLOAT</li>
-<li>DOUBLE</li>
-<li>STRING: Single or double quotes can be used for literals.</li>
-<li>TIMESTAMP: Integer, float, or string.
-
-<ul>
-<li>Integer: For seconds from Unix epoch.</li>
-<li>Float: Seconds from Unix epoch and nanoseconds.</li>
-<li>String: JDBC-compliant java.sql.Timestamp format convention, i.e. YYYY-MM-DD hh:mm:ss.fffffffff</li>
-</ul>
-</li>
-<li>BINARY: array of bytes. Used to include arbitrary bytes and prevent Hive from attempting to parse them.</li>
-</ul>
-
-
-<p>As you can see, Hive supports most basic primitive data types conventionally found in relational databases. Moreover, it helps to remember that these data types are implemented in Java, so their behaviors will be similar to their Java counterparts.</p>
-
-<p>NOTE: Not mentioned in the <strong>Programming Hive</strong> book, but the types <code>DECIMAL</code> and <code>DATE</code> are introduced since Hive 0.13.0.
-In addition, the book claimed &ldquo;Hive does not support character arrays with maximum-allowed lengths, as is common in other SQL dialects&rdquo; but <code>VARCHAR</code> type, introduced in Hive 0.12.0, does exactly that.</p>
-
-<p>Besides primitive data types, Hive supports the following collection data types:</p>
-
-<ul>
-<li>STRUCT: Analogous to a C <code>struct</code> or POJO (Plain Old Java Object). The elements can be accessed using the DOT (.) notation.
-
-<ul>
-<li>Example: Declaration -> <code>struct&lt;name:string,id:int&gt;</code>. Literal -> <code>struct('John',1)</code>.</li>
-</ul>
-</li>
-<li>MAP: A collection of key-value tuples. The elements can be accessed using array notation, e.g. persons[&lsquo;John&rsquo;].
-
-<ul>
-<li>Example: Declaration -> <code>map&lt;string,int&gt;</code>. Literal -> <code>map('John',1)</code>.</li>
-</ul>
-</li>
-<li>ARRAY: Ordered sequences of the same type. The elements can be accessed using array notation, e.g. person[2].
-
-<ul>
-<li>Example: Declaration -> <code>array&lt;string&gt;</code>. Literal -> <code>array('John','Peter')</code>.</li>
-</ul>
-</li>
-</ul>
-
-
-<p>Relational databases don&rsquo;t usually support such collection types because they tend to break <strong>normal form</strong>.
-In Hive/Hadoop, sacrificing normal form is pretty common as it can give benefit of higher processing throughput, especially with large amount of data (tens of terabytes).</p>
-
-<h3>Text File Formats</h3>
-
-<p>Hive can use comma-separated values (CSV) or tab-separated values (TSV) text file format. A Hive table declaration with all row format specified (with default values, however) looks like this:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">employees</span> <span class="p">(</span>
-</span><span class='line'>  <span class="n">name</span>         <span class="n">STRING</span><span class="p">,</span>
-</span><span class='line'>  <span class="n">salary</span>       <span class="nb">FLOAT</span><span class="p">,</span>
-</span><span class='line'>  <span class="n">subordinates</span> <span class="nb">ARRAY</span><span class="o">&lt;</span><span class="n">STRING</span><span class="o">&gt;</span><span class="p">,</span>
-</span><span class='line'>  <span class="n">deductions</span>   <span class="k">MAP</span><span class="o">&lt;</span><span class="n">STRING</span><span class="p">,</span> <span class="nb">FLOAT</span><span class="o">&gt;</span><span class="p">,</span>
-</span><span class='line'>  <span class="n">address</span>      <span class="n">STRUCT</span><span class="o">&lt;</span><span class="n">street</span><span class="p">:</span><span class="n">STRING</span><span class="p">,</span> <span class="n">city</span><span class="p">:</span><span class="n">STRING</span><span class="p">,</span> <span class="k">state</span><span class="p">:</span><span class="n">STRING</span><span class="p">,</span> <span class="n">zip</span><span class="p">:</span><span class="nb">INT</span><span class="o">&gt;</span>
-</span><span class='line'><span class="p">)</span>
-</span><span class='line'><span class="k">ROW</span> <span class="n">FORMAT</span> <span class="n">DELIMITED</span>
-</span><span class='line'><span class="n">FIELDS</span> <span class="n">TERMINATED</span> <span class="k">BY</span> <span class="s1">&#39;\001&#39;</span>
-</span><span class='line'><span class="n">COLLECTION</span> <span class="n">ITEMS</span> <span class="n">TERMINATED</span> <span class="k">BY</span> <span class="s1">&#39;\002&#39;</span>
-</span><span class='line'><span class="k">MAP</span> <span class="n">KEYS</span> <span class="n">TERMINATED</span> <span class="k">BY</span> <span class="s1">&#39;\003&#39;</span>
-</span><span class='line'><span class="n">LINES</span> <span class="n">TERMINATED</span> <span class="k">BY</span> <span class="s1">&#39;\n&#39;</span>
-</span><span class='line'><span class="n">STORED</span> <span class="k">AS</span> <span class="n">TEXTFILE</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Schema on Read</h3>
-
-<p>Different from databases, Hive has no control over the underlying storage: for example, you can modify files on HDFS that Hive will query. Hive tries its best to read the data and match the schema. If the file content does not match the schema such as non-numeric strings found when numbers expected, you may get null values.</p>
-
-<h3>Additional References</h3>
-
-<p>As of November 2015, the <strong>Programming Hive (2nd edition)</strong> book uses slightly a outdated Hive version 0.9.0 (Chapter 2, Installing Hive). Information in the following links are used when writing this post:</p>
-
-<ol>
-<li><a href="https://cwiki.apache.org/confluence/display/Hive/LanguageManual+Types">https://cwiki.apache.org/confluence/display/Hive/LanguageManual+Types</a></li>
-<li><a href="https://cwiki.apache.org/confluence/display/Hive/Tutorial">https://cwiki.apache.org/confluence/display/Hive/Tutorial</a></li>
-<li><a href="https://cwiki.apache.org/confluence/display/Hive/LanguageManual+DDL">https://cwiki.apache.org/confluence/display/Hive/LanguageManual+DDL</a></li>
-</ol>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Learning Hive (Pt. 3): Runtime Modes]]></title>
-    <link href="http://tdongsi.github.io/javascript/blog/2015/11/24/programming-hive-getting-started/"/>
-    <updated>2015-11-24T18:24:30-08:00</updated>
-    <id>http://tdongsi.github.io/javascript/blog/2015/11/24/programming-hive-getting-started</id>
-    <content type="html"><![CDATA[<p>Following up on <a href="http://tdongsi.github.io/javascript/blog/2015/11/23/programming-hive-hive-cli/">Hive CLI</a>, this post covers some lower-level details of Hive such as Hadoop runtime modes and metastore.</p>
-
-<!--more-->
-
-
-<h3>Runtime Modes</h3>
-
-<p>There are different runtime modes for Hadoop.
-Because Hive uses Hadoop jobs for most of its work, its behavior is dependent on Hadoop runtime mode that you are using.
-However, even in distributed mode, Hive can decide on a per-query basis if it can perform the query using just local mode to provide better turnaround.</p>
-
-<table>
-<thead>
-<tr>
-<th> Local Mode </th>
-<th> Distributed Mode </th>
-<th> Pseudodistributed Mode </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td> Filesystem references use local filesystem. </td>
-<td> Filesystem references use HDFS. </td>
-<td> Similar to distributed mode. </td>
-</tr>
-<tr>
-<td> MapReduce tasks in same process. </td>
-<td>  MapReduce tasks in separate <br>processes, managed by JobTracker service. </td>
-<td> Similar to distributed mode.</td>
-</tr>
-<tr>
-<td> Default mode. </td>
-<td> Usually configured for server clusters. </td>
-<td> Like a cluster of one node.</td>
-</tr>
-</tbody>
-</table>
-
-
-<p><br></p>
-
-<p>Pseudodistributed mode is mainly for developers working on personal machines or VM&rsquo;s when testing their applications since local mode doesn’t fully reflect the behavior of a real cluster. Changes to configuration are done by editing the <code>hive-site.xml</code> file in <code>$HIVE_HOME/conf</code> folder (e.g., <code>/usr/lib/hive/conf</code> on Cloudera VM). Create one if it doesn’t already exist.</p>
-
-<h3>Metastore Using JDBC</h3>
-
-<p>Hive requires only one extra component that Hadoop does not already have; the metastore component.
-The metastore stores metadata such as table schema and partition information that you specify when you run commands such as <code>create table x...</code>, or <code>alter table y...</code>, etc.
-Any JDBC-compliant database can be used for the metastore. In practice, most installations of Hive use MySQL.
-In <code>hive-site.xml</code> file, the metastore database configuration looks like this:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-</pre></td><td class='code'><pre><code class='xml'><span class='line'>  <span class="nt">&lt;property&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;name&gt;</span>javax.jdo.option.ConnectionURL<span class="nt">&lt;/name&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;value&gt;</span>jdbc:mysql://127.0.0.1/metastore?createDatabaseIfNotExist=true<span class="nt">&lt;/value&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;description&gt;</span>JDBC connect string for a JDBC metastore<span class="nt">&lt;/description&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;/property&gt;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="nt">&lt;property&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;name&gt;</span>javax.jdo.option.ConnectionDriverName<span class="nt">&lt;/name&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;value&gt;</span>com.mysql.jdbc.Driver<span class="nt">&lt;/value&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;description&gt;</span>Driver class name for a JDBC metastore<span class="nt">&lt;/description&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;/property&gt;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="nt">&lt;property&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;name&gt;</span>javax.jdo.option.ConnectionUserName<span class="nt">&lt;/name&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;value&gt;</span>hive<span class="nt">&lt;/value&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;/property&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The information stored in metastore is typically much smaller than the data stored in Hive.
-Therefore, you typically don’t need a powerful dedicated database server for the metastore.
-However since it represents a Single Point of Failure (SPOF), it is strongly recommended that you replicate and back up this database using the best practices like any other database instances.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Learning Hive (Pt. 2): Hive CLI]]></title>
-    <link href="http://tdongsi.github.io/javascript/blog/2015/11/23/programming-hive-hive-cli/"/>
-    <updated>2015-11-23T19:47:23-08:00</updated>
-    <id>http://tdongsi.github.io/javascript/blog/2015/11/23/programming-hive-hive-cli</id>
-    <content type="html"><![CDATA[<p>This post covers how to get started with Hive and some basics of Hive, including its command-line interface (CLI).</p>
-
-<!--more-->
-
-
-<h3>Starting Hive with Cloudera Quickstart VM</h3>
-
-<p>On Cloudera Quickstart VM, the cores of its Hive distribution, including files such as <code>hive-exec*.jar</code> and <code>hive-metastore*.jar</code>, can be found in <code>/usr/lib/hive/lib</code>.
-The Hive executables can be found in <code>/usr/lib/hive/bin</code>. Running <code>hive</code> without any parameter will start Hive&rsquo;s CLI.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>[cloudera@quickstart temp]$ hive
-</span><span class='line'>
-</span><span class='line'>Logging initialized using configuration in file:/etc/hive/conf.dist/hive-log4j.properties
-</span><span class='line'>hive&gt; CREATE TABLE x (a INT);
-</span><span class='line'>OK
-</span><span class='line'>Time taken: 3.032 seconds
-</span><span class='line'>hive&gt; SELECT * FROM x;
-</span><span class='line'>OK
-</span><span class='line'>Time taken: 0.465 seconds
-</span><span class='line'>hive&gt; SELECT *        
-</span><span class='line'>    &gt; FROM x;
-</span><span class='line'>OK
-</span><span class='line'>Time taken: 0.049 seconds
-</span><span class='line'>hive&gt; DROP TABLE x;
-</span><span class='line'>OK
-</span><span class='line'>Time taken: 0.348 seconds
-</span><span class='line'>hive&gt; exit;</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Hive services</h3>
-
-<p>The <code>hive</code> shell command is actually a wrapper to multiple Hive services, including the CLI.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>[cloudera@quickstart temp]$ hive --help
-</span><span class='line'>Usage ./hive &lt;parameters&gt; --service serviceName &lt;service parameters&gt;
-</span><span class='line'>Service List: beeline cli help hiveserver2 hiveserver hwi jar lineage metastore metatool orcfiledump rcfilecat schemaTool version 
-</span><span class='line'>Parameters parsed:
-</span><span class='line'>  --auxpath : Auxillary jars 
-</span><span class='line'>  --config : Hive configuration directory
-</span><span class='line'>  --service : Starts specific service/component. cli is default
-</span><span class='line'>Parameters used:
-</span><span class='line'>  HADOOP_HOME or HADOOP_PREFIX : Hadoop install directory
-</span><span class='line'>  HIVE_OPT : Hive options
-</span><span class='line'>For help on a particular service:
-</span><span class='line'>  ./hive --service serviceName --help
-</span><span class='line'>Debug help:  ./hive --debug --help</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Note the list of services following the line &ldquo;Service List&rdquo;.
-There are several services available, most notably <strong>cli, hwi, jar, metastore</strong>.
-You can use <code>--service name</code> option to invoke a service.
-CLI is the default service, not specifying any service in <code>hive</code> command will run CLI service, as shown in &ldquo;Starting Hive&rdquo; section above.</p>
-
-<p>For example, to run <a href="https://cwiki.apache.org/confluence/display/Hive/HiveWebInterface">Hive Web Interface</a>, run the service <strong>hwi</strong>. On Cloudera Quickstart VM, you might encounter this error:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>[cloudera@quickstart temp]$ hive --service hwi
-</span><span class='line'>ls: cannot access /usr/lib/hive/lib/hive-hwi-*.war: No such file or directory
-</span><span class='line'>15/11/23 20:22:50 INFO hwi.HWIServer: HWI is starting up
-</span><span class='line'>15/11/23 20:22:50 FATAL hwi.HWIServer: HWI WAR file not found at /usr/lib/hive/usr/lib/hive/lib/hive-hwi-0.8.1-cdh4.0.0.jar</span></code></pre></td></tr></table></div></figure>
-
-
-<p>To fix that error, edit the config file <code>hive-site.xml</code> in the <code>config</code> folder (e.g., <code>/usr/lib/hive/conf/hive-site.xml</code> on Cloudera VM) to point to the right location of HWI&rsquo;s <code>war</code> file.
-On Cloudera Quickstart VM, the <code>war</code> file property block should look like this:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>...
-</span><span class='line'> &lt;property&gt;
-</span><span class='line'>    &lt;name&gt;hive.hwi.war.file&lt;/name&gt;
-</span><span class='line'>    &lt;value&gt;/lib/hive-hwi.jar&lt;/value&gt;
-</span><span class='line'>    &lt;description&gt;This is the WAR file with the jsp content for Hive Web Interface&lt;/description&gt;
-</span><span class='line'>  &lt;/property&gt;
-</span><span class='line'>...</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Running the <strong>hwi</strong> service again using <code>hive</code> command should work. In order to access the Hive Web Interface, go to <code>[Hive Server Address]</code>:9999/hwi on your web browser.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>[cloudera@quickstart temp]$ hive --service hwi
-</span><span class='line'>ls: cannot access /usr/lib/hive/lib/hive-hwi-*.war: No such file or directory
-</span><span class='line'>15/11/23 20:31:27 INFO hwi.HWIServer: HWI is starting up
-</span><span class='line'>15/11/23 20:31:27 INFO mortbay.log: Logging to org.slf4j.impl.Log4jLoggerAdapter(org.mortbay.log) via org.mortbay.log.Slf4jLog
-</span><span class='line'>15/11/23 20:31:27 INFO mortbay.log: jetty-6.1.26.cloudera.4
-</span><span class='line'>15/11/23 20:31:27 INFO mortbay.log: Extract /usr/lib/hive/lib/hive-hwi.jar to /tmp/Jetty_0_0_0_0_9999_hive.hwi.0.13.1.cdh5.3.0.jar__hwi__.lcik1p/webapp
-</span><span class='line'>15/11/23 20:31:28 INFO mortbay.log: Started SocketConnector@0.0.0.0:9999</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Hive CLI</h3>
-
-<p>Available options for Hive CLI can be displayed as follows:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>[cloudera@quickstart temp]$ hive --help --service cli
-</span><span class='line'>usage: hive
-</span><span class='line'> -d,--define &lt;key=value&gt;          Variable subsitution to apply to hive
-</span><span class='line'>                                  commands. e.g. -d A=B or --define A=B
-</span><span class='line'>    --database &lt;databasename&gt;     Specify the database to use
-</span><span class='line'> -e &lt;quoted-query-string&gt;         SQL from command line
-</span><span class='line'> -f &lt;filename&gt;                    SQL from files
-</span><span class='line'> -H,--help                        Print help information
-</span><span class='line'> -h &lt;hostname&gt;                    connecting to Hive Server on remote host
-</span><span class='line'>    --hiveconf &lt;property=value&gt;   Use value for given property
-</span><span class='line'>    --hivevar &lt;key=value&gt;         Variable subsitution to apply to hive
-</span><span class='line'>                                  commands. e.g. --hivevar A=B
-</span><span class='line'> -i &lt;filename&gt;                    Initialization SQL file
-</span><span class='line'> -p &lt;port&gt;                        connecting to Hive Server on port number
-</span><span class='line'> -S,--silent                      Silent mode in interactive shell
-</span><span class='line'> -v,--verbose                     Verbose mode (echo executed SQL to the
-</span><span class='line'>                                  console)</span></code></pre></td></tr></table></div></figure>
-
-
-<h4>Hive variables and properties</h4>
-
-<p>The <code>--define key=value</code> option is equivalent to the <code>--hivevar key=value</code> option. Both let you define custom variables in the <code>hivevar</code> namespace, separate from three other built-in namespaces, <code>hiveconf</code>, <code>system</code>, and <code>env</code>. By convention, the Hive namespaces for variables and properties are as follows:</p>
-
-<ol>
-<li>hivevar: user-defined custom variables.</li>
-<li>hiveconf: Hive-specific configuration properties.</li>
-<li>system: Java configuration properties.</li>
-<li>env: (Read-only) environment variables by shell environment (e.g., bash).</li>
-</ol>
-
-
-<p>Inside Hive CLI, the command <code>SET</code> is used to display and change variables. For example:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>[cloudera@quickstart temp]$ hive
-</span><span class='line'>
-</span><span class='line'>Logging initialized using configuration in file:/etc/hive/conf.dist/hive-log4j.properties
-</span><span class='line'>hive&gt; set env:HOME; &lt;-- display HOME variable in env namespace
-</span><span class='line'>env:HOME=/home/cloudera
-</span><span class='line'>hive&gt; set; &lt;-- display all variables
-</span><span class='line'>...
-</span><span class='line'>hive&gt; set -v; &lt;-- display even more variables
-</span><span class='line'>...
-</span><span class='line'>hive&gt; set hivevar:foo=bar; &lt;-- set foo variable in hivevar namespace to bar</span></code></pre></td></tr></table></div></figure>
-
-
-<h4><code>-e query_string</code> and <code>-S</code> options</h4>
-
-<p><code>-e</code> option allows you to execute a list of semicolon-separated queries as an input string. <code>-S</code> option for silent mode will remove non-essential output. For example:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ hive -e "SELECT * FROM mytable LIMIT 3";
-</span><span class='line'>OK
-</span><span class='line'>name1 10
-</span><span class='line'>name2 20
-</span><span class='line'>name3 30
-</span><span class='line'>Time taken: 4.955 seconds</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ hive -S -e "select * FROM mytable LIMIT 3"
-</span><span class='line'>name1 10
-</span><span class='line'>name2 20
-</span><span class='line'>name3 30</span></code></pre></td></tr></table></div></figure>
-
-
-<p><strong>Tip</strong>: To quickly search for the full name of a property that you only remember part of its name, pipe the Hive&rsquo;s <code>SET</code> command output to grep. For example:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>[cloudera@quickstart temp]$ hive -S -e "set" | grep warehouse
-</span><span class='line'>hive.metastore.warehouse.dir=/user/hive/warehouse
-</span><span class='line'>hive.warehouse.subdir.inherit.perms=true</span></code></pre></td></tr></table></div></figure>
-
-
-<h4><code>-f script_file</code> option</h4>
-
-<p>This option allows you to execute one or more queries contained in a script file. If you are already within the Hive CLI, you can use the <code>SOURCE</code> command to execute a script file. For example:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ cat /path/to/file/withqueries.hql
-</span><span class='line'>SELECT x.* FROM src x;
-</span><span class='line'>$ hive
-</span><span class='line'>hive&gt; source /path/to/file/withqueries.hql;</span></code></pre></td></tr></table></div></figure>
-
-
-<p></p>
-
-<h4><code>-i filename</code> option</h4>
-
-<p>This option lets you specify an initialization file with a list of commands for the CLI to run when it starts. The default initialization file is the file <code>$HOME/.hiverc</code> if it exists.</p>
-
-<h4>Tips</h4>
-
-<ul>
-<li>To print column headers (disabled by default), set the hiveconf property <code>hive.cli.print.header</code> to true: <code>set hive.cli.print.header=true;</code>.</li>
-<li>Hive has a command history, saved into a file <code>$HOME/.hivehistory</code>. Use the up and down arrow keys to scroll through previous commands.</li>
-<li>To run HDFS commands from within Hive CLI, drop the hdfs. For example:</li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>hive&gt; dfs -ls input; 
-</span><span class='line'>Found 1 items
-</span><span class='line'>-rw-r--r--   1 cloudera cloudera         31 2015-01-15 18:04 input/wordcount.txt</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>To run the bash shell commands from within Hive CLI, prefix <code>!</code> before the bash commands and terminate the line with a semicolon (;). Note that interactive commands, shell pipes <code>|</code>, and file globs <code>*</code> will not work. Example:</li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>hive&gt; !pwd;
-</span><span class='line'>hive&gt; /home/cloudera/temp</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>Set the property <code>set hive.exec.mode.local.auto=true;</code> to use local mode more aggressively and gain performance in Hive queries, especially when working with small data sets.</li>
-</ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Learning Hive (Pt. 1): Introduction]]></title>
-    <link href="http://tdongsi.github.io/javascript/blog/2015/11/22/programming-hive-chapter-1/"/>
-    <updated>2015-11-22T17:22:51-08:00</updated>
-    <id>http://tdongsi.github.io/javascript/blog/2015/11/22/programming-hive-chapter-1</id>
-    <content type="html"><![CDATA[<!---
-"Chapter 1: Introduction" of the "Programming Hive" book.
--->
-
-
-<p>This post is the first of many Hive review posts.
-Most of these posts are based on the <strong>Programming Hive</strong> book, with some observations from my own experience with <a href="http://tdongsi.github.io/javascript/blog/2015/11/20/wordcount-sample-in-cloudera-quickstart-vm/">Cloudera Quickstart VM</a>.</p>
-
-<p><img class="center" src="http://tdongsi.github.io/javascript/images/hive/cat.gif" title="Cover" ></p>
-
-<!--more-->
-
-
-<h3>Introduction</h3>
-
-<p>Hive provides a SQL dialect, called Hive Query Language (HiveQL or HQL) for querying data stored in a Hadoop cluster. SQL knowledge is widespread for a reason; it&rsquo;s an effective, reasonably intuitive model for organizing and using data. Therefore, Hive helps lower the barrier, making transition to Hadoop from traditional relational databases easier for database users such as business analysts.</p>
-
-<p>Note that Hive is more suited for data warehouse applications, where data is relatively static and fast response time is not required. For example, a simple query such as <code>select count(*) from my_table</code> can take several seconds for a very small table (mostly due to startup overhead for MapReduce jobs). Hive is a heavily batch-oriented system: in addition to large startup overheads, it neither provides record-level update, insert, or delete nor transactions. In short, Hive is not a full database (hint: check HBase).</p>
-
-<p>HiveQL does not conform to the ANSI SQL standard (not many do), but it is quite close to MySQL dialect.</p>
-
-<h3>Hive within the Hadoop Ecosystem</h3>
-
-<p>A basic understanding of Hadoop and MapReduce can help you to understand and appreciate how Hive works. Simple examples such as WordCount in my <a href="http://tdongsi.github.io/javascript/blog/2015/11/21/explaining-wordcount-example/">last post</a> can be very involving when using the Hadoop Java API. The API requires Java developers to manage many low-level details, repetitive wiring to/from Mappers and Reducers. The WordCount example&rsquo;s Java implementation can be found <a href="https://wiki.apache.org/hadoop/WordCount">here</a>.</p>
-
-<p>Hive not only eliminates advanced, sometimes repetitive Java coding but also provides a familiar interface to those who know SQL. Hive lets you complete a lot of work with relatively little effort. For example, the same WordCount example in HiveQL can be as simple as:</p>
-
-<figure class='code'><figcaption><span>WordCount example in HiveQL</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">docs</span> <span class="p">(</span><span class="n">line</span> <span class="n">STRING</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'><span class="cm">/* Load text files into TABLE docs: each line as a row */</span>
-</span><span class='line'><span class="k">LOAD</span> <span class="k">DATA</span> <span class="n">INPATH</span> <span class="s1">&#39;wordcount.txt&#39;</span> <span class="n">OVERWRITE</span> <span class="k">INTO</span> <span class="k">TABLE</span> <span class="n">docs</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">word_counts</span> <span class="k">AS</span>
-</span><span class='line'><span class="k">SELECT</span> <span class="n">word</span><span class="p">,</span> <span class="k">count</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="k">AS</span> <span class="k">count</span>
-</span><span class='line'><span class="k">FROM</span>
-</span><span class='line'>   <span class="c1">-- explode will return rows of tokens</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">SELECT</span> <span class="n">explode</span><span class="p">(</span><span class="n">split</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="s1">&#39;\s&#39;</span><span class="p">))</span> <span class="k">AS</span> <span class="n">word</span>
-</span><span class='line'>   <span class="k">FROM</span> <span class="n">docs</span><span class="p">)</span> <span class="n">w</span>
-</span><span class='line'><span class="k">GROUP</span> <span class="k">BY</span> <span class="n">word</span>
-</span><span class='line'><span class="k">ORDER</span> <span class="k">BY</span> <span class="n">word</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<!--
-In the remaining sections of Chapter 1, the authors also discuss various related Hadoop projects such as Pig, Hue, HBase, Spark, Storm, Kafka, etc.
--->
 
 ]]></content>
   </entry>

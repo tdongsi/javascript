@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+<loc>http://tdongsi.github.io/javascript/blog/2017/09/06/question-bank/</loc>
+<lastmod>2017-09-06T22:34:25-07:00</lastmod>
+</url>
+<url>
 <loc>http://tdongsi.github.io/javascript/blog/2017/06/21/tutorial-quick-start-for-javascript-programming-test/</loc>
 <lastmod>2017-06-21T00:58:03-07:00</lastmod>
 </url>
@@ -9,8 +13,12 @@
 <lastmod>2017-05-23T21:54:01-07:00</lastmod>
 </url>
 <url>
-<loc>http://tdongsi.github.io/javascript/blog/2016/09/06/question-bank/</loc>
-<lastmod>2016-09-06T22:34:25-07:00</lastmod>
+<loc>http://tdongsi.github.io/javascript/blog/2016/06/30/java-intermittent-test-failures/</loc>
+<lastmod>2016-06-30T17:51:13-07:00</lastmod>
+</url>
+<url>
+<loc>http://tdongsi.github.io/javascript/blog/2016/06/06/java-unit-test-performance/</loc>
+<lastmod>2016-06-06T22:47:42-07:00</lastmod>
 </url>
 <url>
 <loc>http://tdongsi.github.io/javascript/blog/2016/02/29/vertica-9-refresh-projections/</loc>
@@ -23,6 +31,14 @@
 <url>
 <loc>http://tdongsi.github.io/javascript/blog/2016/02/07/vertica-7-projections/</loc>
 <lastmod>2016-02-07T00:50:44-08:00</lastmod>
+</url>
+<url>
+<loc>http://tdongsi.github.io/javascript/blog/2016/01/18/aws-developing-with-amazon-s3/</loc>
+<lastmod>2016-01-18T17:13:28-08:00</lastmod>
+</url>
+<url>
+<loc>http://tdongsi.github.io/javascript/blog/2016/01/17/aws-set-up-aws-credentials-on-mac-osx/</loc>
+<lastmod>2016-01-17T20:57:35-08:00</lastmod>
 </url>
 <url>
 <loc>http://tdongsi.github.io/javascript/blog/2016/01/10/find-and-replace-a-string-in-multiple-files/</loc>
@@ -154,7 +170,13 @@
 <loc>http://tdongsi.github.io/javascript/blog/categories/testing/</loc>
 </url>
 <url>
-<loc>http://tdongsi.github.io/javascript/blog/categories/questions/</loc>
+<loc>http://tdongsi.github.io/javascript/blog/categories/aws/</loc>
+</url>
+<url>
+<loc>http://tdongsi.github.io/javascript/blog/categories/python/</loc>
+</url>
+<url>
+<loc>http://tdongsi.github.io/javascript/blog/categories/junit/</loc>
 </url>
 <url>
 <loc>http://tdongsi.github.io/javascript/blog/categories/javascript/</loc>
@@ -164,5 +186,8 @@
 </url>
 <url>
 <loc>http://tdongsi.github.io/javascript/blog/categories/todo/</loc>
+</url>
+<url>
+<loc>http://tdongsi.github.io/javascript/blog/categories/questions/</loc>
 </url>
 </urlset>

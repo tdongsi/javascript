@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Questions | Archived Blog Posts]]></title>
   <link href="http://tdongsi.github.io/javascript/blog/categories/questions/atom.xml" rel="self"/>
   <link href="http://tdongsi.github.io/javascript/"/>
-  <updated>2021-03-11T07:27:25-08:00</updated>
+  <updated>2021-03-11T07:44:21-08:00</updated>
   <id>http://tdongsi.github.io/javascript/</id>
   <author>
     <name><![CDATA[Cuong Dong-Si]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Question Bank]]></title>
-    <link href="http://tdongsi.github.io/javascript/blog/2016/09/06/question-bank/"/>
-    <updated>2016-09-06T22:34:25-07:00</updated>
-    <id>http://tdongsi.github.io/javascript/blog/2016/09/06/question-bank</id>
+    <link href="http://tdongsi.github.io/javascript/blog/2017/09/06/question-bank/"/>
+    <updated>2017-09-06T22:34:25-07:00</updated>
+    <id>http://tdongsi.github.io/javascript/blog/2017/09/06/question-bank</id>
     <content type="html"><![CDATA[<p>Extracted from this <a href="https://github.com/h5bp/Front-end-Developer-Interview-Questions">Github</a> on September 6th 2016.</p>
 
 <!--more-->
