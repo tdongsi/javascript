@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Bash | Archived Blog Posts]]></title>
+  <link href="http://tdongsi.github.io/javascript/blog/categories/bash/atom.xml" rel="self"/>
+  <link href="http://tdongsi.github.io/javascript/"/>
+  <updated>2021-03-11T06:55:27-08:00</updated>
+  <id>http://tdongsi.github.io/javascript/</id>
+  <author>
+    <name><![CDATA[Cuong Dong-Si]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Bash Programming Cookbook]]></title>
+    <link href="http://tdongsi.github.io/javascript/blog/2015/08/21/bash-programming-cookbook/"/>
+    <updated>2015-08-21T12:05:05-07:00</updated>
+    <id>http://tdongsi.github.io/javascript/blog/2015/08/21/bash-programming-cookbook</id>
+    <content type="html"><![CDATA[<p>The blog lists some frequently used code snippets found in shell programming.</p>
+
+<!--more-->
+
+
+<h3>Indirect expansion</h3>
+
+<p>Using indirect expansion expression <code>${!var}</code>, you can use the value of one variable to tell you the name of another vairable.</p>
+
+<pre><code class="plain Indirect expansion">$ export xyzzy=plugh ; export plugh=cave
+
+$ echo ${xyzzy}  # normal, xyzzy to plugh
+plugh
+
+$ echo ${!xyzzy} # indirection, xyzzy to plugh to cave
+cave
+</code></pre>
+
+<p>According to <code>bash</code> man page, the exceptions to this are the expansions of <code>${!prefix*}</code> and <code>${!name[@]}</code>.
+<code>${!prefix*}</code> expands to the names of variables whose names begin with prefix, separated by the first character of the <code>IFS</code> special variable.
+When <code>${!prefix@}</code> is used and the expansion appears within double quotes, each variable name expands to a separate word.
+On the other hand, <code>${!name[*]}</code>, if name is an array variable, expands to the list of array indices (keys) assigned in name.
+If name is not an array, expands to 0 if name is set and null otherwise.
+When <code>${!name[@]}</code> is used and the expansion appears within double quotes, each key expands to a separate word.</p>
+
+<pre><code class="plain Exceptions to Indirect Expansion">:~&gt; export myVar="hi"
+:~&gt; echo ${!my*}
+    myVar
+
+:~&gt; cat temp.sh
+#!/bin/bash
+
+letters=(a b c d)
+echo ${!letters[*]}
+echo ${!letters[@]}
+
+:~&gt; bash temp.sh
+0 1 2 3
+0 1 2 3
+</code></pre>
+
+<p>Reference:</p>
+
+<ul>
+<li><a href="https://stackoverflow.com/questions/8515411/what-is-indirect-expansion-what-does-var-mean">Stackoverflow discussion</a></li>
+<li><a href="http://tldp.org/LDP/abs/html/ivr.html">Indirect References</a></li>
+<li><a href="http://ahmed.amayem.com/bash-indirect-expansion-exploration/">More experiements</a></li>
+</ul>
+
+
+<h3>General reference</h3>
+
+<ul>
+<li><a href="https://linux.die.net/man/1/bash">bash man page</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

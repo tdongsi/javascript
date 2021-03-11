@@ -1,0 +1,493 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Bash | Personal Interview Notes]]></title>
+  <link href="http://tdongsi.github.io/javascript/blog/categories/bash/atom.xml" rel="self"/>
+  <link href="http://tdongsi.github.io/javascript/"/>
+  <updated>2021-03-11T06:01:44-08:00</updated>
+  <id>http://tdongsi.github.io/javascript/</id>
+  <author>
+    <name><![CDATA[Cuong Dong-Si]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[TCP Ping]]></title>
+    <link href="http://tdongsi.github.io/javascript/blog/2017/10/09/tcp-ping/"/>
+    <updated>2017-10-09T14:36:56-07:00</updated>
+    <id>http://tdongsi.github.io/javascript/blog/2017/10/09/tcp-ping</id>
+    <content type="html"><![CDATA[<p>This post explains a work-around for pinging hosts in network where ICMP requests are blocked.</p>
+
+<!--more-->
+
+
+<p>There are times that we can <code>ssh</code> to our servers but simply can&rsquo;t <code>ping</code> those servers.</p>
+
+<pre><code class="plain ssh works but ping fails">tdongsi$ ping 10.252.158.71
+PING 10.252.158.71 (10.252.158.71): 56 data bytes
+Request timeout for icmp_seq 0
+Request timeout for icmp_seq 1
+Request timeout for icmp_seq 2
+Request timeout for icmp_seq 3
+^C
+--- 10.252.158.71 ping statistics ---
+5 packets transmitted, 0 packets received, 100.0% packet loss
+
+tdongsi$ ssh centos@10.252.158.71
+Last login: Mon Feb  6 23:35:41 2017 from 10.3.55.249
+[centos@kube-1 ~]$ exit
+logout
+Connection to 10.252.158.71 closed.
+</code></pre>
+
+<p>One possible explanation of seemingly perplexing situation like above is that <a href="https://en.wikipedia.org/wiki/Internet_Control_Message_Protocol">ICMP requests</a> (i.e., ping) are blocked.
+It is not unheard of that an ISP or a network administrator blocks ICMP requests.
+To work around that limitation, you can use a &ldquo;TCP ping&rdquo; on a port, using a tool like <code>nmap</code>.
+The following examples check if a host can be reached via port 80:</p>
+
+<pre><code class="plain "TCP ping" with nmap: success and failure.">tdongsi$ nmap -sn -PS80 10.252.158.71
+
+Starting Nmap 7.40 ( https://nmap.org ) at 2017-03-03 17:17 PST
+Nmap scan report for master-1 (10.252.158.71)
+Host is up (0.051s latency).
+Nmap done: 1 IP address (1 host up) scanned in 0.06 seconds
+
+tdongsi$ nmap -sn -PS80 master-2
+
+Starting Nmap 7.40 ( https://nmap.org ) at 2017-10-09 14:35 PDT
+Note: Host seems down. If it is really up, but blocking our ping probes, try -Pn
+Nmap done: 1 IP address (0 hosts up) scanned in 2.02 seconds
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Bash Trap]]></title>
+    <link href="http://tdongsi.github.io/javascript/blog/2016/03/02/bash-trap/"/>
+    <updated>2016-03-02T00:07:48-08:00</updated>
+    <id>http://tdongsi.github.io/javascript/blog/2016/03/02/bash-trap</id>
+    <content type="html"><![CDATA[<p>In this post, we discuss common usage of bash <code>trap</code> to ensure proper cleanup operations in Bash scripts.
+It also discusses a common idiom <code>trap cleanup INT TERM EXIT</code> where other signals such as INT and TERM is also trapped in addition to EXIT.
+While such idiom could be valid in some Unix system, it is usually redundant and can be simply wrong (duplicate executions) in most cases, as shown on Mac.
+A simple test is provided to verify if such idiom is applicable in your current system.</p>
+
+<!--more-->
+
+
+<h3>Standard usage</h3>
+
+<p>There is a simple idiom to ensure your bash scripts to always do proper cleanup operations before exiting, even when something goes wrong during execution.
+In the context of Java or Python, this is similar to a <code>finally</code> clause that will execute after any exception is caught during execution.</p>
+
+<pre><code class="bash DO THIS"># Setup trap to cleanup before exiting script
+function cleanup {
+    echo "Removing temp files..."
+    if [[ -f $CMD_TMPFILE ]] ; then
+        rm $CMD_TMPFILE
+    fi
+    if [[ -f $LOG_TMPFILE ]] ; then
+        rm $LOG_TMPFILE
+    fi
+}
+trap cleanup EXIT
+
+# Setup
+
+# Thousand lines of code here
+</code></pre>
+
+<p>Putting the cleanup operations at the end of the bash script might not work in cases of error.
+Since the bash script already stops executing due to some fatal error, those clean up commands might never run.</p>
+
+<pre><code class="bash DON'T DO THIS">
+# Setup
+
+# Thousand lines of code here
+
+# This might not run when there is error
+echo "Removing temp files..."
+if [[ -f $CMD_TMPFILE ]] ; then
+    rm $CMD_TMPFILE
+fi
+if [[ -f $LOG_TMPFILE ]] ; then
+    rm $LOG_TMPFILE
+fi
+</code></pre>
+
+<p>For example, in Vertica, you should always run <a href="https://my.vertica.com/docs/7.1.x/HTML/Content/Authoring/SQLReferenceManual/Functions/VerticaFunctions/START_REFRESH.htm"><code>SELECT START_REFRESH()</code></a>
+at the end of a deployment script, regardless of any error encountered during script execution.
+It is a good candidate for using <code>trap</code> statement.
+Adding those commands at the end of the script will not work in cases there is an error during deployment, and you might end up with &ldquo;AHM Does Not Advance&rdquo;-related errors (see this <a href="/blog/2016/02/29/vertica-9-refresh-projections/">post</a>).</p>
+
+<h3>Trap multiple signals</h3>
+
+<p>Note that many online examples for <code>trap</code> use a list of signals for cleanup tasks like this <code>trap cleanup INT TERM EXIT</code>, i.e., trapping not only EXIT signal but also INT and TERM signals.
+I believe that if <code>EXIT</code> signal is used, other signals such as <code>INT</code> or <code>TERM</code> are redundant for cleanup purposes.
+<code>EXIT</code> or 0 signal is invoked when the shell exits, an event that also happens when an <code>INT</code> or <code>TERM</code> signal is received.
+It is easy to confirm that with the following short bash script:</p>
+
+<pre><code class="plain Trap tests in Mac OSX">MTVL1288aeea2-82:code tdongsi$ cat test_trap.sh
+#!/bin/bash
+trap 'echo SIGNAL CAPTURED' EXIT
+sleep 3
+
+MTVL1288aeea2-82:code tdongsi$ ./test_trap.sh &amp; sleep 1; kill -INT %1
+[1] 6613
+SIGNAL CAPTURED
+[1]+  Interrupt: 2            ./test_trap.sh
+
+MTVL1288aeea2-82:code tdongsi$ ./test_trap.sh &amp; sleep 1; kill -TERM %1
+[1] 6624
+SIGNAL CAPTURED
+[1]+  Terminated: 15          ./test_trap.sh
+</code></pre>
+
+<p>As shown above, a lone <code>EXIT</code> is enough to capture <code>INT</code> and <code>TERM</code> signals.
+Having said that, I understand that my tests can only verify bash on Mac OSX.
+There are probably different shell variants on different operating systems which do not always work that way.</p>
+
+<p>The problem of those <code>trap</code> examples lies in when someone copies and uses the code directly from the web, without understanding how it works.
+Listing multiple signals can make the <code>cleanup</code> steps executed twice, once for the signal such as <code>TERM</code> and once for <code>EXIT</code>, as shown in the modified experiment below.
+Not all cleanup steps could be and should be executed twice.
+For example, it is almost always true that removing some temporary file/folder should not be executed twice during a cleanup.</p>
+
+<pre><code class="plain Problem of trapping multiple signals">MTVL1288aeea2-82:code tdongsi$ cat test_trap.sh
+#!/bin/bash
+trap 'echo SIGNAL CAPTURED' INT TERM EXIT
+sleep 3
+
+MTVL1288aeea2-82:code tdongsi$ ./test_trap.sh &amp; sleep 1; kill -INT %1
+[1] 7258
+SIGNAL CAPTURED
+SIGNAL CAPTURED
+[1]+  Exit 130                ./test_trap.sh
+
+MTVL1288aeea2-82:code tdongsi$ ./test_trap.sh &amp; sleep 1; kill -TERM %1
+[1] 7278
+Terminated: 15
+SIGNAL CAPTURED
+SIGNAL CAPTURED
+[1]+  Exit 143                ./test_trap.sh
+</code></pre>
+
+<p>In short, you should know how <code>trap</code> works on your production system before listing multiple signals as its parameters, especially when coupled with <code>EXIT</code> signal.</p>
+
+<h3>Other usage notes</h3>
+
+<p>The signal names might be specified with or without prefix <code>SIG</code> or even with numeric values for signal numbers, e.g., 2 for INT (see list below).</p>
+
+<pre><code class="plain List of signals">MTVL1288aeea2-82:octopress tdongsi$ kill -l
+ 1) SIGHUP   2) SIGINT   3) SIGQUIT  4) SIGILL
+ 5) SIGTRAP  6) SIGABRT  7) SIGEMT   8) SIGFPE
+ 9) SIGKILL 10) SIGBUS  11) SIGSEGV 12) SIGSYS
+13) SIGPIPE 14) SIGALRM 15) SIGTERM 16) SIGURG
+17) SIGSTOP 18) SIGTSTP 19) SIGCONT 20) SIGCHLD
+21) SIGTTIN 22) SIGTTOU 23) SIGIO   24) SIGXCPU
+25) SIGXFSZ 26) SIGVTALRM   27) SIGPROF 28) SIGWINCH
+29) SIGINFO 30) SIGUSR1 31) SIGUSR2
+
+OR 
+
+MTVL1288aeea2-82:octopress tdongsi$ man signal
+</code></pre>
+
+<p>If one of the signals specified in <code>trap</code> statement is <code>DEBUG</code>, the list of COMMANDS specified in <code>trap</code> statement will be executed after every simple command.
+This is useful for debugging purpose.
+The following example is taken from <a href="http://tldp.org/LDP/Bash-Beginners-Guide/html/chap_12.html">here</a>:</p>
+
+<pre><code class="bash Tracing when a variable is used">declare -t VARIABLE=value
+trap "echo VARIABLE is being used here." DEBUG
+
+# rest of the script
+</code></pre>
+
+<h3>References</h3>
+
+<ol>
+<li><a href="http://tldp.org/LDP/Bash-Beginners-Guide/html/chap_12.html">Signals and Traps</a></li>
+<li><a href="http://redsymbol.net/articles/bash-exit-traps/">Other usages</a></li>
+<li><a href="http://wiki.bash-hackers.org/commands/builtin/declare">declare</a></li>
+</ol>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Symlinks in Git]]></title>
+    <link href="http://tdongsi.github.io/javascript/blog/2016/02/20/symlinks-in-git/"/>
+    <updated>2016-02-20T11:28:11-08:00</updated>
+    <id>http://tdongsi.github.io/javascript/blog/2016/02/20/symlinks-in-git</id>
+    <content type="html"><![CDATA[<p>Let&rsquo;s say we have folders with many symbolic links in them, linking to other files in the same Git repository.</p>
+
+<pre><code class="bash Before">$ ls -l link
+... link -&gt; /path/to/target
+</code></pre>
+
+<p>Unfortunately after committing into Git, they&rsquo;ve turned into plain text files.
+Note that even after committing and pushing into Git, the symlinks still work fine.
+However, after some branch switches and code merges, the symlinks become actual text files with the link target as the contents.</p>
+
+<pre><code class="bash After">$ cat link
+/path/to/target
+</code></pre>
+
+<!--more-->
+
+
+<h3>Restoring the symlinks</h3>
+
+<p>Before going into lengthy discussion on how Git handles symlinks and hard links, the quick solution for the above problem is the following Bash script:</p>
+
+<pre><code class="bash">folder=/Users/tdongsi/Github/my_repo/scripts/sql
+ls -d1 $folder/* | while read f; do
+  ln -sf "$(cat $f)" "$f"
+done
+</code></pre>
+
+<p>where <code>ls -d1 $folder/*</code> should be replaced with some command that will list exactly the files you want, preferably in full path.
+Note that <code>-f</code> option of <code>ln</code> command is required to replace the file with the symlink. For examples:</p>
+
+<pre><code class="bash Examples">ls -d1 vertica/*.sql | while read f; do
+  ln -sf "$(cat $f)" "$f"
+done
+
+ls -d1 bash/* | while read f; do
+  ln -sf "$(cat $f)" "$f"
+done
+</code></pre>
+
+<p><strong>Best practice note</strong>: I think that the following template is preferred to the more commonly seen <code>for f in $(ls *);</code> <code>do...done</code>:</p>
+
+<pre><code class="bash">ls * | while read f; do
+  # command executed for each file
+done
+</code></pre>
+
+<p>I think it is the better way to handle all file names, especially with spaces, since <code>"$f"</code> will still work.
+In addition, <code>$(cmd)</code> is the same as <code>'cmd'</code> (backticks) but it can be nested, unlike using backticks.
+It fact, it&rsquo;s the main reason why the backticks have been <a href="http://wiki.bash-hackers.org/scripting/obsolete">deprecated</a> from Bash scripting.</p>
+
+<h3>How Git deals with symlinks</h3>
+
+<p>How Git deals with symlinks is defined in the <a href="https://git-scm.com/docs/git-config">git config</a> <code>core.symlinks</code>.
+If false, symbolic links are checked out as small plain files that contain the link text.
+<a href="http://stackoverflow.com/questions/954560/how-does-git-handle-symbolic-links">Otherwise</a>, Git just stores the contents of the link (i.e., the path of the file system) in a &lsquo;blob&rsquo; just like it would for a normal file.
+It also stores the name, mode and type (e.g., symlink) in the tree object that represents its containing directory.
+When you checkout a tree containing the link, it restores the object as a symlink.</p>
+
+<p>After the symlinks are checked out as plain text files, I believe it is pretty much no way for Git to restore symlinks again (i.e., follow symlinks inside text files).
+It would be an insecure, undefined behavior: what if the symlink as text file is modified? What if the target is changed when moving between versions of that text file?</p>
+
+<h3>Use hard links?</h3>
+
+<p>You can use hard links instead of symlinks (a.k.a., soft links).
+Git will handle a hard link like a copy of the file, except that the contents of the linked files change at the same time.
+Git may see changes in both files if both the original file and the hard link are in the same repository.</p>
+
+<p>One of the disadvantages is that the file will be created as a normal file during <code>git checkout</code>, because there is no way Git understand it as a link.
+Moreover, hard link itself has many limitations, compared to symlinks, such as files have to reside on the same file-system or partition.
+In Mac OSX, hard links to directories are not supported. There is a <a href="https://github.com/selkhateeb/hardlink">tool</a> to do that, but use it with caution.</p>
+
+<p>Finally, it is important to note that hard links to files can be lost when moving between different versions/branches in Git, even if they are in the same repository.
+When you switch branches back and forth, Git remove the old files and create new ones.
+You still have the copies of the previous files, but they might have totally different inodes, while others (if not in the same Git repo) still refers to the old inodes.
+Eventually, the file and its hard links may be out of sync, and appear like totally unrelated files to Git.
+Therefore, using hard links, at best, is just a temporary solution.</p>
+
+<h3>Links</h3>
+
+<ol>
+<li><a href="http://superuser.com/questions/638998/easiest-way-to-restore-symbolic-links-turned-into-text-files">Alternative ways to restore symlinks</a></li>
+<li><a href="http://stackoverflow.com/questions/246215/how-can-i-list-files-with-their-absolute-path-in-linux">Alternative ways to list files</a></li>
+<li><a href="https://git.wiki.kernel.org/index.php/Git">Git design overview</a></li>
+</ol>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Bash Programming Cookbook]]></title>
+    <link href="http://tdongsi.github.io/javascript/blog/2015/08/21/bash-programming-cookbook/"/>
+    <updated>2015-08-21T12:05:05-07:00</updated>
+    <id>http://tdongsi.github.io/javascript/blog/2015/08/21/bash-programming-cookbook</id>
+    <content type="html"><![CDATA[<p>The blog lists some frequently used code snippets found in shell programming.</p>
+
+<!--more-->
+
+
+<h3>Indirect expansion</h3>
+
+<p>Using indirect expansion expression <code>${!var}</code>, you can use the value of one variable to tell you the name of another vairable.</p>
+
+<pre><code class="plain Indirect expansion">$ export xyzzy=plugh ; export plugh=cave
+
+$ echo ${xyzzy}  # normal, xyzzy to plugh
+plugh
+
+$ echo ${!xyzzy} # indirection, xyzzy to plugh to cave
+cave
+</code></pre>
+
+<p>According to <code>bash</code> man page, the exceptions to this are the expansions of <code>${!prefix*}</code> and <code>${!name[@]}</code>.
+<code>${!prefix*}</code> expands to the names of variables whose names begin with prefix, separated by the first character of the <code>IFS</code> special variable.
+When <code>${!prefix@}</code> is used and the expansion appears within double quotes, each variable name expands to a separate word.
+On the other hand, <code>${!name[*]}</code>, if name is an array variable, expands to the list of array indices (keys) assigned in name.
+If name is not an array, expands to 0 if name is set and null otherwise.
+When <code>${!name[@]}</code> is used and the expansion appears within double quotes, each key expands to a separate word.</p>
+
+<pre><code class="plain Exceptions to Indirect Expansion">:~&gt; export myVar="hi"
+:~&gt; echo ${!my*}
+    myVar
+
+:~&gt; cat temp.sh
+#!/bin/bash
+
+letters=(a b c d)
+echo ${!letters[*]}
+echo ${!letters[@]}
+
+:~&gt; bash temp.sh
+0 1 2 3
+0 1 2 3
+</code></pre>
+
+<p>Reference:</p>
+
+<ul>
+<li><a href="https://stackoverflow.com/questions/8515411/what-is-indirect-expansion-what-does-var-mean">Stackoverflow discussion</a></li>
+<li><a href="http://tldp.org/LDP/abs/html/ivr.html">Indirect References</a></li>
+<li><a href="http://ahmed.amayem.com/bash-indirect-expansion-exploration/">More experiements</a></li>
+</ul>
+
+
+<h3>General reference</h3>
+
+<ul>
+<li><a href="https://linux.die.net/man/1/bash">bash man page</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Curl Cookbook]]></title>
+    <link href="http://tdongsi.github.io/javascript/blog/2015/08/04/curl-cookbook/"/>
+    <updated>2015-08-04T10:43:42-07:00</updated>
+    <id>http://tdongsi.github.io/javascript/blog/2015/08/04/curl-cookbook</id>
+    <content type="html"><![CDATA[<p>This blog lists some recipes for <code>curl</code> command.</p>
+
+<!--more-->
+
+
+<h3>Alternatives to <code>curl</code></h3>
+
+<h4>Simple connectivity test</h4>
+
+<p><code>telnet</code>: Most of <code>curl</code> uses are to simply check if you can connect to some endpoint at some port number.</p>
+
+<p><code>python</code>: In some Linux systems, <code>telnet</code> is not installed and cannot be installed but <code>python</code> is present. In that case, you can use the following Python snippet:</p>
+
+<pre><code class="plain Connectivity test with Python">$ python
+Python 2.7.5 (default, Nov  6 2016, 00:28:07)
+[GCC 4.8.5 20150623 (Red Hat 4.8.5-11)] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+&gt;&gt;&gt; import socket
+&gt;&gt;&gt; s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+&gt;&gt;&gt; s.connect(('my.service.net',8080))
+</code></pre>
+
+<h4>Full replacement</h4>
+
+<p><code>java</code>: <a href="https://hc.apache.org/index.html">Apache HttpClient</a>.</p>
+
+<p><code>python</code>: <a href="http://docs.python-requests.org/en/master/">requests module</a>. An <a href="https://github.com/tdongsi/bart-parking">example project</a>.</p>
+
+<p><code>groovy</code>: String&rsquo;s <code>toURL().getText()</code> together with JsonSlurper.</p>
+
+<pre><code class="groovy Example Groovy">import groovy.json.JsonSlurper
+
+def getPrBody(String githubUsername, String githubToken, String repo, String id) {
+  String GITHUB_API = 'https://git.enterprise.com/api/v3/repos'
+
+  String url = "${GITHUB_API}/${githubUsername}/${repo}/pulls/${id}"
+  println "Querying ${url}"
+  def text = url.toURL().getText(requestProperties: ['Authorization': "token ${githubToken}"])
+  def json = new JsonSlurper().parseText(text)
+  def bodyText = json.body
+
+  return bodyText
+}
+</code></pre>
+
+<h3>Standard options by functionality</h3>
+
+<h4>General usage</h4>
+
+<pre><code class="plain Options">-X: HTTP method. For example: -X PUT.
+-O: binary download.
+
+-s: silent. It will only output the data you ask for.
+</code></pre>
+
+<h4>Secure connections</h4>
+
+<pre><code class="plain Options">-k, --insecure: curl to proceed and operate even for server connections otherwise considered insecure.
+</code></pre>
+
+<h3>Cookbook</h3>
+
+<h4>Standard usage</h4>
+
+<pre><code class="plain etcd examples">curl -X GET http://master-1:2379/v2/keys/coreos.com/network/config
+</code></pre>
+
+<p>Some examples with <a href="/blog/2017/08/06/github-rest-api/">Github API</a>.</p>
+
+<pre><code class="plain Other Github API examples"># PUT with data: Merging a PR
+curl -X PUT -d '{\"commit_title\": \"Merge pull request\"}' ${GITHUB}/org-name/repo-name/pulls/${env.CHANGE_ID}/merge?access_token=${env.ACCESS_TOKEN_PASSWORD}
+
+# GET with authentication: Get PR details
+curl -s -H "Authorization: token ${env.GITHUB_TOKEN}" ${GITHUB}/${org}/${repo}/pulls/${env.CHANGE_ID}
+
+# With proxy
+curl -L -x public0-proxy1.company.net:8080 https://api.github.com
+</code></pre>
+
+<h3>Common problems</h3>
+
+<h4>Passing certificate and private key gives <code>OSStatus -25299</code> error</h4>
+
+<p>You might encounter the following problem with the default <code>curl</code> on MacOS.</p>
+
+<pre><code class="plain Error message">tdongsi-ltm4:download tdongsi$ curl --cert hostcert.crt --key hostcert.key "https://myurl:9093/namespaces/something"
+curl: (58) SSL: Can't load the certificate "hostcert.crt" and its private key: OSStatus -25299
+</code></pre>
+
+<p>As explained in <a href="https://github.com/curl/curl/issues/283">this Github bug</a>, the certificate must be in PKCS#12 format if using Secure Transport.</p>
+
+<p><blockquote><p>the Secure Transport back-end to curl only supports client IDs that are in PKCS#12 (P12) format; it does not support client IDs in PEM format because Apple does not allow us to create a security identity from an identity file in PEM format without using a private API. And we can&rsquo;t use the private API, because apps that use private API are not allowed in any of Apple&rsquo;s app stores.</p></blockquote></p>
+
+<p>You can use <code>openssl</code> to convert your private key + certificate to PKCS12 format, as follows.</p>
+
+<pre><code class="plain Convert to PKCS12 and retry">tdongsi-ltm4:download tdongsi$ openssl pkcs12 -export -in hostcert.crt -inkey hostcert.key -out ajna.p12
+Enter Export Password:
+Verifying - Enter Export Password:
+
+tdongsi-ltm4:download tdongsi$ curl -v -k -E ./ajna.p12:testing "https://myurl:9093/namespaces/something"
+</code></pre>
+
+<p>In the second command above, <code>testing</code> is the password of your choice when you create <code>ajna.p12</code> keystore with the first command.
+Note that if <code>curl</code> is installed from <code>homebrew</code> on MacOS, you can use the certificate and its key without <code>openssl</code> conversion step.</p>
+
+<h3>References</h3>
+
+<ul>
+<li><a href="https://curl.haxx.se/docs/manpage.html">curl man page</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

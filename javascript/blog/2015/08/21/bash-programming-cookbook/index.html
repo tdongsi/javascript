@@ -1,0 +1,297 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Bash Programming Cookbook - Archived Blog Posts</title>
+  <meta name="author" content="Cuong Dong-Si">
+
+  
+  <meta name="description" content="The blog lists some frequently used code snippets found in shell programming. Indirect expansion Using indirect expansion expression ${!var}, you can &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://tdongsi.github.io/javascript/blog/2015/08/21/bash-programming-cookbook/">
+  <link href="/javascript/favicon.png" rel="icon">
+  <link href="/javascript/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Archived Blog Posts" type="application/atom+xml">
+  <script src="/javascript/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascript/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body    class="collapse-sidebar sidebar-footer" >
+  <header role="banner"><hgroup>
+  <h1><a href="/javascript/">Archived Blog Posts</a></h1>
+  
+    <h2>Neither success nor failure is ever final.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="tdongsi.github.io/javascript">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/javascript/">Blog Home</a></li>
+  <li><a href="/javascript/blog/archives">Archives</a></li>
+  <li><a href="http://tdongsi.github.io">Personal Home</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Bash Programming Cookbook</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-08-21T12:05:05-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>21</span><span class='date-suffix'>st</span>, <span class='date-year'>2015</span></span> <span class='time'>12:05 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>The blog lists some frequently used code snippets found in shell programming.</p>
+
+<!--more-->
+
+
+<h3>Indirect expansion</h3>
+
+<p>Using indirect expansion expression <code>${!var}</code>, you can use the value of one variable to tell you the name of another vairable.</p>
+
+<figure class='code'><figcaption><span>Indirect expansion</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ export xyzzy=plugh ; export plugh=cave
+</span><span class='line'>
+</span><span class='line'>$ echo ${xyzzy}  # normal, xyzzy to plugh
+</span><span class='line'>plugh
+</span><span class='line'>
+</span><span class='line'>$ echo ${!xyzzy} # indirection, xyzzy to plugh to cave
+</span><span class='line'>cave</span></code></pre></td></tr></table></div></figure>
+
+
+<p>According to <code>bash</code> man page, the exceptions to this are the expansions of <code>${!prefix*}</code> and <code>${!name[@]}</code>.
+<code>${!prefix*}</code> expands to the names of variables whose names begin with prefix, separated by the first character of the <code>IFS</code> special variable.
+When <code>${!prefix@}</code> is used and the expansion appears within double quotes, each variable name expands to a separate word.
+On the other hand, <code>${!name[*]}</code>, if name is an array variable, expands to the list of array indices (keys) assigned in name.
+If name is not an array, expands to 0 if name is set and null otherwise.
+When <code>${!name[@]}</code> is used and the expansion appears within double quotes, each key expands to a separate word.</p>
+
+<figure class='code'><figcaption><span>Exceptions to Indirect Expansion</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>:~&gt; export myVar="hi"
+</span><span class='line'>:~&gt; echo ${!my*}
+</span><span class='line'>    myVar
+</span><span class='line'>
+</span><span class='line'>:~&gt; cat temp.sh
+</span><span class='line'>#!/bin/bash
+</span><span class='line'>
+</span><span class='line'>letters=(a b c d)
+</span><span class='line'>echo ${!letters[*]}
+</span><span class='line'>echo ${!letters[@]}
+</span><span class='line'>
+</span><span class='line'>:~&gt; bash temp.sh
+</span><span class='line'>0 1 2 3
+</span><span class='line'>0 1 2 3</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Reference:</p>
+
+<ul>
+<li><a href="https://stackoverflow.com/questions/8515411/what-is-indirect-expansion-what-does-var-mean">Stackoverflow discussion</a></li>
+<li><a href="http://tldp.org/LDP/abs/html/ivr.html">Indirect References</a></li>
+<li><a href="http://ahmed.amayem.com/bash-indirect-expansion-exploration/">More experiements</a></li>
+</ul>
+
+
+<h3>General reference</h3>
+
+<ul>
+<li><a href="https://linux.die.net/man/1/bash">bash man page</a></li>
+</ul>
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Cuong Dong-Si</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2015-08-21T12:05:05-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>21</span><span class='date-suffix'>st</span>, <span class='date-year'>2015</span></span> <span class='time'>12:05 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/javascript/blog/categories/bash/'>bash</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://tdongsi.github.io/javascript/blog/2015/08/21/bash-programming-cookbook/" data-via="" data-counturl="http://tdongsi.github.io/javascript/blog/2015/08/21/bash-programming-cookbook/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+      
+        <a class="basic-alignment right" href="/javascript/blog/2015/09/03/running-maven-tests-in-jenkins/" title="Next Post: Running Maven tests in Jenkins">Running Maven tests in Jenkins &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+    <h1>About This Blog</h1>
+    <p>Random interview experience and lessons.</p>
+</section><section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/javascript/blog/2017/06/21/tutorial-quick-start-for-javascript-programming-test/">Tutorial: Quick-start for JavaScript Programming Test</a>
+      </li>
+    
+      <li class="post">
+        <a href="/javascript/blog/2017/05/23/code-coverage-instanbul-slash-nyc/">Code Coverage: Istanbul & Nyc</a>
+      </li>
+    
+      <li class="post">
+        <a href="/javascript/blog/2016/09/06/question-bank/">Question Bank</a>
+      </li>
+    
+      <li class="post">
+        <a href="/javascript/blog/2015/09/03/running-maven-tests-in-jenkins/">Running Maven Tests in Jenkins</a>
+      </li>
+    
+      <li class="post">
+        <a href="/javascript/blog/2015/08/21/bash-programming-cookbook/">Bash Programming Cookbook</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>Categories</h1>
+    <ul id="category-list"><li><a href='/javascript/blog/categories/bash/'>bash (1)</a></li><li><a href='/javascript/blog/categories/javascript/'>javascript (2)</a></li><li><a href='/javascript/blog/categories/jenkins/'>jenkins (1)</a></li><li><a href='/javascript/blog/categories/maven/'>maven (1)</a></li><li><a href='/javascript/blog/categories/questions/'>questions (1)</a></li><li><a href='/javascript/blog/categories/testng/'>testng (1)</a></li><li><a href='/javascript/blog/categories/todo/'>todo (1)</a></li><li><a href='/javascript/blog/categories/tutorial/'>tutorial (1)</a></li></ul>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2021 - Cuong Dong-Si -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

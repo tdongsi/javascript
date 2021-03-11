@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Todo | Archived Blog Posts]]></title>
+  <link href="http://tdongsi.github.io/javascript/blog/categories/todo/atom.xml" rel="self"/>
+  <link href="http://tdongsi.github.io/javascript/"/>
+  <updated>2021-03-11T06:55:27-08:00</updated>
+  <id>http://tdongsi.github.io/javascript/</id>
+  <author>
+    <name><![CDATA[Cuong Dong-Si]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Tutorial: Quick-start for JavaScript Programming Test]]></title>
+    <link href="http://tdongsi.github.io/javascript/blog/2017/06/21/tutorial-quick-start-for-javascript-programming-test/"/>
+    <updated>2017-06-21T00:58:03-07:00</updated>
+    <id>http://tdongsi.github.io/javascript/blog/2017/06/21/tutorial-quick-start-for-javascript-programming-test</id>
+    <content type="html"><![CDATA[<p>For timed programming tests, new test-takers usually underestimate how short two and a half hours can be (more <a href="https://tdongsi.github.io/java/blog/2016/08/29/tutorial-timed-programming-test/">here</a>).
+This post lists out steps to get started quickly for a JavaScript programming test, using React.</p>
+
+<!--more-->
+
+
+<p>Using this boiler plate <a href="https://github.com/davezuko/react-redux-starter-kit">https://github.com/davezuko/react-redux-starter-kit</a></p>
+
+<p>For example, build the followings:</p>
+
+<ul>
+<li>As a player I want to move my objects around the screen using the keyboard (or any preferred input device)</li>
+<li>If the object meets other objects in the screen, give some feedback.</li>
+</ul>
+
+
+<h3>Start an empty project</h3>
+
+<pre><code class="plain Starting a Node project"># For new machine
+nvm install --lts
+
+# Init by creating package.json file
+npm init
+# Answer questions to create package.json file
+
+# Adding grunt
+npm install grunt --save-dev
+npm install grunt-jslint --save-dev
+npm install load-grunt-tasks --save-dev
+
+# Initalizing Gruntfile
+npm install grunt-init -g
+grunt-init gruntfile
+# grunt-init node
+</code></pre>
+
+<p>At the end of these steps, you have a basic <code>package.json</code> and <code>Gruntfile</code>.
+For large scale project, you may want to further <a href="http://tdongsi.github.io/blog/2017/09/15/keep-gruntfile-clean-with-load-grunt-config/">clean up your Gruntfile using <code>load-grunt-config</code> plugin</a>.</p>
+
+<h3>Add unit testing</h3>
+
+<pre><code class="plain Unit testing with Jasmine"># Add Jasmine to your package.json
+npm install --save-dev jasmine
+
+# Initialize Jasmine in your project
+./node_modules/.bin/jasmine init
+
+# Set jasmine as your test script in your package.json
+"scripts": { "test": "jasmine" }
+
+# Run your tests
+npm test
+</code></pre>
+]]></content>
+  </entry>
+  
+</feed>

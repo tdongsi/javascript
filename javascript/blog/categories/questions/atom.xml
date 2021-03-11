@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Questions | Archived Blog Posts]]></title>
+  <link href="http://tdongsi.github.io/javascript/blog/categories/questions/atom.xml" rel="self"/>
+  <link href="http://tdongsi.github.io/javascript/"/>
+  <updated>2021-03-11T06:55:27-08:00</updated>
+  <id>http://tdongsi.github.io/javascript/</id>
+  <author>
+    <name><![CDATA[Cuong Dong-Si]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Question Bank]]></title>
+    <link href="http://tdongsi.github.io/javascript/blog/2016/09/06/question-bank/"/>
+    <updated>2016-09-06T22:34:25-07:00</updated>
+    <id>http://tdongsi.github.io/javascript/blog/2016/09/06/question-bank</id>
+    <content type="html"><![CDATA[<p>Extracted from this <a href="https://github.com/h5bp/Front-end-Developer-Interview-Questions">Github</a> on September 6th 2016.</p>
+
+<!--more-->
+
+
+<h1>Front-end Job Interview Questions</h1>
+
+<p>This file contains a number of front-end interview questions that can be used when vetting potential candidates. It is by no means recommended to use every single question here on the same candidate (that would take hours). Choosing a few items from this list should help you vet the intended skills you require.</p>
+
+<p><strong>Note:</strong> Keep in mind that many of these questions are open-ended and could lead to interesting discussions that tell you more about the person&rsquo;s capabilities than a straight answer would.</p>
+
+<h2>External links</h2>
+
+<ul>
+<li><a href="https://www.reddit.com/r/cscareerquestions/comments/50qnvr/how_to_prepare_for_a_frontend_engineering/">reddit</a></li>
+</ul>
+
+
+<h2>Table of Contents</h2>
+
+<ol>
+<li><a href="#general-questions">General Questions</a></li>
+<li><a href="#html-questions">HTML Questions</a></li>
+<li><a href="#css-questions">CSS Questions</a></li>
+<li><a href="#js-questions">JS Questions</a></li>
+<li><a href="#testing-questions">Testing Questions</a></li>
+<li><a href="#performance-questions">Performance Questions</a></li>
+<li><a href="#network-questions">Network Questions</a></li>
+<li><a href="#coding-questions">Coding Questions</a></li>
+<li><a href="#fun-questions">Fun Questions</a></li>
+</ol>
+
+
+<h4>General Questions:</h4>
+
+<ul>
+<li>What did you learn yesterday/this week?</li>
+<li>What excites or interests you about coding?</li>
+<li>What is a recent technical challenge you experienced and how did you solve it?</li>
+<li>What UI, Security, Performance, SEO, Maintainability or Technology considerations do you make while building a web application or site?</li>
+<li>Talk about your preferred development environment.</li>
+<li>Which version control systems are you familiar with?</li>
+<li>Can you describe your workflow when you create a web page?</li>
+<li>If you have 5 different stylesheets, how would you best integrate them into the site?</li>
+<li>Can you describe the difference between progressive enhancement and graceful degradation?</li>
+<li>How would you optimize a website&rsquo;s assets/resources?</li>
+<li>How many resources will a browser download from a given domain at a time?
+
+<ul>
+<li>What are the exceptions?</li>
+</ul>
+</li>
+<li>Name 3 ways to decrease page load (perceived or actual load time).</li>
+<li>If you jumped on a project and they used tabs and you used spaces, what would you do?</li>
+<li>Describe how you would create a simple slideshow page.</li>
+<li>If you could master one technology this year, what would it be?</li>
+<li>Explain the importance of standards and standards bodies.</li>
+<li>What is Flash of Unstyled Content? How do you avoid FOUC?</li>
+<li>Explain what ARIA and screenreaders are, and how to make a website accessible.</li>
+<li>Explain some of the pros and cons for CSS animations versus JavaScript animations.</li>
+<li>What does CORS stand for and what issue does it address?</li>
+</ul>
+
+
+<h4>HTML Questions:</h4>
+
+<ul>
+<li>What does a <code>doctype</code> do?</li>
+<li>What&rsquo;s the difference between full standards mode, almost standards mode and quirks mode?</li>
+<li>What&rsquo;s the difference between HTML and XHTML?</li>
+<li>Are there any problems with serving pages as <code>application/xhtml+xml</code>?</li>
+<li>How do you serve a page with content in multiple languages?</li>
+<li>What kind of things must you be wary of when design or developing for multilingual sites?</li>
+<li>What are <code>data-</code> attributes good for?</li>
+<li>Consider HTML5 as an open web platform. What are the building blocks of HTML5?</li>
+<li>Describe the difference between a <code>cookie</code>, <code>sessionStorage</code> and <code>localStorage</code>.</li>
+<li>Describe the difference between <code>&lt;script&gt;</code>, <code>&lt;script async&gt;</code> and <code>&lt;script defer&gt;</code>.</li>
+<li>Why is it generally a good idea to position CSS <code>&lt;link&gt;</code>s between <code>&lt;head&gt;&lt;/head&gt;</code> and JS <code>&lt;script&gt;</code>s just before <code>&lt;/body&gt;</code>? Do you know any exceptions?</li>
+<li>What is progressive rendering?</li>
+<li>Have you used different HTML templating languages before?</li>
+</ul>
+
+
+<h4>CSS Questions:</h4>
+
+<ul>
+<li>What is the difference between classes and IDs in CSS?</li>
+<li>What&rsquo;s the difference between &ldquo;resetting&rdquo; and &ldquo;normalizing&rdquo; CSS? Which would you choose, and why?</li>
+<li>Describe Floats and how they work.</li>
+<li>Describe z-index and how stacking context is formed.</li>
+<li>Describe BFC(Block Formatting Context) and how it works.</li>
+<li>What are the various clearing techniques and which is appropriate for what context?</li>
+<li>Explain CSS sprites, and how you would implement them on a page or site.</li>
+<li>What are your favourite image replacement techniques and which do you use when?</li>
+<li>How would you approach fixing browser-specific styling issues?</li>
+<li>How do you serve your pages for feature-constrained browsers?
+
+<ul>
+<li>What techniques/processes do you use?</li>
+</ul>
+</li>
+<li>What are the different ways to visually hide content (and make it available only for screen readers)?</li>
+<li>Have you ever used a grid system, and if so, what do you prefer?</li>
+<li>Have you used or implemented media queries or mobile specific layouts/CSS?</li>
+<li>Are you familiar with styling SVG?</li>
+<li>How do you optimize your webpages for print?</li>
+<li>What are some of the &ldquo;gotchas&rdquo; for writing efficient CSS?</li>
+<li>What are the advantages/disadvantages of using CSS preprocessors?
+
+<ul>
+<li>Describe what you like and dislike about the CSS preprocessors you have used.</li>
+</ul>
+</li>
+<li>How would you implement a web design comp that uses non-standard fonts?</li>
+<li>Explain how a browser determines what elements match a CSS selector.</li>
+<li>Describe pseudo-elements and discuss what they are used for.</li>
+<li>Explain your understanding of the box model and how you would tell the browser in CSS to render your layout in different box models.</li>
+<li>What does <code>* { box-sizing: border-box; }</code> do? What are its advantages?</li>
+<li>List as many values for the display property that you can remember.</li>
+<li>What&rsquo;s the difference between inline and inline-block?</li>
+<li>What&rsquo;s the difference between a relative, fixed, absolute and statically positioned element?</li>
+<li>The &lsquo;C&rsquo; in CSS stands for Cascading.  How is priority determined in assigning styles (a few examples)?  How can you use this system to your advantage?</li>
+<li>What existing CSS frameworks have you used locally, or in production? How would you change/improve them?</li>
+<li>Have you played around with the new CSS Flexbox or Grid specs?</li>
+<li>How is responsive design different from adaptive design?</li>
+<li>Have you ever worked with retina graphics? If so, when and what techniques did you use?</li>
+<li>Is there any reason you&rsquo;d want to use <code>translate()</code> instead of <em>absolute positioning</em>, or vice-versa? And why?</li>
+</ul>
+
+
+<h4>JS Questions:</h4>
+
+<ul>
+<li>Explain event delegation</li>
+<li>Explain how <code>this</code> works in JavaScript</li>
+<li>Explain how prototypal inheritance works</li>
+<li>What do you think of AMD vs CommonJS?</li>
+<li>Explain why the following doesn&rsquo;t work as an IIFE: <code>function foo(){ }();</code>.
+
+<ul>
+<li>What needs to be changed to properly make it an IIFE?</li>
+</ul>
+</li>
+<li>What&rsquo;s the difference between a variable that is: <code>null</code>, <code>undefined</code> or undeclared?
+
+<ul>
+<li>How would you go about checking for any of these states?</li>
+</ul>
+</li>
+<li>What is a closure, and how/why would you use one?</li>
+<li>What&rsquo;s a typical use case for anonymous functions?</li>
+<li>How do you organize your code? (module pattern, classical inheritance?)</li>
+<li>What&rsquo;s the difference between host objects and native objects?</li>
+<li>Difference between: <code>function Person(){}</code>, <code>var person = Person()</code>, and <code>var person = new Person()</code>?</li>
+<li>What&rsquo;s the difference between <code>.call</code> and <code>.apply</code>?</li>
+<li>Explain <code>Function.prototype.bind</code>.</li>
+<li>When would you use <code>document.write()</code>?</li>
+<li>What&rsquo;s the difference between feature detection, feature inference, and using the UA string?</li>
+<li>Explain Ajax in as much detail as possible.</li>
+<li>What are the advantages and disadvantages of using Ajax?</li>
+<li>Explain how JSONP works (and how it&rsquo;s not really Ajax).</li>
+<li>Have you ever used JavaScript templating?
+
+<ul>
+<li>If so, what libraries have you used?</li>
+</ul>
+</li>
+<li>Explain &ldquo;hoisting&rdquo;.</li>
+<li>Describe event bubbling.</li>
+<li>What&rsquo;s the difference between an &ldquo;attribute&rdquo; and a &ldquo;property&rdquo;?</li>
+<li>Why is extending built-in JavaScript objects not a good idea?</li>
+<li>Difference between document load event and document DOMContentLoaded event?</li>
+<li>What is the difference between <code>==</code> and <code>===</code>?</li>
+<li>Explain the same-origin policy with regards to JavaScript.</li>
+<li>Make this work:
+<code>javascript
+duplicate([1,2,3,4,5]); // [1,2,3,4,5,1,2,3,4,5]
+</code></li>
+<li>Why is it called a Ternary expression, what does the word &ldquo;Ternary&rdquo; indicate?</li>
+<li>What is <code>"use strict";</code>? what are the advantages and disadvantages to using it?</li>
+<li>Create a for loop that iterates up to <code>100</code> while outputting <strong>&ldquo;fizz&rdquo;</strong> at multiples of <code>3</code>, <strong>&ldquo;buzz&rdquo;</strong> at multiples of <code>5</code> and <strong>&ldquo;fizzbuzz&rdquo;</strong> at multiples of <code>3</code> and <code>5</code></li>
+<li>Why is it, in general, a good idea to leave the global scope of a website as-is and never touch it?</li>
+<li>Why would you use something like the <code>load</code> event? Does this event have disadvantages? Do you know any alternatives, and why would you use those?</li>
+<li>Explain what a single page app is and how to make one SEO-friendly.</li>
+<li>What is the extent of your experience with Promises and/or their polyfills?</li>
+<li>What are the pros and cons of using Promises instead of callbacks?</li>
+<li>What are some of the advantages/disadvantages of writing JavaScript code in a language that compiles to JavaScript?</li>
+<li>What tools and techniques do you use debugging JavaScript code?</li>
+<li>What language constructions do you use for iterating over object properties and array items?</li>
+<li>Explain the difference between mutable and immutable objects.
+
+<ul>
+<li>What is an example of an immutable object in JavaScript?</li>
+<li>What are the pros and cons of immutability?</li>
+<li>How can you achieve immutability in your own code?</li>
+</ul>
+</li>
+<li>Explain the difference between synchronous and asynchronous functions.</li>
+<li>What is event loop?
+
+<ul>
+<li>What is the difference between call stack and task queue?</li>
+</ul>
+</li>
+<li>Explain the differences on the usage of <code>foo</code> between <code>function foo() {}</code> and <code>var foo = function() {}</code></li>
+</ul>
+
+
+<h4>Testing Questions:</h4>
+
+<ul>
+<li>What are some advantages/disadvantages to testing your code?</li>
+<li>What tools would you use to test your code&rsquo;s functionality?</li>
+<li>What is the difference between a unit test and a functional/integration test?</li>
+<li>What is the purpose of a code style linting tool?</li>
+</ul>
+
+
+<h4>Performance Questions:</h4>
+
+<ul>
+<li>What tools would you use to find a performance bug in your code?</li>
+<li>What are some ways you may improve your website&rsquo;s scrolling performance?</li>
+<li>Explain the difference between layout, painting and compositing.</li>
+</ul>
+
+
+<h4>Network Questions:</h4>
+
+<ul>
+<li>Traditionally, why has it been better to serve site assets from multiple domains?</li>
+<li>Do your best to describe the process from the time you type in a website&rsquo;s URL to it finishing loading on your screen.</li>
+<li>What are the differences between Long-Polling, Websockets and Server-Sent Events?</li>
+<li>Explain the following request and response headers:
+
+<ul>
+<li>Diff. between Expires, Date, Age and If-Modified-&hellip;</li>
+<li>Do Not Track</li>
+<li>Cache-Control</li>
+<li>Transfer-Encoding</li>
+<li>ETag</li>
+<li>X-Frame-Options</li>
+</ul>
+</li>
+<li>What are HTTP methods? List all HTTP methods that you know, and explain them.</li>
+</ul>
+
+
+<h4>Coding Questions:</h4>
+
+<p><em>Question: What is the value of <code>foo</code>?</em>
+<code>javascript
+var foo = 10 + '20';
+</code></p>
+
+<p><em>Question: How would you make this work?</em>
+<code>javascript
+add(2, 5); // 7
+add(2)(5); // 7
+</code></p>
+
+<p><em>Question: What value is returned from the following statement?</em>
+<code>javascript
+"i'm a lasagna hog".split("").reverse().join("");
+</code></p>
+
+<p><em>Question: What is the value of <code>window.foo</code>?</em>
+<code>javascript
+( window.foo || ( window.foo = "bar" ) );
+</code></p>
+
+<p><em>Question: What is the outcome of the two alerts below?</em>
+<code>javascript
+var foo = "Hello";
+(function() {
+  var bar = " World";
+  alert(foo + bar);
+})();
+alert(foo + bar);
+</code></p>
+
+<p><em>Question: What is the value of <code>foo.length</code>?</em>
+<code>javascript
+var foo = [];
+foo.push(1);
+foo.push(2);
+</code></p>
+
+<p><em>Question: What is the value of <code>foo.x</code>?</em>
+<code>javascript
+var foo = {n: 1};
+var bar = foo;
+foo.x = foo = {n: 2};
+</code></p>
+
+<p><em>Question: What does the following code print?</em>
+<code>javascript
+console.log('one');
+setTimeout(function() {
+  console.log('two');
+}, 0);
+console.log('three');
+</code></p>
+
+<h4>Fun Questions:</h4>
+
+<ul>
+<li>What&rsquo;s a cool project that you&rsquo;ve recently worked on?</li>
+<li>What are some things you like about the developer tools you use?</li>
+<li>Who inspires you in the front-end community?</li>
+<li>Do you have any pet projects? What kind?</li>
+<li>What&rsquo;s your favorite feature of Internet Explorer?</li>
+<li>How do you like your coffee?</li>
+</ul>
+
+
+<h4>Contributors:</h4>
+
+<p>This document started in 2009 as a collaboration of <a href="https://twitter.com/paul_irish">@paul_irish</a> <a href="https://twitter.com/bentruyman">@bentruyman</a> <a href="https://twitter.com/cowboy">@cowboy</a> <a href="https://twitter.com/ajpiano">@ajpiano</a>  <a href="https://twitter.com/slexaxton">@SlexAxton</a> <a href="https://twitter.com/boazsender">@boazsender</a> <a href="https://twitter.com/miketaylr">@miketaylr</a> <a href="https://twitter.com/vladikoff">@vladikoff</a> <a href="https://twitter.com/gf3">@gf3</a> <a href="https://twitter.com/jon_neal">@jon_neal</a> <a href="https://twitter.com/sambreed">@sambreed</a> and <a href="https://twitter.com/iansym">@iansym</a>.</p>
+
+<p>It has since received contributions from over <a href="https://github.com/h5bp/Front-end-Developer-Interview-Questions/graphs/contributors">100 developers</a>.</p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,856 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Archived Blog Posts]]></title>
+  <link href="http://tdongsi.github.io/javascript/atom.xml" rel="self"/>
+  <link href="http://tdongsi.github.io/javascript/"/>
+  <updated>2021-03-11T06:55:27-08:00</updated>
+  <id>http://tdongsi.github.io/javascript/</id>
+  <author>
+    <name><![CDATA[Cuong Dong-Si]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Tutorial: Quick-start for JavaScript Programming Test]]></title>
+    <link href="http://tdongsi.github.io/javascript/blog/2017/06/21/tutorial-quick-start-for-javascript-programming-test/"/>
+    <updated>2017-06-21T00:58:03-07:00</updated>
+    <id>http://tdongsi.github.io/javascript/blog/2017/06/21/tutorial-quick-start-for-javascript-programming-test</id>
+    <content type="html"><![CDATA[<p>For timed programming tests, new test-takers usually underestimate how short two and a half hours can be (more <a href="https://tdongsi.github.io/java/blog/2016/08/29/tutorial-timed-programming-test/">here</a>).
+This post lists out steps to get started quickly for a JavaScript programming test, using React.</p>
+
+<!--more-->
+
+
+<p>Using this boiler plate <a href="https://github.com/davezuko/react-redux-starter-kit">https://github.com/davezuko/react-redux-starter-kit</a></p>
+
+<p>For example, build the followings:</p>
+
+<ul>
+<li>As a player I want to move my objects around the screen using the keyboard (or any preferred input device)</li>
+<li>If the object meets other objects in the screen, give some feedback.</li>
+</ul>
+
+
+<h3>Start an empty project</h3>
+
+<figure class='code'><figcaption><span>Starting a Node project</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># For new machine
+</span><span class='line'>nvm install --lts
+</span><span class='line'>
+</span><span class='line'># Init by creating package.json file
+</span><span class='line'>npm init
+</span><span class='line'># Answer questions to create package.json file
+</span><span class='line'>
+</span><span class='line'># Adding grunt
+</span><span class='line'>npm install grunt --save-dev
+</span><span class='line'>npm install grunt-jslint --save-dev
+</span><span class='line'>npm install load-grunt-tasks --save-dev
+</span><span class='line'>
+</span><span class='line'># Initalizing Gruntfile
+</span><span class='line'>npm install grunt-init -g
+</span><span class='line'>grunt-init gruntfile
+</span><span class='line'># grunt-init node</span></code></pre></td></tr></table></div></figure>
+
+
+<p>At the end of these steps, you have a basic <code>package.json</code> and <code>Gruntfile</code>.
+For large scale project, you may want to further <a href="http://tdongsi.github.io/blog/2017/09/15/keep-gruntfile-clean-with-load-grunt-config/">clean up your Gruntfile using <code>load-grunt-config</code> plugin</a>.</p>
+
+<h3>Add unit testing</h3>
+
+<figure class='code'><figcaption><span>Unit testing with Jasmine</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># Add Jasmine to your package.json
+</span><span class='line'>npm install --save-dev jasmine
+</span><span class='line'>
+</span><span class='line'># Initialize Jasmine in your project
+</span><span class='line'>./node_modules/.bin/jasmine init
+</span><span class='line'>
+</span><span class='line'># Set jasmine as your test script in your package.json
+</span><span class='line'>"scripts": { "test": "jasmine" }
+</span><span class='line'>
+</span><span class='line'># Run your tests
+</span><span class='line'>npm test</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Code Coverage: Istanbul & Nyc]]></title>
+    <link href="http://tdongsi.github.io/javascript/blog/2017/05/23/code-coverage-instanbul-slash-nyc/"/>
+    <updated>2017-05-23T21:54:01-07:00</updated>
+    <id>http://tdongsi.github.io/javascript/blog/2017/05/23/code-coverage-instanbul-slash-nyc</id>
+    <content type="html"><![CDATA[<p>Code coverage for NodeJS projects.</p>
+
+<!--more-->
+
+
+<h3>Settings in <code>.nycrc</code> file</h3>
+
+<p>What is the standard code coverage settings look like?</p>
+
+<figure class='code'><figcaption><span>Example nycrc file</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+</pre></td><td class='code'><pre><code class='json'><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="nt">&quot;reporter&quot;</span><span class="p">:</span> <span class="p">[</span>
+</span><span class='line'>    <span class="s2">&quot;text-summary&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;html&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;lcov&quot;</span>
+</span><span class='line'>  <span class="p">],</span>
+</span><span class='line'>  <span class="nt">&quot;lines&quot;</span><span class="p">:</span> <span class="mi">46</span><span class="p">,</span>
+</span><span class='line'>  <span class="nt">&quot;statements&quot;</span><span class="p">:</span> <span class="mi">47</span><span class="p">,</span>
+</span><span class='line'>  <span class="nt">&quot;functions&quot;</span><span class="p">:</span> <span class="mi">44</span><span class="p">,</span>
+</span><span class='line'>  <span class="nt">&quot;branches&quot;</span><span class="p">:</span> <span class="mi">35</span><span class="p">,</span>
+</span><span class='line'>  <span class="nt">&quot;exclude&quot;</span><span class="p">:</span> <span class="p">[</span>
+</span><span class='line'>    <span class="s2">&quot;**/node_modules/**&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;**/grunt/**&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;**/public/**&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;**/test/**&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;i18n-express.js&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;newrelic.js&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;app.js&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;Gruntfile.js&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;scripts/**&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;build/**&quot;</span>
+</span><span class='line'>  <span class="p">],</span>
+</span><span class='line'>  <span class="nt">&quot;extension&quot;</span><span class="p">:</span> <span class="p">[</span>
+</span><span class='line'>    <span class="s2">&quot;.js&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;.jsx&quot;</span>
+</span><span class='line'>  <span class="p">],</span>
+</span><span class='line'>  <span class="nt">&quot;require&quot;</span><span class="p">:</span> <span class="p">[</span>
+</span><span class='line'>    <span class="s2">&quot;babel/register&quot;</span>
+</span><span class='line'>  <span class="p">],</span>
+</span><span class='line'>  <span class="nt">&quot;all&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+</span><span class='line'>  <span class="nt">&quot;check-coverage&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+</span><span class='line'>  <span class="nt">&quot;cache&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+</span><span class='line'>  <span class="nt">&quot;report-dir&quot;</span><span class="p">:</span> <span class="s2">&quot;./build/coverage&quot;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3><code>nyc</code> settings</h3>
+
+<p>Is it possible to specify the custom location of <code>.nycrc</code> file? Short answer: NO. Long answer: Depending on the custom location in question.</p>
+
+<p>nycrc support is implemented in <a href="https://github.com/istanbuljs/nyc/pull/391/files">this PR</a>.
+The relevant code for processing <code>.nycrc</code> file is in <a href="https://github.com/istanbuljs/nyc/blob/master/lib/config-util.js">this file</a>:</p>
+
+<figure class='code'><figcaption><span>.nycrc processing, extracted on May 20th 2017</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kr">const</span> <span class="nx">findUp</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;find-up&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="p">...</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// load config from a cascade of sources:</span>
+</span><span class='line'><span class="c1">// * command line arguments</span>
+</span><span class='line'><span class="c1">// * package.json</span>
+</span><span class='line'><span class="c1">// * .nycrc</span>
+</span><span class='line'><span class="nx">Config</span><span class="p">.</span><span class="nx">loadConfig</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">argv</span><span class="p">,</span> <span class="nx">cwd</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">cwd</span> <span class="o">=</span> <span class="nx">cwd</span> <span class="o">||</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">NYC_CWD</span> <span class="o">||</span> <span class="nx">process</span><span class="p">.</span><span class="nx">cwd</span><span class="p">()</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">pkgPath</span> <span class="o">=</span> <span class="nx">findUp</span><span class="p">.</span><span class="nx">sync</span><span class="p">(</span><span class="s1">&#39;package.json&#39;</span><span class="p">,</span> <span class="p">{</span><span class="nx">cwd</span><span class="o">:</span> <span class="nx">cwd</span><span class="p">})</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">rcPath</span> <span class="o">=</span> <span class="nx">findUp</span><span class="p">.</span><span class="nx">sync</span><span class="p">(</span><span class="s1">&#39;.nycrc&#39;</span><span class="p">,</span> <span class="p">{</span><span class="nx">cwd</span><span class="o">:</span> <span class="nx">cwd</span><span class="p">})</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">rcConfig</span> <span class="o">=</span> <span class="kc">null</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="nx">rcPath</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">rcConfig</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span>
+</span><span class='line'>      <span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="nx">rcPath</span><span class="p">,</span> <span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">)</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">...</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The <a href="https://www.npmjs.com/package/find-up"><code>find-up</code></a> returns valid path if the file <code>.nycrc</code> is in the parent folders.
+In Jenkins environment, it means that if you can place that file into a parent folder of the workspace, then <code>.nycrc</code> can be found.</p>
+
+<p>The commandline arguments and their default values can be retrieved from <code>nyc help</code>, as shown belows:</p>
+
+<figure class='code'><figcaption><span>Installing nyc</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>mymac:learn_grunt tdongsi$ npm i nyc -g
+</span><span class='line'>/Users/tdongsi/.nvm/versions/node/v4.6.1/bin/nyc -&gt; /Users/tdongsi/.nvm/versions/node/v4.6.1/lib/node_modules/nyc/bin/nyc.js
+</span><span class='line'>nyc@10.3.2 /Users/tdongsi/.nvm/versions/node/v4.6.1/lib/node_modules/nyc
+</span><span class='line'>
+</span><span class='line'>mymac:learn_grunt tdongsi$ which nyc
+</span><span class='line'>/Users/tdongsi/.nvm/versions/node/v4.6.1/bin/nyc
+</span><span class='line'>
+</span><span class='line'>mymac:learn_grunt tdongsi$ nyc help config
+</span><span class='line'>nyc [command] [options]
+</span><span class='line'>
+</span><span class='line'>run your tests with the nyc bin to instrument them with coverage</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Related problem</h4>
+
+<p>The problem with code coverage thresholds in <code>.nycrc</code> is explained in <a href="https://stackoverflow.com/questions/44148412/increase-code-coverage-gate-for-protected-master-branch-in-github-enterprise">this question</a>.
+In summary, if a person wants to increase code coverage threshold in <code>.nycrc</code> file sitting in a Github repository with protected branches, the PR cannot be merged because the test run fails.
+The easy way to work around this is to disable &ldquo;Include adminstrators&rdquo; under &ldquo;Require status checks to pass before merging&rdquo; in Repository settings -> Branches -> master, then add the manager into the Admin group.
+However, in this approach, sneaky developers can still reduce the code coverage threshold in their branches and merge their PRs.
+For larger teams, the file <code>.nycrc</code> should be separated from the repository in question.
+Instead, that file should be included into the Docker image for running that job (assumption: containerized Jenkins system with Kubernetes plugin) and symlinked to workspace folder or its parent directory accordingly.
+See above and <code>find-up</code> package for explanations.</p>
+
+<h3>References</h3>
+
+<ul>
+<li><a href="https://github.com/istanbuljs/nyc">Istanbul nyc</a></li>
+<li><a href="https://github.com/istanbuljs/nyc/pull/391/files">nycrc implementation</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Question Bank]]></title>
+    <link href="http://tdongsi.github.io/javascript/blog/2016/09/06/question-bank/"/>
+    <updated>2016-09-06T22:34:25-07:00</updated>
+    <id>http://tdongsi.github.io/javascript/blog/2016/09/06/question-bank</id>
+    <content type="html"><![CDATA[<p>Extracted from this <a href="https://github.com/h5bp/Front-end-Developer-Interview-Questions">Github</a> on September 6th 2016.</p>
+
+<!--more-->
+
+
+<h1>Front-end Job Interview Questions</h1>
+
+<p>This file contains a number of front-end interview questions that can be used when vetting potential candidates. It is by no means recommended to use every single question here on the same candidate (that would take hours). Choosing a few items from this list should help you vet the intended skills you require.</p>
+
+<p><strong>Note:</strong> Keep in mind that many of these questions are open-ended and could lead to interesting discussions that tell you more about the person&rsquo;s capabilities than a straight answer would.</p>
+
+<h2>External links</h2>
+
+<ul>
+<li><a href="https://www.reddit.com/r/cscareerquestions/comments/50qnvr/how_to_prepare_for_a_frontend_engineering/">reddit</a></li>
+</ul>
+
+
+<h2>Table of Contents</h2>
+
+<ol>
+<li><a href="#general-questions">General Questions</a></li>
+<li><a href="#html-questions">HTML Questions</a></li>
+<li><a href="#css-questions">CSS Questions</a></li>
+<li><a href="#js-questions">JS Questions</a></li>
+<li><a href="#testing-questions">Testing Questions</a></li>
+<li><a href="#performance-questions">Performance Questions</a></li>
+<li><a href="#network-questions">Network Questions</a></li>
+<li><a href="#coding-questions">Coding Questions</a></li>
+<li><a href="#fun-questions">Fun Questions</a></li>
+</ol>
+
+
+<h4>General Questions:</h4>
+
+<ul>
+<li>What did you learn yesterday/this week?</li>
+<li>What excites or interests you about coding?</li>
+<li>What is a recent technical challenge you experienced and how did you solve it?</li>
+<li>What UI, Security, Performance, SEO, Maintainability or Technology considerations do you make while building a web application or site?</li>
+<li>Talk about your preferred development environment.</li>
+<li>Which version control systems are you familiar with?</li>
+<li>Can you describe your workflow when you create a web page?</li>
+<li>If you have 5 different stylesheets, how would you best integrate them into the site?</li>
+<li>Can you describe the difference between progressive enhancement and graceful degradation?</li>
+<li>How would you optimize a website&rsquo;s assets/resources?</li>
+<li>How many resources will a browser download from a given domain at a time?
+
+<ul>
+<li>What are the exceptions?</li>
+</ul>
+</li>
+<li>Name 3 ways to decrease page load (perceived or actual load time).</li>
+<li>If you jumped on a project and they used tabs and you used spaces, what would you do?</li>
+<li>Describe how you would create a simple slideshow page.</li>
+<li>If you could master one technology this year, what would it be?</li>
+<li>Explain the importance of standards and standards bodies.</li>
+<li>What is Flash of Unstyled Content? How do you avoid FOUC?</li>
+<li>Explain what ARIA and screenreaders are, and how to make a website accessible.</li>
+<li>Explain some of the pros and cons for CSS animations versus JavaScript animations.</li>
+<li>What does CORS stand for and what issue does it address?</li>
+</ul>
+
+
+<h4>HTML Questions:</h4>
+
+<ul>
+<li>What does a <code>doctype</code> do?</li>
+<li>What&rsquo;s the difference between full standards mode, almost standards mode and quirks mode?</li>
+<li>What&rsquo;s the difference between HTML and XHTML?</li>
+<li>Are there any problems with serving pages as <code>application/xhtml+xml</code>?</li>
+<li>How do you serve a page with content in multiple languages?</li>
+<li>What kind of things must you be wary of when design or developing for multilingual sites?</li>
+<li>What are <code>data-</code> attributes good for?</li>
+<li>Consider HTML5 as an open web platform. What are the building blocks of HTML5?</li>
+<li>Describe the difference between a <code>cookie</code>, <code>sessionStorage</code> and <code>localStorage</code>.</li>
+<li>Describe the difference between <code>&lt;script&gt;</code>, <code>&lt;script async&gt;</code> and <code>&lt;script defer&gt;</code>.</li>
+<li>Why is it generally a good idea to position CSS <code>&lt;link&gt;</code>s between <code>&lt;head&gt;&lt;/head&gt;</code> and JS <code>&lt;script&gt;</code>s just before <code>&lt;/body&gt;</code>? Do you know any exceptions?</li>
+<li>What is progressive rendering?</li>
+<li>Have you used different HTML templating languages before?</li>
+</ul>
+
+
+<h4>CSS Questions:</h4>
+
+<ul>
+<li>What is the difference between classes and IDs in CSS?</li>
+<li>What&rsquo;s the difference between &ldquo;resetting&rdquo; and &ldquo;normalizing&rdquo; CSS? Which would you choose, and why?</li>
+<li>Describe Floats and how they work.</li>
+<li>Describe z-index and how stacking context is formed.</li>
+<li>Describe BFC(Block Formatting Context) and how it works.</li>
+<li>What are the various clearing techniques and which is appropriate for what context?</li>
+<li>Explain CSS sprites, and how you would implement them on a page or site.</li>
+<li>What are your favourite image replacement techniques and which do you use when?</li>
+<li>How would you approach fixing browser-specific styling issues?</li>
+<li>How do you serve your pages for feature-constrained browsers?
+
+<ul>
+<li>What techniques/processes do you use?</li>
+</ul>
+</li>
+<li>What are the different ways to visually hide content (and make it available only for screen readers)?</li>
+<li>Have you ever used a grid system, and if so, what do you prefer?</li>
+<li>Have you used or implemented media queries or mobile specific layouts/CSS?</li>
+<li>Are you familiar with styling SVG?</li>
+<li>How do you optimize your webpages for print?</li>
+<li>What are some of the &ldquo;gotchas&rdquo; for writing efficient CSS?</li>
+<li>What are the advantages/disadvantages of using CSS preprocessors?
+
+<ul>
+<li>Describe what you like and dislike about the CSS preprocessors you have used.</li>
+</ul>
+</li>
+<li>How would you implement a web design comp that uses non-standard fonts?</li>
+<li>Explain how a browser determines what elements match a CSS selector.</li>
+<li>Describe pseudo-elements and discuss what they are used for.</li>
+<li>Explain your understanding of the box model and how you would tell the browser in CSS to render your layout in different box models.</li>
+<li>What does <code>* { box-sizing: border-box; }</code> do? What are its advantages?</li>
+<li>List as many values for the display property that you can remember.</li>
+<li>What&rsquo;s the difference between inline and inline-block?</li>
+<li>What&rsquo;s the difference between a relative, fixed, absolute and statically positioned element?</li>
+<li>The &lsquo;C&rsquo; in CSS stands for Cascading.  How is priority determined in assigning styles (a few examples)?  How can you use this system to your advantage?</li>
+<li>What existing CSS frameworks have you used locally, or in production? How would you change/improve them?</li>
+<li>Have you played around with the new CSS Flexbox or Grid specs?</li>
+<li>How is responsive design different from adaptive design?</li>
+<li>Have you ever worked with retina graphics? If so, when and what techniques did you use?</li>
+<li>Is there any reason you&rsquo;d want to use <code>translate()</code> instead of <em>absolute positioning</em>, or vice-versa? And why?</li>
+</ul>
+
+
+<h4>JS Questions:</h4>
+
+<ul>
+<li>Explain event delegation</li>
+<li>Explain how <code>this</code> works in JavaScript</li>
+<li>Explain how prototypal inheritance works</li>
+<li>What do you think of AMD vs CommonJS?</li>
+<li>Explain why the following doesn&rsquo;t work as an IIFE: <code>function foo(){ }();</code>.
+
+<ul>
+<li>What needs to be changed to properly make it an IIFE?</li>
+</ul>
+</li>
+<li>What&rsquo;s the difference between a variable that is: <code>null</code>, <code>undefined</code> or undeclared?
+
+<ul>
+<li>How would you go about checking for any of these states?</li>
+</ul>
+</li>
+<li>What is a closure, and how/why would you use one?</li>
+<li>What&rsquo;s a typical use case for anonymous functions?</li>
+<li>How do you organize your code? (module pattern, classical inheritance?)</li>
+<li>What&rsquo;s the difference between host objects and native objects?</li>
+<li>Difference between: <code>function Person(){}</code>, <code>var person = Person()</code>, and <code>var person = new Person()</code>?</li>
+<li>What&rsquo;s the difference between <code>.call</code> and <code>.apply</code>?</li>
+<li>Explain <code>Function.prototype.bind</code>.</li>
+<li>When would you use <code>document.write()</code>?</li>
+<li>What&rsquo;s the difference between feature detection, feature inference, and using the UA string?</li>
+<li>Explain Ajax in as much detail as possible.</li>
+<li>What are the advantages and disadvantages of using Ajax?</li>
+<li>Explain how JSONP works (and how it&rsquo;s not really Ajax).</li>
+<li>Have you ever used JavaScript templating?
+
+<ul>
+<li>If so, what libraries have you used?</li>
+</ul>
+</li>
+<li>Explain &ldquo;hoisting&rdquo;.</li>
+<li>Describe event bubbling.</li>
+<li>What&rsquo;s the difference between an &ldquo;attribute&rdquo; and a &ldquo;property&rdquo;?</li>
+<li>Why is extending built-in JavaScript objects not a good idea?</li>
+<li>Difference between document load event and document DOMContentLoaded event?</li>
+<li>What is the difference between <code>==</code> and <code>===</code>?</li>
+<li>Explain the same-origin policy with regards to JavaScript.</li>
+<li>Make this work:</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">duplicate</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]);</span> <span class="c1">// [1,2,3,4,5,1,2,3,4,5]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Why is it called a Ternary expression, what does the word &ldquo;Ternary&rdquo; indicate?</li>
+<li>What is <code>"use strict";</code>? what are the advantages and disadvantages to using it?</li>
+<li>Create a for loop that iterates up to <code>100</code> while outputting <strong>&ldquo;fizz&rdquo;</strong> at multiples of <code>3</code>, <strong>&ldquo;buzz&rdquo;</strong> at multiples of <code>5</code> and <strong>&ldquo;fizzbuzz&rdquo;</strong> at multiples of <code>3</code> and <code>5</code></li>
+<li>Why is it, in general, a good idea to leave the global scope of a website as-is and never touch it?</li>
+<li>Why would you use something like the <code>load</code> event? Does this event have disadvantages? Do you know any alternatives, and why would you use those?</li>
+<li>Explain what a single page app is and how to make one SEO-friendly.</li>
+<li>What is the extent of your experience with Promises and/or their polyfills?</li>
+<li>What are the pros and cons of using Promises instead of callbacks?</li>
+<li>What are some of the advantages/disadvantages of writing JavaScript code in a language that compiles to JavaScript?</li>
+<li>What tools and techniques do you use debugging JavaScript code?</li>
+<li>What language constructions do you use for iterating over object properties and array items?</li>
+<li>Explain the difference between mutable and immutable objects.
+
+<ul>
+<li>What is an example of an immutable object in JavaScript?</li>
+<li>What are the pros and cons of immutability?</li>
+<li>How can you achieve immutability in your own code?</li>
+</ul>
+</li>
+<li>Explain the difference between synchronous and asynchronous functions.</li>
+<li>What is event loop?
+
+<ul>
+<li>What is the difference between call stack and task queue?</li>
+</ul>
+</li>
+<li>Explain the differences on the usage of <code>foo</code> between <code>function foo() {}</code> and <code>var foo = function() {}</code></li>
+</ul>
+
+
+<h4>Testing Questions:</h4>
+
+<ul>
+<li>What are some advantages/disadvantages to testing your code?</li>
+<li>What tools would you use to test your code&rsquo;s functionality?</li>
+<li>What is the difference between a unit test and a functional/integration test?</li>
+<li>What is the purpose of a code style linting tool?</li>
+</ul>
+
+
+<h4>Performance Questions:</h4>
+
+<ul>
+<li>What tools would you use to find a performance bug in your code?</li>
+<li>What are some ways you may improve your website&rsquo;s scrolling performance?</li>
+<li>Explain the difference between layout, painting and compositing.</li>
+</ul>
+
+
+<h4>Network Questions:</h4>
+
+<ul>
+<li>Traditionally, why has it been better to serve site assets from multiple domains?</li>
+<li>Do your best to describe the process from the time you type in a website&rsquo;s URL to it finishing loading on your screen.</li>
+<li>What are the differences between Long-Polling, Websockets and Server-Sent Events?</li>
+<li>Explain the following request and response headers:
+
+<ul>
+<li>Diff. between Expires, Date, Age and If-Modified-&hellip;</li>
+<li>Do Not Track</li>
+<li>Cache-Control</li>
+<li>Transfer-Encoding</li>
+<li>ETag</li>
+<li>X-Frame-Options</li>
+</ul>
+</li>
+<li>What are HTTP methods? List all HTTP methods that you know, and explain them.</li>
+</ul>
+
+
+<h4>Coding Questions:</h4>
+
+<p><em>Question: What is the value of <code>foo</code>?</em></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">+</span> <span class="s1">&#39;20&#39;</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><em>Question: How would you make this work?</em></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">add</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span> <span class="c1">// 7</span>
+</span><span class='line'><span class="nx">add</span><span class="p">(</span><span class="mi">2</span><span class="p">)(</span><span class="mi">5</span><span class="p">);</span> <span class="c1">// 7</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><em>Question: What value is returned from the following statement?</em></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="s2">&quot;i&#39;m a lasagna hog&quot;</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">).</span><span class="nx">reverse</span><span class="p">().</span><span class="nx">join</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><em>Question: What is the value of <code>window.foo</code>?</em></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="p">(</span> <span class="nb">window</span><span class="p">.</span><span class="nx">foo</span> <span class="o">||</span> <span class="p">(</span> <span class="nb">window</span><span class="p">.</span><span class="nx">foo</span> <span class="o">=</span> <span class="s2">&quot;bar&quot;</span> <span class="p">)</span> <span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><em>Question: What is the outcome of the two alerts below?</em></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="s2">&quot;Hello&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">bar</span> <span class="o">=</span> <span class="s2">&quot; World&quot;</span><span class="p">;</span>
+</span><span class='line'>  <span class="nx">alert</span><span class="p">(</span><span class="nx">foo</span> <span class="o">+</span> <span class="nx">bar</span><span class="p">);</span>
+</span><span class='line'><span class="p">})();</span>
+</span><span class='line'><span class="nx">alert</span><span class="p">(</span><span class="nx">foo</span> <span class="o">+</span> <span class="nx">bar</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><em>Question: What is the value of <code>foo.length</code>?</em></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="p">[];</span>
+</span><span class='line'><span class="nx">foo</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+</span><span class='line'><span class="nx">foo</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><em>Question: What is the value of <code>foo.x</code>?</em></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="p">{</span><span class="nx">n</span><span class="o">:</span> <span class="mi">1</span><span class="p">};</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">bar</span> <span class="o">=</span> <span class="nx">foo</span><span class="p">;</span>
+</span><span class='line'><span class="nx">foo</span><span class="p">.</span><span class="nx">x</span> <span class="o">=</span> <span class="nx">foo</span> <span class="o">=</span> <span class="p">{</span><span class="nx">n</span><span class="o">:</span> <span class="mi">2</span><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><em>Question: What does the following code print?</em></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;one&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;two&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="p">},</span> <span class="mi">0</span><span class="p">);</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;three&#39;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Fun Questions:</h4>
+
+<ul>
+<li>What&rsquo;s a cool project that you&rsquo;ve recently worked on?</li>
+<li>What are some things you like about the developer tools you use?</li>
+<li>Who inspires you in the front-end community?</li>
+<li>Do you have any pet projects? What kind?</li>
+<li>What&rsquo;s your favorite feature of Internet Explorer?</li>
+<li>How do you like your coffee?</li>
+</ul>
+
+
+<h4>Contributors:</h4>
+
+<p>This document started in 2009 as a collaboration of <a href="https://twitter.com/paul_irish">@paul_irish</a> <a href="https://twitter.com/bentruyman">@bentruyman</a> <a href="https://twitter.com/cowboy">@cowboy</a> <a href="https://twitter.com/ajpiano">@ajpiano</a>  <a href="https://twitter.com/slexaxton">@SlexAxton</a> <a href="https://twitter.com/boazsender">@boazsender</a> <a href="https://twitter.com/miketaylr">@miketaylr</a> <a href="https://twitter.com/vladikoff">@vladikoff</a> <a href="https://twitter.com/gf3">@gf3</a> <a href="https://twitter.com/jon_neal">@jon_neal</a> <a href="https://twitter.com/sambreed">@sambreed</a> and <a href="https://twitter.com/iansym">@iansym</a>.</p>
+
+<p>It has since received contributions from over <a href="https://github.com/h5bp/Front-end-Developer-Interview-Questions/graphs/contributors">100 developers</a>.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Running Maven Tests in Jenkins]]></title>
+    <link href="http://tdongsi.github.io/javascript/blog/2015/09/03/running-maven-tests-in-jenkins/"/>
+    <updated>2015-09-03T01:10:36-07:00</updated>
+    <id>http://tdongsi.github.io/javascript/blog/2015/09/03/running-maven-tests-in-jenkins</id>
+    <content type="html"><![CDATA[<p>A few notes on executing Maven + TestNG tests in Jenkins.</p>
+
+<!--more-->
+
+
+<h3>Running tests</h3>
+
+<p>Use the following Maven commands in Jenkins when executing tests.</p>
+
+<figure class='code'><figcaption><span>Running tests</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>mvn -f pom.xml clean test</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In pom.xml, the test suite file should be specified, such as testng.xml.
+To run a custom TestNG test suite file, use the following command:</p>
+
+<figure class='code'><figcaption><span>Custom TestNG test suite</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>mvn clean test -DsuiteXmlFile=testng.xml</span></code></pre></td></tr></table></div></figure>
+
+
+<p>To run a specific TestNG class, use the following command:</p>
+
+<figure class='code'><figcaption><span>Run specific TestNG class/method</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>mvn clean test -Dtest=TestCircle
+</span><span class='line'>
+</span><span class='line'>mvn clean test -Dtest=TestCircle#test_area</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note that the symbol <code>#</code> must be used between class name and method name.
+In other words, <code>-Dtest=TestCircle.test_area</code> will not work.</p>
+
+<h4>Links</h4>
+
+<ol>
+<li><a href="http://www.vazzolla.com/2013/03/how-to-select-which-testng-suites-to-run-in-maven-surefire-plugin/">Custom TestNG suite file</a></li>
+<li><a href="http://stackoverflow.com/questions/1873995/run-a-single-test-method-with-maven">Select method in test class</a></li>
+</ol>
+
+
+<h3>Configuring tests</h3>
+
+<p>Sometimes, your tests need to access resources outside of standard Eclipse/Maven project folders.
+For the tests to pass both locally and on Jenkins, the full path to the current workspace may be required to resolve the file path to those resources in tests.
+Jenkins set a number of <a href="https://wiki.jenkins-ci.org/display/JENKINS/Building+a+software+project">environment variables</a>, including the variable
+<code>WORKSPACE</code> as the absolute path of the workspace.</p>
+
+<p>For local environment, we need to set environment variable <code>WORKSPACE</code> to simulate Jenkins environment.
+In the tests, we need to retrieve this environment variable, as follows in Java:</p>
+
+<figure class='code'><figcaption><span>Getting environment variable</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">String</span> <span class="n">wsPath</span> <span class="o">=</span> <span class="n">System</span><span class="o">.</span><span class="na">getenv</span><span class="o">(</span><span class="s">&quot;WORKSPACE&quot;</span><span class="o">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Besides workspace&rsquo;s absolute path, we might also need to configure some constants in tests from a configuration file.
+When initializing constants from properties files in Maven, remember:</p>
+
+<ul>
+<li>Use <code>this.class.getResourceAsStream()</code> method.</li>
+<li>By Maven convention, properties file should be in <code>src/main/resources</code> folder.</li>
+<li>Default property values could be used when reading properties file.</li>
+</ul>
+
+
+<figure class='code'><figcaption><span>Example</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">CONFIG_PATH</span> <span class="o">=</span> <span class="s">&quot;/config.properties&quot;</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">static</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">Properties</span> <span class="n">prop</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Properties</span><span class="o">();</span>
+</span><span class='line'>    <span class="k">try</span> <span class="o">(</span> <span class="n">InputStream</span> <span class="n">stream</span> <span class="o">=</span> <span class="n">VerticaConnection</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">getResourceAsStream</span><span class="o">(</span><span class="n">MyConstants</span><span class="o">.</span><span class="na">CONFIG_PATH</span><span class="o">)</span> <span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">prop</span><span class="o">.</span><span class="na">load</span><span class="o">(</span><span class="n">stream</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="c1">// Set values from config file with default values</span>
+</span><span class='line'>        <span class="n">UNIT_TEST_SCHEMA</span> <span class="o">=</span> <span class="n">prop</span><span class="o">.</span><span class="na">getProperty</span><span class="o">(</span><span class="s">&quot;schema&quot;</span><span class="o">,</span> <span class="s">&quot;UNIT_TEST&quot;</span><span class="o">);</span>
+</span><span class='line'>        <span class="n">FUNC_TEST_SCHEMA</span> <span class="o">=</span> <span class="n">prop</span><span class="o">.</span><span class="na">getProperty</span><span class="o">(</span><span class="s">&quot;schema&quot;</span><span class="o">,</span> <span class="s">&quot;FUNC_TEST&quot;</span><span class="o">);</span>
+</span><span class='line'>        <span class="n">VSQL_PATH</span> <span class="o">=</span> <span class="n">prop</span><span class="o">.</span><span class="na">getProperty</span><span class="o">(</span><span class="s">&quot;vsql_path&quot;</span><span class="o">,</span> <span class="s">&quot;/opt/vertica/bin/vsql&quot;</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">FileNotFoundException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">System</span><span class="o">.</span><span class="na">err</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Cannot find file &quot;</span> <span class="o">+</span> <span class="n">MyConstants</span><span class="o">.</span><span class="na">CONFIG_PATH</span><span class="o">);</span>
+</span><span class='line'>        <span class="k">throw</span> <span class="k">new</span> <span class="nf">IllegalStateException</span><span class="o">(</span><span class="s">&quot;Could not init class VerticaConnection.&quot;</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+</span><span class='line'>    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">System</span><span class="o">.</span><span class="na">err</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Error reading file &quot;</span> <span class="o">+</span> <span class="n">MyConstants</span><span class="o">.</span><span class="na">CONFIG_PATH</span><span class="o">);</span>
+</span><span class='line'>        <span class="k">throw</span> <span class="k">new</span> <span class="nf">IllegalStateException</span><span class="o">(</span><span class="s">&quot;Could not init class VerticaConnection.&quot;</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note that the location of the properties file in the example above is <code>src/main/resources/config.properties</code>.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Bash Programming Cookbook]]></title>
+    <link href="http://tdongsi.github.io/javascript/blog/2015/08/21/bash-programming-cookbook/"/>
+    <updated>2015-08-21T12:05:05-07:00</updated>
+    <id>http://tdongsi.github.io/javascript/blog/2015/08/21/bash-programming-cookbook</id>
+    <content type="html"><![CDATA[<p>The blog lists some frequently used code snippets found in shell programming.</p>
+
+<!--more-->
+
+
+<h3>Indirect expansion</h3>
+
+<p>Using indirect expansion expression <code>${!var}</code>, you can use the value of one variable to tell you the name of another vairable.</p>
+
+<figure class='code'><figcaption><span>Indirect expansion</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ export xyzzy=plugh ; export plugh=cave
+</span><span class='line'>
+</span><span class='line'>$ echo ${xyzzy}  # normal, xyzzy to plugh
+</span><span class='line'>plugh
+</span><span class='line'>
+</span><span class='line'>$ echo ${!xyzzy} # indirection, xyzzy to plugh to cave
+</span><span class='line'>cave</span></code></pre></td></tr></table></div></figure>
+
+
+<p>According to <code>bash</code> man page, the exceptions to this are the expansions of <code>${!prefix*}</code> and <code>${!name[@]}</code>.
+<code>${!prefix*}</code> expands to the names of variables whose names begin with prefix, separated by the first character of the <code>IFS</code> special variable.
+When <code>${!prefix@}</code> is used and the expansion appears within double quotes, each variable name expands to a separate word.
+On the other hand, <code>${!name[*]}</code>, if name is an array variable, expands to the list of array indices (keys) assigned in name.
+If name is not an array, expands to 0 if name is set and null otherwise.
+When <code>${!name[@]}</code> is used and the expansion appears within double quotes, each key expands to a separate word.</p>
+
+<figure class='code'><figcaption><span>Exceptions to Indirect Expansion</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>:~&gt; export myVar="hi"
+</span><span class='line'>:~&gt; echo ${!my*}
+</span><span class='line'>    myVar
+</span><span class='line'>
+</span><span class='line'>:~&gt; cat temp.sh
+</span><span class='line'>#!/bin/bash
+</span><span class='line'>
+</span><span class='line'>letters=(a b c d)
+</span><span class='line'>echo ${!letters[*]}
+</span><span class='line'>echo ${!letters[@]}
+</span><span class='line'>
+</span><span class='line'>:~&gt; bash temp.sh
+</span><span class='line'>0 1 2 3
+</span><span class='line'>0 1 2 3</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Reference:</p>
+
+<ul>
+<li><a href="https://stackoverflow.com/questions/8515411/what-is-indirect-expansion-what-does-var-mean">Stackoverflow discussion</a></li>
+<li><a href="http://tldp.org/LDP/abs/html/ivr.html">Indirect References</a></li>
+<li><a href="http://ahmed.amayem.com/bash-indirect-expansion-exploration/">More experiements</a></li>
+</ul>
+
+
+<h3>General reference</h3>
+
+<ul>
+<li><a href="https://linux.die.net/man/1/bash">bash man page</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>
