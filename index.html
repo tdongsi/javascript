@@ -250,6 +250,80 @@ This <code>kube-router</code> project is one of them although I&rsquo;ve not get
       
   <header>
     
+      <h1 class="entry-title"><a href="/javascript/blog/2017/03/17/jenkins-pipeline-shared-libraries/">Updating Jenkins Pipeline Shared Libraries</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2017-03-17T15:38:14-07:00'><span class='date'><span class='date-month'>Mar</span> <span class='date-day'>17</span><span class='date-suffix'>th</span>, <span class='date-year'>2017</span></span> <span class='time'>3:38 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>When you have multiple Pipeline jobs, you often want to share some parts of the Jenkinsfiles between them to keep Jenkinfiles <a href="https://en.wikipedia.org/wiki/Don't_repeat_yourself">DRY</a>.
+A very common use case is that you have many projects that are built in the similar way, such as Nexus authentication step in Gradle build.
+One way is to use <a href="https://github.com/jenkinsci/workflow-cps-global-lib-plugin">Workflow plugin</a>.
+Comprehensive user documentation can be found in <a href="https://jenkins.io/doc/book/pipeline/shared-libraries/">this section</a> of Jenkins handbook.</p>
+
+<p>In the following sections, we review a couple <strong>older</strong>, but not necessarily worse, ways of updating shared Groovy code which are still used in some Jenkins system.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/javascript/blog/2017/03/17/jenkins-pipeline-shared-libraries/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/javascript/blog/2017/02/09/docker-copy-file-into-a-container/">Docker: Copy File Into a Container</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2017-02-09T15:17:19-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>9</span><span class='date-suffix'>th</span>, <span class='date-year'>2017</span></span> <span class='time'>3:17 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>In this blog post, we have a running Docker container or a running pod in Kubernetes cluster.
+We want to add some files into the running containers to fix some issue, verify, and commit the changes.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/javascript/blog/2017/02/09/docker-copy-file-into-a-container/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/javascript/blog/2016/10/30/job-dsl-plugin-in-jenkins/">Job DSL Plugin in Jenkins</a></h1>
     
     
@@ -351,118 +425,6 @@ It could be agonizing that unit tests pass locally, but then fail in the Jenkins
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/javascript/blog/2016/06/06/java-unit-test-performance/">Java: Unit Test Performance</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2016-06-06T22:47:42-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>6</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span> <span class='time'>10:47 pm</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>According to <a href="https://www.youtube.com/watch?v=wEhu57pih5w">this</a>, the right way of automated testing is that we have lots of unit tests as majority of our overall automated tests, supplemented by a smaller set of functional tests and even fewer sets of integration tests (a.k.a., Test Automation Pyramid).
-However, for that strategy to work, we should pay attention to unit test performance.
-It is not productive for us developers to wait 30+ minutes to run unit tests locally, especially when we have multiple check-ins per day.
-In addition, the runtime will get compounded as we add more unit tests.
-Here, I list out few commonly observed mistakes to avoid and suggestions that frequently improve Java unit test performance.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/javascript/blog/2016/06/06/java-unit-test-performance/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/javascript/blog/2016/02/29/vertica-9-refresh-projections/">Vertica: Refresh Your Projections</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2016-02-29T00:54:02-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>29</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span> <span class='time'>12:54 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Most information presented in this post is directly quoted from <a href="https://community.dev.hpe.com/t5/Vertica-Knowledge-Base/Understanding-Vertica-Epochs/ta-p/233749">this page</a>.</p>
-
-<p><strong>Epoch</strong>: An epoch is 64-bit number that represents a logical time stamp for the data in Vertica.
-The epoch advances when the logical state of the system changes or when the data is committed with a DML operation (INSERT, UPDATE, MERGE, COPY, or DELETE).
-The <code>EPOCHS</code> system table contains the date and time of each closed epoch and the corresponding epoch number of the closed epoch.</p>
-
-<figure class='code'><figcaption><span>epochs table</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>=&gt; select * from epochs;
-</span><span class='line'>
-</span><span class='line'>epoch_close_time            epoch_number
-</span><span class='line'>2016-03-04 21:44:24.192495    610131</span></code></pre></td></tr></table></div></figure>
-
-
-<p><strong>Ancient History Mark (AHM)</strong>: A large epoch map can increase the catalog size.
-The ancient history mark is the epoch prior to which historical data can be purged from physical storage.
-You cannot run any historical queries prior to the AHM.
-By default, Vertica advances the AHM at an interval of 5 minutes.</p>
-
-<p>There are scenarios that the ancient history marker does not advance: there is an unrefreshed <a href="/javascript/blog/2016/02/07/vertica-7-projections/">projection</a>.
-To find about the unrefreshed projection, use the following command:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>SELECT * FROM projections where is_up_to_date = 'f';</span></code></pre></td></tr></table></div></figure>
-
-
-<p>It was already mentioned in the HPE page that AHM will not advance if there’s any projection not up to date.
-However, it also means that AHM will also not advance if there’s no activity (data insert/update or delete) on a table.
-AHM could lag behind at the create epoch of some unrefreshed projection.
-Therefore, we need to make sure we are <strong>always</strong> refreshing projections after creating them.</p>
-
-<p>Generally, you can refresh a projection by executing the <code>START_REFRESH</code> meta-function, which is a background process, or the <code>REFRESH</code> meta-function, which is a foreground process.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>select START_REFRESH();</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Links</h3>
-
-<ol>
-<li><a href="https://community.dev.hpe.com/t5/Vertica-Knowledge-Base/Understanding-Vertica-Epochs/ta-p/233749">Epoch and AHM</a></li>
-<li><a href="https://community.dev.hpe.com/t5/Vertica-Blog/Best-Practices-for-Refreshing-Large-Projections/ba-p/229505">Best Practices</a></li>
-</ol>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/javascript/posts/2">&larr; Older</a>
@@ -501,6 +463,14 @@ Therefore, we need to make sure we are <strong>always</strong> refreshing projec
       </li>
     
       <li class="post">
+        <a href="/javascript/blog/2017/03/17/jenkins-pipeline-shared-libraries/">Updating Jenkins Pipeline Shared Libraries</a>
+      </li>
+    
+      <li class="post">
+        <a href="/javascript/blog/2017/02/09/docker-copy-file-into-a-container/">Docker: Copy File Into a Container</a>
+      </li>
+    
+      <li class="post">
         <a href="/javascript/blog/2016/10/30/job-dsl-plugin-in-jenkins/">Job DSL Plugin in Jenkins</a>
       </li>
     
@@ -512,20 +482,12 @@ Therefore, we need to make sure we are <strong>always</strong> refreshing projec
         <a href="/javascript/blog/2016/06/30/java-intermittent-test-failures/">Unit Tests Pass on Local but Fail on CI</a>
       </li>
     
-      <li class="post">
-        <a href="/javascript/blog/2016/06/06/java-unit-test-performance/">Java: Unit Test Performance</a>
-      </li>
-    
-      <li class="post">
-        <a href="/javascript/blog/2016/02/29/vertica-9-refresh-projections/">Vertica: Refresh Your Projections</a>
-      </li>
-    
   </ul>
 </section>
 
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/javascript/blog/categories/automation/'>automation (1)</a></li><li><a href='/javascript/blog/categories/aws/'>aws (2)</a></li><li><a href='/javascript/blog/categories/bash/'>bash (2)</a></li><li><a href='/javascript/blog/categories/book/'>book (9)</a></li><li><a href='/javascript/blog/categories/centos/'>centos (1)</a></li><li><a href='/javascript/blog/categories/database/'>database (5)</a></li><li><a href='/javascript/blog/categories/git/'>git (2)</a></li><li><a href='/javascript/blog/categories/groovy/'>groovy (1)</a></li><li><a href='/javascript/blog/categories/hadoop/'>hadoop (10)</a></li><li><a href='/javascript/blog/categories/hive/'>hive (8)</a></li><li><a href='/javascript/blog/categories/java/'>java (6)</a></li><li><a href='/javascript/blog/categories/javascript/'>javascript (2)</a></li><li><a href='/javascript/blog/categories/jdbc/'>jdbc (1)</a></li><li><a href='/javascript/blog/categories/jenkins/'>jenkins (4)</a></li><li><a href='/javascript/blog/categories/junit/'>junit (1)</a></li><li><a href='/javascript/blog/categories/kubernetes/'>kubernetes (1)</a></li><li><a href='/javascript/blog/categories/macosx/'>macosx (2)</a></li><li><a href='/javascript/blog/categories/maven/'>maven (2)</a></li><li><a href='/javascript/blog/categories/performance/'>performance (3)</a></li><li><a href='/javascript/blog/categories/perl/'>perl (1)</a></li><li><a href='/javascript/blog/categories/python/'>python (2)</a></li><li><a href='/javascript/blog/categories/questions/'>questions (1)</a></li><li><a href='/javascript/blog/categories/sql/'>sql (10)</a></li><li><a href='/javascript/blog/categories/testing/'>testing (3)</a></li><li><a href='/javascript/blog/categories/testng/'>testng (3)</a></li><li><a href='/javascript/blog/categories/todo/'>todo (1)</a></li><li><a href='/javascript/blog/categories/tutorial/'>tutorial (1)</a></li><li><a href='/javascript/blog/categories/vertica/'>vertica (7)</a></li><li><a href='/javascript/blog/categories/windows/'>windows (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/javascript/blog/categories/automation/'>automation (1)</a></li><li><a href='/javascript/blog/categories/aws/'>aws (2)</a></li><li><a href='/javascript/blog/categories/bash/'>bash (2)</a></li><li><a href='/javascript/blog/categories/book/'>book (9)</a></li><li><a href='/javascript/blog/categories/centos/'>centos (1)</a></li><li><a href='/javascript/blog/categories/database/'>database (5)</a></li><li><a href='/javascript/blog/categories/docker/'>docker (1)</a></li><li><a href='/javascript/blog/categories/git/'>git (3)</a></li><li><a href='/javascript/blog/categories/groovy/'>groovy (2)</a></li><li><a href='/javascript/blog/categories/hadoop/'>hadoop (10)</a></li><li><a href='/javascript/blog/categories/hive/'>hive (8)</a></li><li><a href='/javascript/blog/categories/java/'>java (6)</a></li><li><a href='/javascript/blog/categories/javascript/'>javascript (2)</a></li><li><a href='/javascript/blog/categories/jdbc/'>jdbc (1)</a></li><li><a href='/javascript/blog/categories/jenkins/'>jenkins (5)</a></li><li><a href='/javascript/blog/categories/junit/'>junit (1)</a></li><li><a href='/javascript/blog/categories/kubernetes/'>kubernetes (1)</a></li><li><a href='/javascript/blog/categories/macosx/'>macosx (2)</a></li><li><a href='/javascript/blog/categories/maven/'>maven (2)</a></li><li><a href='/javascript/blog/categories/performance/'>performance (3)</a></li><li><a href='/javascript/blog/categories/perl/'>perl (1)</a></li><li><a href='/javascript/blog/categories/python/'>python (2)</a></li><li><a href='/javascript/blog/categories/questions/'>questions (1)</a></li><li><a href='/javascript/blog/categories/sql/'>sql (10)</a></li><li><a href='/javascript/blog/categories/testing/'>testing (3)</a></li><li><a href='/javascript/blog/categories/testng/'>testng (3)</a></li><li><a href='/javascript/blog/categories/todo/'>todo (1)</a></li><li><a href='/javascript/blog/categories/tutorial/'>tutorial (1)</a></li><li><a href='/javascript/blog/categories/vertica/'>vertica (7)</a></li><li><a href='/javascript/blog/categories/windows/'>windows (1)</a></li></ul>
 </section>
 
 

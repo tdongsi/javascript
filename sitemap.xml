@@ -21,6 +21,14 @@
 <lastmod>2017-05-15T10:52:34-07:00</lastmod>
 </url>
 <url>
+<loc>http://tdongsi.github.io/javascript/blog/2017/03/17/jenkins-pipeline-shared-libraries/</loc>
+<lastmod>2017-03-17T15:38:14-07:00</lastmod>
+</url>
+<url>
+<loc>http://tdongsi.github.io/javascript/blog/2017/02/09/docker-copy-file-into-a-container/</loc>
+<lastmod>2017-02-09T15:17:19-08:00</lastmod>
+</url>
+<url>
 <loc>http://tdongsi.github.io/javascript/blog/2016/10/30/job-dsl-plugin-in-jenkins/</loc>
 <lastmod>2016-10-30T18:27:07-07:00</lastmod>
 </url>
@@ -209,6 +217,9 @@
 </url>
 <url>
 <loc>http://tdongsi.github.io/javascript/blog/categories/groovy/</loc>
+</url>
+<url>
+<loc>http://tdongsi.github.io/javascript/blog/categories/docker/</loc>
 </url>
 <url>
 <loc>http://tdongsi.github.io/javascript/blog/categories/kubernetes/</loc>
