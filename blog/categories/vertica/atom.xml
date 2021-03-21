@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Vertica | Archived Blog Posts]]></title>
   <link href="http://tdongsi.github.io/javascript/blog/categories/vertica/atom.xml" rel="self"/>
   <link href="http://tdongsi.github.io/javascript/"/>
-  <updated>2021-03-13T03:02:09-08:00</updated>
+  <updated>2021-03-21T05:45:14-07:00</updated>
   <id>http://tdongsi.github.io/javascript/</id>
   <author>
     <name><![CDATA[Cuong Dong-Si]]></name>
@@ -12,6 +12,117 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Docker Image for ETL Development in Vertica]]></title>
+    <link href="http://tdongsi.github.io/javascript/blog/2016/09/01/docker-image-for-vertica/"/>
+    <updated>2016-09-01T11:38:27-07:00</updated>
+    <id>http://tdongsi.github.io/javascript/blog/2016/09/01/docker-image-for-vertica</id>
+    <content type="html"><![CDATA[<p>Docker is Awesome!!!</p>
+
+<!--more-->
+
+
+<p>I wish I knew Docker earlier, before going through the hassle of creating VMs for local ETL development and testing.
+Docker can make the whole setup even easier.
+It can be done in just a few commands, using <a href="https://github.com/tdongsi/vertica/tree/master/docker">a Vertica Dockerfile</a>, created based on <a href="https://github.com/wmarinho/docker-hp-vertica">this</a>.
+In addition to easy virtualization, Docker also enables the entire setup can be automated in a script, allowing it to be version-controlled (i.e., <a href="https://en.wikipedia.org/wiki/Infrastructure_as_Code">Infrastructure as Code</a>).</p>
+
+<p>Some notes about this Dockerfile, compared to <code>wmarinho</code>&rsquo;s:</p>
+
+<ul>
+<li>Added new schema, new user and new role as examples. Avoid using <code>dbadmin</code> user for development purpose.</li>
+<li>Added Java and Maven for Java-based ETL and automated test execution.</li>
+<li>Demonstrated running Bash and SQL scripts to initialize the container/database.</li>
+</ul>
+
+
+<h3>How to run</h3>
+
+<p>Before running <code>docker build</code>, download Vertica Community Edition from <a href="https://my.vertica.com/">https://my.vertica.com/</a> and place in the same folder as the <code>Dockerfile</code>.
+This <code>Dockerfile</code> takes &ldquo;vertica-7.2.3-0.x86_64.RHEL6.rpm&rdquo; as the install file.</p>
+
+<pre><code class="plain Windows output">epigineer@epigineerpc MINGW64 /c/Work/Github/vertica/docker (develop)
+$ docker build -t vertica .
+...
+
+epigineer@epigineerpc MINGW64 /c/Work/Github/vertica/docker (develop)
+$ docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED
+SIZE
+vertica             latest              d2607fa1f457        13 seconds ago
+1.638 GB
+&lt;none&gt;              &lt;none&gt;              486163abe73f        11 minutes ago
+1.638 GB
+centos              centos6.6           2c886f766286        8 weeks ago
+202.6 MB
+
+epigineer@epigineerpc MINGW64 /c/Work/Github/vertica/docker (develop)
+$ docker run -p 5433:5433 --hostname=verthost --privileged=true --memory 4G -t
+-i d2607fa1f457 /bin/bash
+Info: no password specified, using none
+        Starting nodes:
+                v_docker_node0001 (127.0.0.1)
+        Starting Vertica on all nodes. Please wait, databases with large catalog
+ may take a while to initialize.
+        Node Status: v_docker_node0001: (DOWN)
+        Node Status: v_docker_node0001: (DOWN)
+        Node Status: v_docker_node0001: (DOWN)
+        Node Status: v_docker_node0001: (DOWN)
+        Node Status: v_docker_node0001: (UP)
+Database docker started successfully
+creating schema
+CREATE SCHEMA
+creating user
+CREATE USER
+creating role
+CREATE ROLE
+grant usage, create on schema
+GRANT PRIVILEGE
+</code></pre>
+
+<h3>Troubleshooting Notes</h3>
+
+<p>In Mac OSX, remember that the <code>entrypoint.sh</code> file should have executable permission.
+Otherwise, you might get the error &ldquo;oci runtime error: exec: &rdquo;/entrypoint.sh": permission denied".
+After changing the file permission, you have to rebuild the image with <code>docker build</code> before <code>docker run</code> again.</p>
+
+<h4>&ldquo;Insufficient resources&rdquo; error when running ETL</h4>
+
+<p>You might get &ldquo;Insufficient resources to execute plan on pool general &hellip; Memory exceeded&rdquo; error when running a large ETL script against the Vertica container.
+For complex ETL, Vertica might need additional memory to execute the query plan.
+Simply setting higher memory allocation using <code>--memory</code> option of <code>docker run</code> might NOT work if using <strong>Docker Toolbox</strong>.
+To set higher memory allowance, stop the <code>docker-machine</code> and set memory as follows:</p>
+
+<pre><code class="plain">tdongsi$ docker-machine stop
+Stopping "default"...
+Machine "default" was stopped.
+
+tdongsi$ VBoxManage modifyvm default --memory 8192
+
+tdongsi$ docker-machine start
+Starting "default"...
+(default) Check network to re-create if needed...
+(default) Waiting for an IP...
+Machine "default" was started.
+Waiting for SSH to be available...
+Detecting the provisioner...
+Started machines may have new IP addresses. You may need to re-run the `docker-machine env` command.
+</code></pre>
+
+<p>Note that after running the above commands, <code>docker-machine inspect</code> still shows <code>"Memory":"2048"</code>.
+To verify if memory is properly allocated as desired, run <code>free</code> command, for example, inside the container to verify.</p>
+
+<h3>Links</h3>
+
+<ul>
+<li><a href="https://github.com/tdongsi/vertica/tree/master/docker">My Dockerfile for ETL development and testing on Vertica</a></li>
+<li><a href="https://github.com/wmarinho/docker-hp-vertica">Original Dockerfile</a></li>
+<li><a href="https://www.docker.com/">Docker</a></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Vertica: Refresh Your Projections]]></title>
@@ -346,66 +457,6 @@ The reason is that Vertica database with one or two hosts cannot be <em>k-safe</
 </code></pre>
 
 <p>This will search for the string <code>KSAFE 1</code> in all files in the <code>tables</code> directory and replace <code>KSAFE 1</code> with nothing <code>''</code> for each occurrence of the string in each file.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Vertica Tip: Find Empty Tables]]></title>
-    <link href="http://tdongsi.github.io/javascript/blog/2015/12/18/vertica-tip-find-empty-tables-in-a-schema/"/>
-    <updated>2015-12-18T21:39:56-08:00</updated>
-    <id>http://tdongsi.github.io/javascript/blog/2015/12/18/vertica-tip-find-empty-tables-in-a-schema</id>
-    <content type="html"><![CDATA[<p>This post is a reminder of using Vertica&rsquo;s system tables for administrating and monitoring our own tables. One common house-cleaning operation when developing/testing in Vertica is to find and drop tables that are empty (truncated) and never used again.</p>
-
-<p>You might ask why the tables are not dropped directly when I truncated the table in the first place. The answer is that all those tables have some specific designs on projection segmentation and partition, and those information will be lost if I drop the tables. These tables are frequently populated with data and cleared for testing purposes, and truncating and inserting with <code>direct</code> <a href="https://my.vertica.com/docs/7.1.x/HTML/Content/Authoring/SQLReferenceManual/Statements/INSERT.htm">hint</a> will give a significant performance boost (see <a href="/blog/2015/12/16/vertica-tip-best-practices/">Best practices</a>).</p>
-
-<!--more-->
-
-
-<h3>v_monitor schema and COLUMN_STORAGE system table</h3>
-
-<p>The <a href="https://my.vertica.com/docs/7.1.x/HTML/index.htm#Authoring/SQLReferenceManual/SystemTables/MONITOR/COLUMN_STORAGE.htm">COLUMN_STORAGE system table</a> in <code>v_monitor</code> schema returns the &ldquo;amount of disk storage used by each column of each projection on each node&rdquo;. Therefore, to get the size of each table, you only need to aggregate the <code>used_byte</code> data, grouped by schema name and table name.</p>
-
-<pre><code class="sql Query to list tables' sizes in a schema">select anchor_table_schema, anchor_table_name, sum(used_bytes)
-FROM v_monitor.column_storage
-where anchor_table_schema = 'some_schema'
-group by anchor_table_schema, anchor_table_name
-</code></pre>
-
-<p>According to <a href="http://vertica.tips/2014/01/25/table-size/">here</a>, the number from the above query is the <em>compressed</em> size of the Vertica tables. To get the <em>raw</em> size of the tables, which probably only matters for license limit, perform a <em>license audit</em>, and query the system table <code>license_audits</code> in <code>v_catalog</code> schema. However, the most important takeaway is that empty tables will not appear in this <code>COLUMN_STORAGE</code> system table.</p>
-
-<h3>v_catalog schema and TABLES system table</h3>
-
-<p>The <a href="https://my.vertica.com/docs/7.1.x/HTML/index.htm#Authoring/SQLReferenceManual/SystemTables/CATALOG/TABLES.htm">TABLES system table</a> is probably more well-known. It contains all the information about all the tables in all the schemas. For example, to list all the tables in some schema:</p>
-
-<pre><code class="sql Query to list all tables in a schema">select table_schema, table_name from tables
-where table_schema = 'some_schema'
-</code></pre>
-
-<p>Another useful system table in <code>v_catalog</code> schema is <code>USER_FUNCTIONS</code> which lists all user-defined functions and their function signatures in the database.</p>
-
-<h3>Find all the empty (truncated) tables</h3>
-
-<p>Having all the tables in <code>v_catalog.tables</code> table and only non-empty tables in <code>v_monitor.column_storage</code> table, finding empty tables is pretty straight-forward in SQL:</p>
-
-<pre><code class="sql Query to find empty tables in a schema">select table_name
-from v_catalog.tables
-where table_schema = 'some_schema'
-EXCEPT
-select anchor_table_name
-from v_monitor.column_storage
-where anchor_table_schema = 'some_schema' 
-</code></pre>
-
-<h3>External Links</h3>
-
-<ol>
-<li><a href="http://vertica.tips/2014/01/25/table-size/">Finding table&rsquo;s compressed size</a></li>
-<li><a href="http://vertica.tips/2014/01/24/license-audit-utilization-raw-size/">Vertica License audit</a></li>
-<li><a href="https://my.vertica.com/docs/7.1.x/HTML/index.htm#Authoring/SQLReferenceManual/SystemTables/MONITOR/COLUMN_STORAGE.htm">COLUMN_STORAGE system table</a></li>
-<li><a href="https://my.vertica.com/docs/7.1.x/HTML/index.htm#Authoring/SQLReferenceManual/SystemTables/CATALOG/TABLES.htm">TABLES system table</a></li>
-<li><a href="https://my.vertica.com/docs/7.1.x/HTML/index.htm#Authoring/SQLReferenceManual/SystemTables/CATALOG/USER_FUNCTIONS.htm">USER_FUNCTIONS system table</a></li>
-</ol>
-
 ]]></content>
   </entry>
   

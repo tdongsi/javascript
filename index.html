@@ -324,6 +324,41 @@ We want to add some files into the running containers to fix some issue, verify,
       
   <header>
     
+      <h1 class="entry-title"><a href="/javascript/blog/2017/01/24/kubernetes-pod-to-node-communication-loss/">Kubernetes: Pod-to-Node Communication Loss</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2017-01-24T15:05:15-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>24</span><span class='date-suffix'>th</span>, <span class='date-year'>2017</span></span> <span class='time'>3:05 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>This post goes over what happens if we misconfigure <code>etcd</code> and <code>flannel</code> to use the same network (e.g., &ldquo;10.252.61.0/16&rdquo;) as the infrastructure (e.g., &ldquo;10.252.158.72&rdquo; node).
+This newbie mistake is rare but very perplexing and this post shows how to troubleshoot it with <code>busybox</code> container.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/javascript/blog/2017/01/24/kubernetes-pod-to-node-communication-loss/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/javascript/blog/2016/10/30/job-dsl-plugin-in-jenkins/">Job DSL Plugin in Jenkins</a></h1>
     
     
@@ -358,7 +393,7 @@ We want to add some files into the running containers to fix some issue, verify,
       
   <header>
     
-      <h1 class="entry-title"><a href="/javascript/blog/2016/07/05/git-allow-empty-when-squashing/">Git: Allow-empty When Squashing</a></h1>
+      <h1 class="entry-title"><a href="/javascript/blog/2016/09/01/docker-image-for-vertica/">Docker Image for ETL Development in Vertica</a></h1>
     
     
       <p class="meta">
@@ -367,58 +402,20 @@ We want to add some files into the running containers to fix some issue, verify,
 
 
 
-<time class='entry-date' datetime='2016-07-05T00:15:57-07:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>5</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span> <span class='time'>12:15 am</span></time>
+<time class='entry-date' datetime='2016-09-01T11:38:27-07:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>1</span><span class='date-suffix'>st</span>, <span class='date-year'>2016</span></span> <span class='time'>11:38 am</span></time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>Many times in Git, we commit some work only to realize that is a mistake, and we should do another way.
-The easy way to fix that is to revert the previous commit, a process in which Git creates another commit that undoes exactly everything in the last commit.
-After that, we move on with the other way and check in commits for that.
-Before pushing everything to the remote branch, as responsible software engineers :), we sometimes want to &ldquo;squash&rdquo; the commits to erase the mistake to keep the commit log clean.</p>
+  <div class="entry-content"><p>Docker is Awesome!!!</p>
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/javascript/blog/2016/07/05/git-allow-empty-when-squashing/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/javascript/blog/2016/06/30/java-intermittent-test-failures/">Unit Tests Pass on Local but Fail on CI</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2016-06-30T17:51:13-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>30</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span> <span class='time'>5:51 pm</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>We have all seen it before: intermittent unit test failures.
-It could be agonizing that unit tests pass locally, but then fail in the Jenkins unit test build.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/javascript/blog/2016/06/30/java-intermittent-test-failures/">Read on &rarr;</a>
+      <a rel="full-article" href="/javascript/blog/2016/09/01/docker-image-for-vertica/">Read on &rarr;</a>
     </footer>
   
 
@@ -471,15 +468,15 @@ It could be agonizing that unit tests pass locally, but then fail in the Jenkins
       </li>
     
       <li class="post">
+        <a href="/javascript/blog/2017/01/24/kubernetes-pod-to-node-communication-loss/">Kubernetes: Pod-to-Node Communication Loss</a>
+      </li>
+    
+      <li class="post">
         <a href="/javascript/blog/2016/10/30/job-dsl-plugin-in-jenkins/">Job DSL Plugin in Jenkins</a>
       </li>
     
       <li class="post">
-        <a href="/javascript/blog/2016/07/05/git-allow-empty-when-squashing/">Git: Allow-empty When Squashing</a>
-      </li>
-    
-      <li class="post">
-        <a href="/javascript/blog/2016/06/30/java-intermittent-test-failures/">Unit Tests Pass on Local but Fail on CI</a>
+        <a href="/javascript/blog/2016/09/01/docker-image-for-vertica/">Docker Image for ETL Development in Vertica</a>
       </li>
     
   </ul>
@@ -487,7 +484,7 @@ It could be agonizing that unit tests pass locally, but then fail in the Jenkins
 
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/javascript/blog/categories/automation/'>automation (1)</a></li><li><a href='/javascript/blog/categories/aws/'>aws (2)</a></li><li><a href='/javascript/blog/categories/bash/'>bash (2)</a></li><li><a href='/javascript/blog/categories/book/'>book (9)</a></li><li><a href='/javascript/blog/categories/centos/'>centos (1)</a></li><li><a href='/javascript/blog/categories/database/'>database (5)</a></li><li><a href='/javascript/blog/categories/docker/'>docker (1)</a></li><li><a href='/javascript/blog/categories/git/'>git (3)</a></li><li><a href='/javascript/blog/categories/groovy/'>groovy (2)</a></li><li><a href='/javascript/blog/categories/hadoop/'>hadoop (10)</a></li><li><a href='/javascript/blog/categories/hive/'>hive (8)</a></li><li><a href='/javascript/blog/categories/java/'>java (6)</a></li><li><a href='/javascript/blog/categories/javascript/'>javascript (2)</a></li><li><a href='/javascript/blog/categories/jdbc/'>jdbc (1)</a></li><li><a href='/javascript/blog/categories/jenkins/'>jenkins (5)</a></li><li><a href='/javascript/blog/categories/junit/'>junit (1)</a></li><li><a href='/javascript/blog/categories/kubernetes/'>kubernetes (1)</a></li><li><a href='/javascript/blog/categories/macosx/'>macosx (2)</a></li><li><a href='/javascript/blog/categories/maven/'>maven (2)</a></li><li><a href='/javascript/blog/categories/performance/'>performance (3)</a></li><li><a href='/javascript/blog/categories/perl/'>perl (1)</a></li><li><a href='/javascript/blog/categories/python/'>python (2)</a></li><li><a href='/javascript/blog/categories/questions/'>questions (1)</a></li><li><a href='/javascript/blog/categories/sql/'>sql (10)</a></li><li><a href='/javascript/blog/categories/testing/'>testing (3)</a></li><li><a href='/javascript/blog/categories/testng/'>testng (3)</a></li><li><a href='/javascript/blog/categories/todo/'>todo (1)</a></li><li><a href='/javascript/blog/categories/tutorial/'>tutorial (1)</a></li><li><a href='/javascript/blog/categories/vertica/'>vertica (7)</a></li><li><a href='/javascript/blog/categories/windows/'>windows (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/javascript/blog/categories/automation/'>automation (1)</a></li><li><a href='/javascript/blog/categories/aws/'>aws (2)</a></li><li><a href='/javascript/blog/categories/bash/'>bash (2)</a></li><li><a href='/javascript/blog/categories/book/'>book (9)</a></li><li><a href='/javascript/blog/categories/centos/'>centos (1)</a></li><li><a href='/javascript/blog/categories/database/'>database (5)</a></li><li><a href='/javascript/blog/categories/docker/'>docker (3)</a></li><li><a href='/javascript/blog/categories/git/'>git (3)</a></li><li><a href='/javascript/blog/categories/groovy/'>groovy (2)</a></li><li><a href='/javascript/blog/categories/hadoop/'>hadoop (10)</a></li><li><a href='/javascript/blog/categories/hive/'>hive (8)</a></li><li><a href='/javascript/blog/categories/java/'>java (6)</a></li><li><a href='/javascript/blog/categories/javascript/'>javascript (2)</a></li><li><a href='/javascript/blog/categories/jdbc/'>jdbc (1)</a></li><li><a href='/javascript/blog/categories/jenkins/'>jenkins (5)</a></li><li><a href='/javascript/blog/categories/junit/'>junit (1)</a></li><li><a href='/javascript/blog/categories/kubernetes/'>kubernetes (2)</a></li><li><a href='/javascript/blog/categories/macosx/'>macosx (2)</a></li><li><a href='/javascript/blog/categories/maven/'>maven (2)</a></li><li><a href='/javascript/blog/categories/performance/'>performance (3)</a></li><li><a href='/javascript/blog/categories/perl/'>perl (1)</a></li><li><a href='/javascript/blog/categories/python/'>python (2)</a></li><li><a href='/javascript/blog/categories/questions/'>questions (1)</a></li><li><a href='/javascript/blog/categories/sql/'>sql (10)</a></li><li><a href='/javascript/blog/categories/testing/'>testing (3)</a></li><li><a href='/javascript/blog/categories/testng/'>testng (3)</a></li><li><a href='/javascript/blog/categories/todo/'>todo (1)</a></li><li><a href='/javascript/blog/categories/tutorial/'>tutorial (1)</a></li><li><a href='/javascript/blog/categories/vertica/'>vertica (8)</a></li><li><a href='/javascript/blog/categories/windows/'>windows (1)</a></li></ul>
 </section>
 
 

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Kubernetes | Archived Blog Posts]]></title>
   <link href="http://tdongsi.github.io/javascript/blog/categories/kubernetes/atom.xml" rel="self"/>
   <link href="http://tdongsi.github.io/javascript/"/>
-  <updated>2021-03-13T03:02:09-08:00</updated>
+  <updated>2021-03-21T05:45:14-07:00</updated>
   <id>http://tdongsi.github.io/javascript/</id>
   <author>
     <name><![CDATA[Cuong Dong-Si]]></name>
@@ -36,6 +36,127 @@ Huawei presented this work at Kubecon 2016.
 IIRC, it is implemented as a flag to kube-proxy and considerable performance improvement was reported.</li>
 </ul>
 
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Kubernetes: Pod-to-Node Communication Loss]]></title>
+    <link href="http://tdongsi.github.io/javascript/blog/2017/01/24/kubernetes-pod-to-node-communication-loss/"/>
+    <updated>2017-01-24T15:05:15-08:00</updated>
+    <id>http://tdongsi.github.io/javascript/blog/2017/01/24/kubernetes-pod-to-node-communication-loss</id>
+    <content type="html"><![CDATA[<p>This post goes over what happens if we misconfigure <code>etcd</code> and <code>flannel</code> to use the same network (e.g., &ldquo;10.252.61.0/16&rdquo;) as the infrastructure (e.g., &ldquo;10.252.158.72&rdquo; node).
+This newbie mistake is rare but very perplexing and this post shows how to troubleshoot it with <code>busybox</code> container.</p>
+
+<!--more-->
+
+
+<h3>Problem symptoms</h3>
+
+<p>From a pod (e.g., <code>jenkins</code>) on one node (e.g., <code>10.252.158.71</code>), we cannot communicate with another node (e.g., <code>10.252.158.72</code>) even though two nodes can communicate with each other normally.</p>
+
+<pre><code class="plain">mymac:kubernetes tdongsi$ kubectl --kubeconfig kubeconfig exec -it jenkins -- bash -il
+jenkins@jenkins:~$ ping 10.252.158.72
+PING 10.252.158.72 (10.252.158.72) 56(84) bytes of data.
+^C
+--- 10.252.158.72 ping statistics ---
+16 packets transmitted, 0 received, 100% packet loss, time 14999ms
+
+jenkins@jenkins:~$ exit
+</code></pre>
+
+<p>Even more perplexing, the pod-to-pod communication is fine (as described right below), even though the second pod is on the same node (e.g., <code>10.252.158.72</code>) that the first pod cannot communciate to.</p>
+
+<h3>Troubleshooting with <code>busybox</code></h3>
+
+<p>Try to run a test pod <code>busybox</code>.
+<code>jenkins</code> pod can ping the <code>busybox</code> pod, but not the node that <code>busybox</code> pod is running on.</p>
+
+<pre><code>mymac:kubernetes tdongsi$ kubectl --kubeconfig kubeconfig run busybox \
+--image=docker.registry.company.net/tdongsi/busybox --restart=Never --tty -i --generator=run-pod/v1
+Waiting for pod default/busybox to be running, status is Pending, pod ready: false
+Waiting for pod default/busybox to be running, status is Running, pod ready: false
+Waiting for pod default/busybox to be running, status is Running, pod ready: false
+
+mymac:kubernetes tdongsi$ kubectl --kubeconfig kubeconfig exec -it jenkins -- bash -il
+jenkins@jenkins:~$ ping 10.252.61.7
+PING 10.252.61.7 (10.252.61.7) 56(84) bytes of data.
+64 bytes from 10.252.61.7: icmp_seq=1 ttl=62 time=0.540 ms
+64 bytes from 10.252.61.7: icmp_seq=2 ttl=62 time=0.186 ms
+64 bytes from 10.252.61.7: icmp_seq=3 ttl=62 time=0.177 ms
+64 bytes from 10.252.61.7: icmp_seq=4 ttl=62 time=0.161 ms
+64 bytes from 10.252.61.7: icmp_seq=5 ttl=62 time=0.187 ms
+^C
+--- 10.252.61.7 ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss, time 4000ms
+rtt min/avg/max/mdev = 0.161/0.250/0.540/0.145 ms
+
+jenkins@jenkins:~$ ping 10.252.158.72
+PING 10.252.158.72 (10.252.158.72) 56(84) bytes of data.
+^C
+--- 10.252.158.72 ping statistics ---
+14 packets transmitted, 0 received, 100% packet loss, time 13000ms
+</code></pre>
+
+<p>In this case, we would use <code>traceroute</code> from the <code>busybox</code> container to determine when the packets are dropped.
+<code>10.252.158.72</code> is IP of the VM. <code>10.252.100.5</code> is the IP of the <code>jenkins</code> pod.</p>
+
+<pre><code>mymac:kubernetes tdongsi$ kubectl --kubeconfig kubeconfig run busybox \
+--image=docker.registry.company.net/tdongsi/busybox --restart=Never --tty -i --generator=run-pod/v1
+
+Waiting for pod default/busybox to be running, status is Pending, pod ready: false
+Waiting for pod default/busybox to be running, status is Running, pod ready: false
+Waiting for pod default/busybox to be running, status is Running, pod ready: false
+
+/ # traceroute 10.252.158.72
+traceroute to 10.252.158.72 (10.252.158.72), 30 hops max, 46 byte packets
+ 1  10.252.61.1 (10.252.61.1)  0.005 ms  0.012 ms  0.001 ms
+ 2  *  *  *
+ 3  *  *  *
+ 4  *  *  *
+ 5  *  *  *
+/ #
+/ # traceroute 10.252.100.5
+traceroute to 10.252.100.5 (10.252.100.5), 30 hops max, 46 byte packets
+ 1  10.252.61.1 (10.252.61.1)  0.005 ms  0.004 ms  0.002 ms
+ 2  *  10.252.100.0 (10.252.100.0)  0.487 ms  0.241 ms
+ 3  10.252.100.5 (10.252.100.5)  0.141 ms  0.563 ms  0.132 ms
+/ # exit
+</code></pre>
+
+<p>For the context, <code>10.252.100.5</code> is the IP of the service, as shown in the command below.</p>
+
+<pre><code>mymac:private_cloud tdongsi$ kubectl --kubeconfig kubeconfig describe services
+Name:           jenkins
+Namespace:      default
+Labels:         &lt;none&gt;
+Selector:       name=jenkins
+Type:           NodePort
+IP:         10.252.77.85
+Port:           http    80/TCP
+NodePort:       http    30080/TCP
+Endpoints:      10.252.100.5:8080
+Session Affinity:   None
+No events.
+</code></pre>
+
+<h3>What went wrong?</h3>
+
+<p>It&rsquo;s a newbie mistake when configuring Kubernetes.
+When setting up <code>etcd</code> and configuring it to hold <code>flannel</code> configuration, it is important to pick an unused network.
+I made a mistake for using <code>10.252.61.0/16</code> for flannel when some of my kubernetes nodes has IPs as &ldquo;10.252.xxx.xxx&rdquo;.
+As a result, kube-proxy services intercept the traffic from the container and thinks its a virtual traffic since my node IP happens to be in the same subnet with <code>flanneld</code>.
+This leads to pod-to-VM communication loss as described above.
+The solution is simply reset flanneld with another subnet after resetting configruation value in <code>etcd</code> to &ldquo;172.17.0.0/16&rdquo;.</p>
+
+<pre><code class="plain Update etcd">[centos@kube-master ~]$ etcdctl update /kube-centos/network/config \
+"{ \"Network\": \"172.17.0.0/16\", \"SubnetLen\": 24, \"Backend\": { \"Type\": \"vxlan\" } }"
+
+[centos@kube-master ~]$ etcdctl rm --recursive /kube-centos/network/subnets
+[centos@kube-master ~]$ etcdctl ls /kube-centos/network
+/kube-centos/network/config
+</code></pre>
+
+<p>After this, we can reset and restart <code>flannel</code> services on all nodes to use the new network overlay configuration.</p>
 ]]></content>
   </entry>
   
